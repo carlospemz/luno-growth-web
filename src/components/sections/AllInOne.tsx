@@ -208,12 +208,12 @@ export default function AllInOne() {
             <p className="text-[11px] font-bold tracking-[0.2em] text-purple-400 uppercase mb-3">Tú pagas solo</p>
             <div className="flex items-start justify-center gap-1">
               <span className="text-[24px] font-bold text-zinc-100 mt-3">$</span>
-              <span className="text-[72px] md:text-[88px] font-black text-zinc-100 tracking-[-0.04em] leading-none">19,500</span>
+              <span className="text-[72px] md:text-[88px] font-black text-zinc-100 tracking-[-0.04em] leading-none">25,000</span>
               <span className="text-[18px] font-normal text-zinc-400 mt-5">/mes</span>
             </div>
-            <p className="mt-2 text-[13px] text-zinc-500">+ $8,000 setup fee único · Sin contratos de largo plazo</p>
+            <p className="mt-2 text-[13px] text-zinc-500">+ $10,000 setup fee único · Sin contratos de largo plazo</p>
             <div className="mt-4 inline-block rounded-full border border-purple-500/30 bg-purple-500/10 px-5 py-2 text-[13px] font-semibold text-purple-300">
-              Ahorra $37,500 al mes vs. contratar un equipo
+              Ahorra $32,000 al mes vs. contratar un equipo
             </div>
           </Card>
         </motion.div>

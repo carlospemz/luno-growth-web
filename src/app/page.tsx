@@ -1,6 +1,6 @@
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
-import WhatYouGet from "@/components/sections/WhatYouGet";
+import ForWhom from "@/components/sections/ForWhom";
 import Pricing from "@/components/sections/Pricing";
 import AllInOne from "@/components/sections/AllInOne";
 import Process from "@/components/sections/Process";
@@ -18,7 +18,7 @@ export default function Home() {
       <Navbar />
       <main className="relative z-10 pb-14 md:pb-0">
         <Hero />
-        <WhatYouGet />
+        <ForWhom />
         <AllInOne />
         <Pricing />
         <Process />

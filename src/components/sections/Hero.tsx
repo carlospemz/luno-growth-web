@@ -76,8 +76,8 @@ export default function Hero() {
                 transition={{ duration: 0.5, ease, delay: 0.25 }}
                 className="mt-6 max-w-[460px] text-[16px] md:text-[18px] text-zinc-500 leading-relaxed"
               >
-                Marketing completo con IA + estrategas humanos.{" "}
-                <span className="text-zinc-400">Una sola mensualidad. Resultados en 30 días.</span>
+                Más mensajes. Más ventas. Sin contratar equipo.{" "}
+                <span className="text-zinc-400">IA + estrategas humanos. Una mensualidad. 30 días.</span>
               </motion.p>
 
               {/* CTAs */}
