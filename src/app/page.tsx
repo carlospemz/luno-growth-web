@@ -12,6 +12,7 @@ import Brief from "@/components/sections/Brief";
 import Contact from "@/components/sections/Contact";
 import MobileBar from "@/components/sections/MobileBar";
 import PageBackdrop from "@/components/layout/PageBackdrop";
+import AllInOne from "@/components/sections/AllInOne";
 
 
 export default function Home() {
@@ -27,6 +28,7 @@ export default function Home() {
         <Addons />
         <Maintenance />
         <WaaS />
+        <AllInOne />
         <Process />
         <FAQ />
         <Brief />
