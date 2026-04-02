@@ -16,7 +16,9 @@ const VARIANT_CLASS: Record<CardVariant, string> = {
 
 /* ── Inline styles per variant (light theme) ───────────────────────── */
 const BASE_STYLE: React.CSSProperties = {
-  background: "#fff",
+  background: "rgba(255,255,255,0.92)",
+  backdropFilter: "blur(20px)",
+  WebkitBackdropFilter: "blur(20px)",
   willChange: "transform",
 };
 
@@ -33,21 +35,21 @@ const VARIANT_STYLE: Record<CardVariant, React.CSSProperties> = {
   },
   gold: {
     ...BASE_STYLE,
-    border: "1px solid rgba(168,85,247,0.12)",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.04), 0 0 24px rgba(168,85,247,0.06)",
+    border: "1.5px solid rgba(168,85,247,0.20)",
+    boxShadow: "0 4px 20px rgba(168,85,247,0.08), 0 0 40px rgba(168,85,247,0.06), 0 1px 3px rgba(0,0,0,0.04)",
   },
   onyx: {
     ...BASE_STYLE,
-    border: "1px solid rgba(6,182,212,0.12)",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.04), 0 0 24px rgba(6,182,212,0.04)",
+    border: "1px solid rgba(6,182,212,0.18)",
+    boxShadow: "0 2px 12px rgba(0,0,0,0.05), 0 0 32px rgba(6,182,212,0.06)",
   },
 };
 
 const HOVER_SHADOW: Record<CardVariant, string> = {
   default: "0 4px 16px rgba(0,0,0,0.06)",
   silver: "0 4px 16px rgba(0,0,0,0.06)",
-  gold: "0 4px 16px rgba(0,0,0,0.06), 0 0 32px rgba(168,85,247,0.10)",
-  onyx: "0 4px 16px rgba(0,0,0,0.06), 0 0 32px rgba(6,182,212,0.10)",
+  gold: "0 8px 32px rgba(168,85,247,0.12), 0 0 48px rgba(168,85,247,0.08), 0 2px 8px rgba(0,0,0,0.04)",
+  onyx: "0 6px 24px rgba(6,182,212,0.10), 0 0 40px rgba(6,182,212,0.06), 0 2px 8px rgba(0,0,0,0.04)",
 };
 
 export default function Card({

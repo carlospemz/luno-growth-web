@@ -18,7 +18,7 @@ export default function Navbar() {
 
   return (
     <header
-      className="fixed inset-x-0 top-0 z-50 bg-white/70 backdrop-blur-2xl"
+      className="fixed inset-x-0 top-0 z-50 bg-white/60 backdrop-blur-2xl"
       style={{ boxShadow: "0 1px 0 rgba(0,0,0,0.04)" }}
     >
       <Container>
@@ -56,7 +56,7 @@ export default function Navbar() {
           <div className="hidden md:block">
             <a
               href="#brief"
-              className="inline-flex items-center rounded-lg bg-gradient-to-r from-purple-600 to-cyan-500 px-4 py-2 text-[12px] font-medium text-white transition-all hover:from-purple-700 hover:to-cyan-600 hover:shadow-md active:scale-[0.98]"
+              className="inline-flex items-center rounded-xl bg-gradient-to-r from-purple-600 to-cyan-500 px-5 py-2.5 text-[13px] font-semibold text-white shadow-sm shadow-purple-500/15 transition-all hover:shadow-md hover:shadow-purple-500/20 hover:brightness-105 active:scale-[0.98]"
             >
               Llenar brief
             </a>

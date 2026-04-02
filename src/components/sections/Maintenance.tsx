@@ -110,7 +110,7 @@ export default function Maintenance() {
                     <motion.li
                       key={f}
                       variants={featureVariants}
-                      className="flex items-start gap-2.5 text-[13px] text-zinc-900"
+                      className="flex items-start gap-2.5 text-[14px] text-zinc-700"
                     >
                       <span className="mt-0.5 flex-shrink-0">
                         <Check className="h-4 w-4 text-purple-500" />

@@ -157,7 +157,7 @@ export default function Process() {
                       )}
                     </span>
                     <h3 className="mt-4 font-heading text-[17px] font-bold">{s.title}</h3>
-                    <p className="mt-2 text-[14px] leading-[1.6] text-zinc-500">{s.desc}</p>
+                    <p className="mt-2 text-[14.5px] leading-[1.55] text-zinc-500">{s.desc}</p>
                   </Card>
                 </motion.div>
               );

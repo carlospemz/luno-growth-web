@@ -30,6 +30,7 @@
 
 html {
   color-scheme: light;
+  background: #fafafa;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
@@ -37,7 +38,7 @@ html {
 }
 
 body {
-  background: var(--background);
+  background: transparent;
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
   overflow-x: hidden;
@@ -93,7 +94,9 @@ button, [role="button"] { -webkit-user-select: none; user-select: none; touch-ac
 
 /* === SURFACES === */
 .luno-card {
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.90);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border);
@@ -134,11 +137,11 @@ button, [role="button"] { -webkit-user-select: none; user-select: none; touch-ac
 
 /* === SECTION TITLE === */
 .section-title {
-  font-size: 11px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: #a1a1aa;
+  color: #a855f7;
 }
 
 /* === DECORATIVE === */

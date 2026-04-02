@@ -77,11 +77,11 @@ const TIER_STYLES: Record<Tier, {
   },
   gold: {
     checkClass: "text-purple-500",
-    badgeClass: "bg-purple-100 text-purple-700 text-[10px] font-medium rounded-full px-2.5 py-0.5",
+    badgeClass: "bg-gradient-to-r from-purple-500 to-cyan-500 text-white text-[10px] font-bold rounded-full px-3 py-1 shadow-sm shadow-purple-500/20",
   },
   onyx: {
-    checkClass: "text-zinc-400",
-    badgeClass: "bg-purple-100 text-purple-700 text-[10px] font-medium rounded-full px-2.5 py-0.5",
+    checkClass: "text-cyan-500",
+    badgeClass: "bg-zinc-900 text-white text-[10px] font-bold rounded-full px-3 py-1",
   },
 };
 
@@ -131,7 +131,7 @@ export default function Pricing() {
               }}
               style={{ willChange: "transform, opacity" }}
             >
-              <Card variant={pkg.tier} collider className="flex flex-col">
+              <Card variant={pkg.tier} collider shine={pkg.tier === "gold"} className={`flex flex-col ${pkg.tier === "gold" ? "md:scale-[1.03] md:origin-center" : ""}`}>
                 <div className="flex items-center justify-between gap-2">
                   <h3 className="text-[18px] font-semibold text-zinc-900">{pkg.name}</h3>
                   {pkg.badge && (
@@ -166,7 +166,7 @@ export default function Pricing() {
                   className="mt-5 flex-1 space-y-2.5"
                 >
                   {pkg.features.map((f) => (
-                    <motion.li key={f} variants={featureVariants} className="flex items-start gap-2.5 text-[13px] text-zinc-900">
+                    <motion.li key={f} variants={featureVariants} className="flex items-start gap-2.5 text-[14px] text-zinc-700">
                       <span className="mt-0.5 flex-shrink-0">
                         <Check className={`h-4 w-4 ${style.checkClass}`} />
                       </span>

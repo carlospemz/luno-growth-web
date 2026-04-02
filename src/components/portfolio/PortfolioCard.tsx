@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -25,29 +24,12 @@ export interface Project {
    Screenshot thumbnail — premium frame
    ═══════════════════════════════════════ */
 
-function Thumbnail({ project, glitchKey }: { project: Project; glitchKey?: number }) {
+function Thumbnail({ project }: { project: Project }) {
   const { gradient, name, image } = project;
-  const [introGlitch, setIntroGlitch] = useState(false);
-  const prevKey = useRef(glitchKey);
-
-  useEffect(() => {
-    if (glitchKey !== undefined && glitchKey !== prevKey.current && glitchKey > 0) {
-      prevKey.current = glitchKey;
-      setIntroGlitch(true);
-      const t = setTimeout(() => setIntroGlitch(false), 320);
-      return () => clearTimeout(t);
-    }
-    prevKey.current = glitchKey;
-  }, [glitchKey]);
-
-  const glitchVars = useMemo(() => ({
-    "--gDelay": `${(Math.random() * 4).toFixed(2)}s`,
-    "--gDur": `${(10 + Math.random() * 4).toFixed(2)}s`,
-  } as React.CSSProperties), []);
 
   return (
     <div
-      className={`group/thumb relative aspect-[16/9] overflow-hidden rounded-xl${introGlitch ? " thumb-intro-active" : ""}`}
+      className="group/thumb relative aspect-[16/9] overflow-hidden"
       style={{
         background: `linear-gradient(135deg, ${gradient.from} 0%, ${gradient.via} 50%, ${gradient.to} 100%), var(--surface-1)`,
         isolation: "isolate",
@@ -62,7 +44,6 @@ function Thumbnail({ project, glitchKey }: { project: Project; glitchKey?: numbe
             sizes="(max-width: 768px) 90vw, 540px"
             className="object-cover object-top transition-transform duration-700 ease-out group-hover/thumb:scale-[1.03]"
           />
-          {/* Dark vignette overlay */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -75,27 +56,43 @@ function Thumbnail({ project, glitchKey }: { project: Project; glitchKey?: numbe
         </>
       ) : (
         <>
+          {/* Rich gradient background with texture */}
           <div
-            className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
+            className="absolute inset-0"
             style={{
-              backgroundImage: "repeating-conic-gradient(rgba(255,255,255,0.08) 0% 25%, transparent 0% 50%)",
-              backgroundSize: "3px 3px",
+              background: `
+                radial-gradient(ellipse 80% 60% at 30% 20%, rgba(255,255,255,0.25), transparent 60%),
+                radial-gradient(ellipse 60% 80% at 80% 80%, rgba(255,255,255,0.15), transparent 50%)
+              `,
             }}
           />
+          {/* Grid pattern overlay */}
           <div
-            className="absolute -right-16 -top-16 h-52 w-52 rounded-full"
+            className="absolute inset-0 opacity-[0.08]"
             style={{
-              background: "radial-gradient(circle, rgba(255,255,255,0.05), transparent 55%)",
+              backgroundImage: `
+                linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)
+              `,
+              backgroundSize: "24px 24px",
             }}
           />
-          <span className="absolute inset-0 flex items-center justify-center font-heading text-[24px] font-bold tracking-[-0.02em] text-zinc-300 md:text-[32px]">
-            {name}
-          </span>
+          {/* Name */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+            <span className="text-[28px] font-bold tracking-[-0.02em] text-white/90 md:text-[36px] drop-shadow-sm">
+              {name}
+            </span>
+            <span className="text-[12px] font-medium uppercase tracking-[0.15em] text-white/50">
+              Ver sitio en vivo
+            </span>
+          </div>
+          {/* Bottom fade */}
+          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/20 to-transparent" />
         </>
       )}
 
-      {/* Corner chromatic aberration — elegant glitch signature */}
-      <div className="thumb-glitch thumb-glitch--desync" style={glitchVars} aria-hidden="true" />
+      {/* Hover overlay */}
+      <div className="absolute inset-0 bg-black/0 transition-colors duration-300 group-hover/thumb:bg-black/[0.04]" />
     </div>
   );
 }
@@ -107,10 +104,10 @@ function Thumbnail({ project, glitchKey }: { project: Project; glitchKey?: numbe
 function CaseMeta({ service, extras }: { service: string; extras?: string }) {
   return (
     <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[14px]">
-      <dt className="font-medium text-white/70">Servicio:</dt>
-      <dd className="font-semibold text-white/95">{service}</dd>
-      <dt className="font-medium text-white/70">Extras:</dt>
-      <dd className="font-semibold text-white/95">{extras || "—"}</dd>
+      <dt className="font-medium text-zinc-400">Servicio:</dt>
+      <dd className="font-semibold text-zinc-800">{service}</dd>
+      <dt className="font-medium text-zinc-400">Extras:</dt>
+      <dd className="font-semibold text-zinc-800">{extras || "—"}</dd>
     </dl>
   );
 }
@@ -132,25 +129,34 @@ export default function PortfolioCard({
 }: PortfolioCardProps) {
   return (
     <div
-      className={`${highlight ? "card-border-glow--accent" : "card-border-glow"} portfolio-card rounded-[20px] border transition-colors
-        ${highlight ? "border-white/[0.15]" : "border-white/[0.12]"}`}
+      className={`portfolio-card rounded-[20px] border transition-colors
+        ${highlight ? "border-purple-200/50" : "border-zinc-200/60"}`}
     >
-      {/* Preview frame */}
+      {/* Preview frame with browser chrome */}
       <div className="p-3 pb-0">
         <div className="portfolio-frame overflow-hidden rounded-xl">
-          <Thumbnail project={project} glitchKey={glitchKey} />
+          {/* Mini browser bar */}
+          <div className="flex items-center gap-1.5 border-b border-zinc-100 bg-zinc-50 px-3 py-1.5">
+            <span className="h-[7px] w-[7px] rounded-full bg-zinc-200" />
+            <span className="h-[7px] w-[7px] rounded-full bg-zinc-200" />
+            <span className="h-[7px] w-[7px] rounded-full bg-zinc-200" />
+            <div className="mx-auto flex h-[18px] w-28 items-center justify-center rounded-[4px] bg-zinc-100/80">
+              <span className="text-[9px] text-zinc-400 truncate">{project.url.replace(/https?:\/\//, "").split("/")[0]}</span>
+            </div>
+          </div>
+          <Thumbnail project={project} />
         </div>
       </div>
 
       {/* Content */}
       <div className="px-5 pt-4 pb-5 md:px-6">
         {/* Title */}
-        <h3 className="font-heading text-[20px] font-bold tracking-[-0.01em]">
+        <h3 className="font-heading text-[20px] font-bold tracking-[-0.01em] text-zinc-900">
           {project.name}
         </h3>
 
         {/* Description */}
-        <p className="mt-1.5 text-[14px] leading-[1.5] text-zinc-500">
+        <p className="mt-1.5 text-[14.5px] leading-[1.5] text-zinc-500">
           {project.line2 ? `${project.line1} ${project.line2}` : project.line1}
         </p>
 

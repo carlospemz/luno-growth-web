@@ -73,7 +73,7 @@ export function SectionHeader({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.15 }}
         transition={{ duration: 0.5, ease: [...EASE], delay: 0.06 }}
-        className="text-2xl font-semibold leading-[1.15] tracking-tight text-zinc-900 md:text-3xl"
+        className="text-[28px] font-bold leading-[1.1] tracking-[-0.02em] text-zinc-900 md:text-[36px]"
       >
         {renderTitle()}
       </motion.h2>
@@ -83,7 +83,7 @@ export function SectionHeader({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.5, ease: [...EASE], delay: 0.1 }}
-          className="mt-4 max-w-[54ch] text-[15px] leading-relaxed text-zinc-500"
+          className="mt-4 max-w-[54ch] text-[16px] leading-relaxed text-zinc-500"
         >
           {subtitle}
         </motion.p>
@@ -94,7 +94,7 @@ export function SectionHeader({
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.35, ease: [...EASE], delay: 0.12 }}
-          className="mt-3 text-[13px] text-zinc-400"
+          className="mt-3 text-[14px] text-zinc-400"
         >
           {subcopy}
         </motion.p>

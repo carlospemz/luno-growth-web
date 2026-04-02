@@ -54,20 +54,21 @@ export default function WhatYouGet() {
           <motion.div
             key={tile.title}
             variants={rowVariants}
-            whileTap={{ backgroundColor: "rgba(255,255,255,0.05)", borderColor: "rgba(255,255,255,0.18)" }}
-            transition={{ duration: 0.15 }}
-            className="flex items-start gap-[12px] rounded-[16px] border border-white/[0.10] bg-white/[0.03] px-[14px] py-[12px]"
+            whileHover={{ y: -2, boxShadow: "0 4px 16px rgba(0,0,0,0.06), 0 0 24px rgba(168,85,247,0.06)" }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.2 }}
+            className="flex items-start gap-[14px] rounded-[18px] border border-zinc-200/50 bg-white/80 px-[18px] py-[16px] shadow-sm backdrop-blur-xl transition-colors"
           >
-            <Check
-              className={`mt-[3px] h-[14px] w-[14px] flex-shrink-0 ${
-                ACCENT_IDX.has(i) ? "text-violet-400/75" : "text-zinc-500"
-              }`}
-            />
+            <span className={`mt-[2px] flex h-[26px] w-[26px] flex-shrink-0 items-center justify-center rounded-[8px] ${
+              ACCENT_IDX.has(i) ? "bg-purple-50 text-purple-500" : "bg-zinc-100 text-zinc-500"
+            }`}>
+              <Check className="h-[14px] w-[14px]" />
+            </span>
             <div>
-              <p className="text-[15px] font-semibold leading-[1.3] text-zinc-900">
+              <p className="text-[15px] font-semibold leading-[1.3] text-zinc-800">
                 {tile.title}
               </p>
-              <p className="mt-[3px] text-[13px] leading-[1.35] text-zinc-500">
+              <p className="mt-[4px] text-[13.5px] leading-[1.45] text-zinc-500">
                 {tile.desc}
               </p>
               {tile.chips && (
@@ -75,7 +76,7 @@ export default function WhatYouGet() {
                   {tile.chips.map((chip) => (
                     <span
                       key={chip}
-                      className="rounded-full border border-white/[0.08] bg-white/[0.04] px-[8px] py-[2px] text-[11px] text-zinc-500"
+                      className="rounded-full border border-purple-200/50 bg-purple-50/60 px-[8px] py-[2px] text-[11px] font-medium text-purple-600/80"
                     >
                       {chip}
                     </span>

@@ -30,27 +30,30 @@ interface Particle {
 const COLOR_CHANNELS: [number, number, number][] = [
   [168, 85, 247], // purple
   [6, 182, 212],  // cyan
+  [147, 51, 234], // violet
+  [244, 114, 182], // pink
+  [20, 184, 166],  // teal
 ];
 
 function createParticles(width: number, height: number, count: number): Particle[] {
   const particles: Particle[] = [];
   for (let i = 0; i < count; i++) {
-    const isLarge = Math.random() < 0.15;
+    const isLarge = Math.random() < 0.2;
     const [r, g, b] = COLOR_CHANNELS[Math.floor(Math.random() * COLOR_CHANNELS.length)];
     particles.push({
       x: Math.random() * width,
       y: Math.random() * height,
-      radius: isLarge ? 5 + Math.random() : 2 + Math.random() * 2,
+      radius: isLarge ? 4 + Math.random() * 3 : 1.5 + Math.random() * 2.5,
       r,
       g,
       b,
-      vy: 0.1 + Math.random() * 0.2,
-      swayAmplitude: 0.5 + Math.random() * 0.5,
-      swaySpeed: 0.005 + Math.random() * 0.01,
+      vy: 0.08 + Math.random() * 0.25,
+      swayAmplitude: 0.6 + Math.random() * 0.8,
+      swaySpeed: 0.004 + Math.random() * 0.012,
       swayOffset: Math.random() * Math.PI * 2,
-      opacityMin: 0.08,
-      opacityMax: 0.10 + Math.random() * 0.05, // 0.10-0.15
-      opacitySpeed: 0.008 + Math.random() * 0.012,
+      opacityMin: 0.12,
+      opacityMax: 0.20 + Math.random() * 0.10, // 0.20-0.30
+      opacitySpeed: 0.006 + Math.random() * 0.014,
       opacityOffset: Math.random() * Math.PI * 2,
       glow: isLarge,
     });
@@ -106,7 +109,7 @@ export default function MatrixRainCanvas() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       if (w !== prevWidth) {
         prevWidth = w;
-        const count = w < 768 ? 20 : 40;
+        const count = w < 768 ? 40 : 80;
         particlesRef.current = createParticles(w, h, count);
       }
     };
@@ -160,7 +163,7 @@ export default function MatrixRainCanvas() {
           );
           gradient.addColorStop(
             0,
-            `rgba(${p.r}, ${p.g}, ${p.b}, ${opacity * 0.5})`
+            `rgba(${p.r}, ${p.g}, ${p.b}, ${opacity * 0.7})`
           );
           gradient.addColorStop(1, "transparent");
           ctx.globalAlpha = 1;

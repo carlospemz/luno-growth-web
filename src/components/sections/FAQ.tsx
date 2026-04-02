@@ -51,9 +51,9 @@ function Item({ faq, index }: { faq: (typeof FAQS)[0]; index: number }) {
         delay: index * 0.04,
       }}
       style={{ willChange: "transform, opacity" }}
-      className={`border-b border-border transition-colors duration-300 ${
+      className={`border-b border-zinc-100 transition-colors duration-300 ${
         open
-          ? `border-l-2 ${isEven ? "border-l-violet-500/40" : "border-l-cyan-400/30"} bg-white/[0.02] pl-4`
+          ? `border-l-2 ${isEven ? "border-l-violet-500/40" : "border-l-cyan-400/40"} bg-purple-50/30 pl-4`
           : "border-l-2 border-l-transparent pl-4"
       }`}
     >
@@ -63,7 +63,7 @@ function Item({ faq, index }: { faq: (typeof FAQS)[0]; index: number }) {
         className="flex w-full items-center justify-between py-5 text-left"
       >
         <div className="flex items-baseline gap-2.5 pr-4">
-          <span className={`text-[11px] font-bold tabular-nums ${isEven ? "text-violet-400/30" : "text-cyan-400/25"}`}>
+          <span className={`text-[11px] font-bold tabular-nums ${isEven ? "text-violet-400/60" : "text-cyan-400/50"}`}>
             0{index + 1}
           </span>
           <span className="text-[15px] font-semibold md:text-[16px]">{faq.q}</span>
