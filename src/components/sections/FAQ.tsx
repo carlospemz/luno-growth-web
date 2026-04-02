@@ -8,24 +8,28 @@ import { MOTION } from "@/lib/motion";
 
 const FAQS = [
   {
-    q: "¿En cuánto tiempo está lista?",
-    a: "Express suele quedar en 48–72h después de recibir contenido. Pro tarda 4–7 días hábiles. Enterprise depende de páginas y flujos (típico 1–3 semanas).",
+    q: "¿En cuánto tiempo empieza a funcionar?",
+    a: "Setup completo en 48 horas después de firmar. Primera semana ya tienes contenido publicado, chatbot activo y campañas corriendo.",
   },
   {
-    q: "¿Incluye dominio y hosting?",
-    a: "Hosting incluido en Web como servicio. En pago único se publica y queda listo. El dominio y correo se pagan directo a tu proveedor para que siempre sean tuyos; nosotros lo configuramos y conectamos.",
+    q: "¿Qué pasa si no veo resultados en 30 días?",
+    a: "Al mes te entregamos un reporte con alcance, leads y conversiones reales. Si no hay movimiento visible, no tienes que renovar. Tu riesgo es cero.",
   },
   {
-    q: "¿Qué pasa si quiero cambios?",
-    a: "Cada paquete incluye rondas definidas. Después puedes entrar a mantenimiento mensual o pedir cambios por bloque de 1 hora.",
+    q: "¿El presupuesto de anuncios está incluido?",
+    a: "La gestión de ads está incluida. El presupuesto que se invierte en Meta/Google va aparte — tú decides cuánto. Nosotros lo optimizamos al máximo.",
   },
   {
-    q: "¿Se puede escalar después?",
-    a: "Sí. Puedes arrancar Express y subir a Pro/Enterprise o sumar add-ons sin rehacer todo.",
+    q: "¿Puedo cambiar de plan después?",
+    a: "Sí. Puedes subir de Señal a Sistema o de Sistema a Motor en cualquier momento. Los cambios aplican al siguiente ciclo mensual.",
   },
   {
-    q: "¿Garantizas resultados?",
-    a: "No se puede prometer ventas. Lo que sí garantizamos es entrega funcional: mobile correcto, CTA probado y (si aplica) medición básica para aprender qué convierte.",
+    q: "¿Cómo generan contenido si no están aquí?",
+    a: "Nuestros agentes IA generan la estrategia, copy y diseños. Para video coordinamos un freelancer local en tu ciudad con el brief exacto — tú no tienes que hacer nada.",
+  },
+  {
+    q: "¿Funciona para mi tipo de negocio?",
+    a: "Trabajamos con consultorios, restaurantes, antros, clínicas, salones de fiestas y cualquier negocio donde los clientes lleguen por canales digitales. Si la gente te busca en línea, LUNO funciona.",
   },
 ];
 
