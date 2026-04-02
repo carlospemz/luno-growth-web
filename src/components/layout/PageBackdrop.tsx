@@ -1,49 +1,17 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import "@/styles/hero.css";
 
 /**
- * PageBackdrop — fixed global background with rich aurora field.
- * Light theme: #fafafa canvas with visible, layered color washes.
- * Opal-inspired — iridescent, alive, premium.
+ * PageBackdrop — fixed iridescent mesh gradient.
+ * NO moving blobs. NO animation loops.
+ * Just a rich, static color field that subtly shifts hue on scroll.
+ * Opal/Linear-inspired — premium, calm, zero motion sickness.
  */
 export default function PageBackdrop() {
   const { scrollYProgress } = useScroll();
 
-  const gradientY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
-
-  /* Scroll-reactive opacities — noticeable and alive */
-  const purpleOp = useTransform(
-    scrollYProgress,
-    [0, 0.25, 0.5, 0.75, 1],
-    [0.22, 0.16, 0.20, 0.18, 0.24],
-  );
-  const cyanOp = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.6, 1],
-    [0.16, 0.22, 0.18, 0.20],
-  );
-  const magentaOp = useTransform(
-    scrollYProgress,
-    [0, 0.4, 0.8, 1],
-    [0.14, 0.10, 0.18, 0.14],
-  );
-  const roseOp = useTransform(
-    scrollYProgress,
-    [0, 0.35, 0.65, 1],
-    [0.10, 0.16, 0.12, 0.14],
-  );
-  const tealOp = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [0.12, 0.18, 0.14],
-  );
-  const indigoOp = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.7, 1],
-    [0.10, 0.14, 0.10, 0.16],
-  );
+  const gradientY = useTransform(scrollYProgress, [0, 1], ["0%", "-4%"]);
 
   return (
     <div
@@ -51,164 +19,72 @@ export default function PageBackdrop() {
       style={{ zIndex: 0 }}
       aria-hidden="true"
     >
-      {/* Base gradient — shifts with scroll */}
+      {/* Base — warm off-white */}
+      <div
+        className="absolute inset-0"
+        style={{ background: "#fafafa" }}
+      />
+
+      {/* Mesh gradient layer — multiple radial gradients composited */}
       <motion.div
-        className="absolute inset-x-0"
+        className="absolute inset-0"
         style={{
-          top: "-15%",
-          bottom: "-15%",
-          background:
-            "linear-gradient(180deg, #fafafa 0%, #f8f6ff 20%, #ffffff 45%, #f6fffe 65%, #fafafa 85%, #fafafa 100%)",
+          y: gradientY,
+          background: `
+            radial-gradient(ellipse 80% 50% at 20% 10%, rgba(168,85,247,0.08), transparent 60%),
+            radial-gradient(ellipse 60% 70% at 80% 15%, rgba(244,114,182,0.06), transparent 55%),
+            radial-gradient(ellipse 70% 50% at 60% 45%, rgba(6,182,212,0.07), transparent 55%),
+            radial-gradient(ellipse 50% 60% at 15% 55%, rgba(20,184,166,0.05), transparent 50%),
+            radial-gradient(ellipse 80% 60% at 75% 70%, rgba(147,51,234,0.06), transparent 55%),
+            radial-gradient(ellipse 60% 40% at 40% 85%, rgba(99,102,241,0.05), transparent 50%)
+          `,
+        }}
+      />
+
+      {/* Top accent — stronger purple wash near hero */}
+      <motion.div
+        className="absolute inset-x-0 top-0"
+        style={{
+          height: "60vh",
+          background: `
+            radial-gradient(ellipse 90% 60% at 50% 0%, rgba(168,85,247,0.06), transparent 70%),
+            radial-gradient(ellipse 50% 80% at 25% 20%, rgba(192,38,211,0.04), transparent 60%)
+          `,
           y: gradientY,
         }}
       />
 
-      {/* ─── Primary blobs ─── */}
-
-      {/* 1. Large purple — hero area, centered */}
-      <motion.div
-        className="hero-blob"
+      {/* Mid accent — cyan wash at content area */}
+      <div
+        className="absolute inset-x-0"
         style={{
-          width: "80vw",
-          height: "80vw",
-          maxWidth: 1100,
-          maxHeight: 1100,
-          top: "-5%",
-          left: "50%",
-          marginLeft: "-40vw",
-          background:
-            "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(168,85,247,0.18), rgba(168,85,247,0.06) 50%, transparent 75%)",
-          filter: "blur(100px)",
-          animation: "aurora-1 20s ease-in-out infinite alternate",
-          opacity: purpleOp,
+          top: "35%",
+          height: "40vh",
+          background: `
+            radial-gradient(ellipse 70% 50% at 70% 50%, rgba(6,182,212,0.05), transparent 60%),
+            radial-gradient(ellipse 50% 60% at 20% 40%, rgba(168,85,247,0.04), transparent 55%)
+          `,
         }}
       />
 
-      {/* 2. Cyan — mid-right, overlapping content */}
-      <motion.div
-        className="hero-blob"
+      {/* Bottom accent — warm close */}
+      <div
+        className="absolute inset-x-0 bottom-0"
         style={{
-          width: "65vw",
-          height: "65vw",
-          maxWidth: 900,
-          maxHeight: 900,
-          top: "28%",
-          left: "45%",
-          background:
-            "radial-gradient(ellipse 55% 60% at 50% 50%, rgba(6,182,212,0.16), rgba(6,182,212,0.04) 55%, transparent 75%)",
-          filter: "blur(120px)",
-          animation: "aurora-2 16s ease-in-out infinite alternate",
-          opacity: cyanOp,
+          height: "50vh",
+          background: `
+            radial-gradient(ellipse 80% 50% at 50% 100%, rgba(147,51,234,0.05), transparent 65%),
+            radial-gradient(ellipse 60% 40% at 80% 80%, rgba(20,184,166,0.04), transparent 55%)
+          `,
         }}
       />
 
-      {/* 3. Magenta — bottom-left */}
-      <motion.div
-        className="hero-blob"
+      {/* Noise texture overlay for depth — very subtle */}
+      <div
+        className="absolute inset-0 opacity-[0.025]"
         style={{
-          width: "55vw",
-          height: "55vw",
-          maxWidth: 800,
-          maxHeight: 800,
-          top: "52%",
-          left: "5%",
-          background:
-            "radial-gradient(circle, rgba(192,38,211,0.14), rgba(192,38,211,0.04) 50%, transparent 70%)",
-          filter: "blur(100px)",
-          animation: "aurora-3 18s ease-in-out infinite alternate",
-          opacity: magentaOp,
-        }}
-      />
-
-      {/* ─── Secondary blobs — more depth and coverage ─── */}
-
-      {/* 4. Rose/pink — top-right, creates warmth */}
-      <motion.div
-        className="hero-blob"
-        style={{
-          width: "45vw",
-          height: "50vw",
-          maxWidth: 650,
-          maxHeight: 700,
-          top: "8%",
-          right: "0%",
-          background:
-            "radial-gradient(ellipse 50% 60% at 50% 40%, rgba(244,114,182,0.12), rgba(244,114,182,0.03) 55%, transparent 75%)",
-          filter: "blur(110px)",
-          animation: "aurora-4 22s ease-in-out infinite alternate",
-          opacity: roseOp,
-        }}
-      />
-
-      {/* 5. Deep teal — mid-left, cool contrast */}
-      <motion.div
-        className="hero-blob"
-        style={{
-          width: "50vw",
-          height: "45vw",
-          maxWidth: 700,
-          maxHeight: 650,
-          top: "40%",
-          left: "-8%",
-          background:
-            "radial-gradient(ellipse 55% 50% at 55% 50%, rgba(20,184,166,0.12), rgba(20,184,166,0.03) 50%, transparent 70%)",
-          filter: "blur(130px)",
-          animation: "aurora-5 19s ease-in-out infinite alternate",
-          opacity: tealOp,
-        }}
-      />
-
-      {/* 6. Indigo — bottom-right, depth anchor */}
-      <motion.div
-        className="hero-blob"
-        style={{
-          width: "55vw",
-          height: "50vw",
-          maxWidth: 750,
-          maxHeight: 700,
-          top: "60%",
-          right: "-5%",
-          background:
-            "radial-gradient(ellipse 50% 55% at 45% 50%, rgba(99,102,241,0.10), rgba(99,102,241,0.03) 50%, transparent 70%)",
-          filter: "blur(120px)",
-          animation: "aurora-6 24s ease-in-out infinite alternate",
-          opacity: indigoOp,
-        }}
-      />
-
-      {/* 7. Small hot spot — purple concentrated, near hero for punch */}
-      <motion.div
-        className="hero-blob"
-        style={{
-          width: "25vw",
-          height: "25vw",
-          maxWidth: 400,
-          maxHeight: 400,
-          top: "15%",
-          left: "30%",
-          background:
-            "radial-gradient(circle, rgba(147,51,234,0.20), transparent 60%)",
-          filter: "blur(80px)",
-          animation: "aurora-7 14s ease-in-out infinite alternate",
-          opacity: purpleOp,
-        }}
-      />
-
-      {/* 8. Small cyan hot spot — pricing area accent */}
-      <motion.div
-        className="hero-blob"
-        style={{
-          width: "20vw",
-          height: "20vw",
-          maxWidth: 350,
-          maxHeight: 350,
-          top: "45%",
-          right: "15%",
-          background:
-            "radial-gradient(circle, rgba(34,211,238,0.16), transparent 55%)",
-          filter: "blur(70px)",
-          animation: "aurora-2 12s ease-in-out infinite alternate-reverse",
-          opacity: cyanOp,
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          backgroundSize: "200px 200px",
         }}
       />
     </div>

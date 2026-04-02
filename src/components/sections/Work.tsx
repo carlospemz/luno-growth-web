@@ -21,6 +21,7 @@ const PROJECTS: Project[] = [
     line1: "Mini-sitio para pedir rápido.",
     line2: "Menú, ubicación y catering por WhatsApp.",
     url: "https://jugos-del-sur-theta.vercel.app",
+    image: "/portfolio/jugosdelsur.jpg",
     gradient: {
       from: "rgba(228,152,43,0.55)",
       via: "rgba(245,184,77,0.35)",
@@ -34,6 +35,7 @@ const PROJECTS: Project[] = [
     line1: "Catálogo con promos listo para cotizar por WhatsApp.",
     line2: "",
     url: "https://takani-uniforms.vercel.app",
+    image: "/portfolio/takani.jpg",
     gradient: {
       from: "rgba(34,211,238,0.50)",
       via: "rgba(168,85,247,0.35)",
@@ -47,6 +49,7 @@ const PROJECTS: Project[] = [
     line1: "Press kit para cerrar eventos.",
     line2: "WhatsApp directo y propuesta clara.",
     url: "https://falcon-music-presskit.vercel.app",
+    image: "/portfolio/falconmusic.jpg",
     gradient: {
       from: "rgba(124,58,237,0.55)",
       via: "rgba(168,85,247,0.40)",
@@ -115,7 +118,7 @@ export default function Work() {
 
   return (
     <section id="work" className="relative z-[3] overflow-hidden pt-[12px] pb-[28px] md:pt-[20px] md:pb-[40px]">
-      <AuroraBackground />
+      {/* Background handled by PageBackdrop */}
 
       <Container className="relative z-10">
         <SectionHeader kicker="Proyectos" title="Casos reales en vivo." accentWord="reales" subcopy="Abre los sitios y comprueba el nivel." compact />

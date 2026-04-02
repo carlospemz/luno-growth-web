@@ -12,13 +12,12 @@ import Brief from "@/components/sections/Brief";
 import Contact from "@/components/sections/Contact";
 import MobileBar from "@/components/sections/MobileBar";
 import PageBackdrop from "@/components/layout/PageBackdrop";
-import MatrixRainCanvas from "@/components/layout/MatrixRainCanvas";
+
 
 export default function Home() {
   return (
     <>
       <PageBackdrop />
-      <MatrixRainCanvas />
       <Navbar />
       <main className="relative z-10 pb-14 md:pb-0">
         <Hero />
