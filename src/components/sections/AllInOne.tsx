@@ -158,12 +158,8 @@ export default function AllInOne() {
             const Icon = item.icon;
             return (
               <motion.div key={item.role} custom={i} variants={fadeUp}>
-                <motion.div
-                  whileHover={{ y: -1 }}
-                  transition={{ duration: 0.2 }}
-                  className="flex items-center gap-4 rounded-[16px] border border-white/[0.07] bg-white/[0.03] px-5 py-3.5"
-                >
-                  <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px] bg-purple-500/12 text-purple-400">
+                <GlowCard glowColor="purple" className="flex items-center gap-4 px-5 py-3.5">
+                  <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px] bg-purple-500/15 text-purple-400">
                     <Icon className="h-4 w-4" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -173,7 +169,7 @@ export default function AllInOne() {
                   <div className="flex-shrink-0 text-right">
                     <p className="text-[13px] font-bold text-red-400/80 whitespace-nowrap line-through">{item.cost}</p>
                   </div>
-                </motion.div>
+                </GlowCard>
               </motion.div>
             );
           })}
