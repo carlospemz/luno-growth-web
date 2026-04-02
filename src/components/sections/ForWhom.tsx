@@ -48,11 +48,7 @@ export default function ForWhom() {
       </motion.div>
 
       {/* Infinite scroll strip */}
-      <div className="relative">
-        {/* Fade edges */}
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20" style={{background:"linear-gradient(to right, #080810 0%, transparent 100%)"}} />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-20" style={{background:"linear-gradient(to left, #080810 0%, transparent 100%)"}} />
-
+      <div className="relative overflow-hidden">
         <motion.div
           animate={{ x: ["0%", "-50%"] }}
           transition={{ duration: 28, ease: "linear", repeat: Infinity }}
