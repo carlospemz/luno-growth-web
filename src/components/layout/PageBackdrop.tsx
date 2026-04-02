@@ -4,17 +4,19 @@ import AnimatedGradientBackground from "@/components/ui/AnimatedGradientBackgrou
 
 // LUNO brand colors: purple (#a855f7), cyan (#06b6d4), deep purple (#9333ea), magenta (#c026d3)
 // Gradient goes from soft white-purple center → brand washes → back to fafafa
+// Dark theme: deep black center → deep purple → purple → cyan → fade to black
 const LUNO_GRADIENT_COLORS = [
-  "#fafafa",                     // center: clean white
-  "#f5f3ff",                     // soft violet tint
-  "rgba(168,85,247,0.09)",        // purple wash
-  "rgba(192,38,211,0.05)",        // magenta tint
-  "rgba(6,182,212,0.07)",         // cyan wash
-  "rgba(168,85,247,0.03)",        // faint purple
-  "#fafafa",                     // edge: back to bg
+  "#080810",                      // center: deep dark
+  "#0f0a1e",                      // dark purple-black
+  "rgba(147,51,234,0.55)",        // deep purple ring
+  "rgba(168,85,247,0.38)",        // purple
+  "rgba(192,38,211,0.22)",        // magenta-purple
+  "rgba(6,182,212,0.28)",         // cyan ring
+  "rgba(168,85,247,0.08)",        // faint purple edge
+  "#080810",                      // edge: back to dark
 ];
 
-const LUNO_GRADIENT_STOPS = [15, 32, 48, 62, 76, 88, 100];
+const LUNO_GRADIENT_STOPS = [8, 22, 38, 54, 66, 78, 90, 100];
 
 export default function PageBackdrop() {
   return (
@@ -22,10 +24,10 @@ export default function PageBackdrop() {
       Breathing={true}
       gradientColors={LUNO_GRADIENT_COLORS}
       gradientStops={LUNO_GRADIENT_STOPS}
-      startingGap={120}
-      breathingRange={8}
-      animationSpeed={0.012}
-      topOffset={5}
+      startingGap={110}
+      breathingRange={12}
+      animationSpeed={0.01}
+      topOffset={10}
       containerClassName="z-0"
     />
   );

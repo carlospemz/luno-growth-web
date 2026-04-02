@@ -1,21 +1,21 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafafa;
-  --foreground: #18181b;
-  --surface: #ffffff;
-  --surface-2: #f4f4f5;
+  --background: #080810;
+  --foreground: #f1f5f9;
+  --surface: rgba(255,255,255,0.05);
+  --surface-2: rgba(255,255,255,0.03);
   --accent: #a855f7;
   --accent-deep: #9333ea;
   --accent-secondary: #06b6d4;
-  --accent-glow: rgba(168, 85, 247, 0.06);
-  --accent-glow-cyan: rgba(6, 182, 212, 0.06);
-  --border: rgba(0, 0, 0, 0.04);
-  --border-subtle: rgba(0, 0, 0, 0.03);
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.03);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.02);
-  --shadow-glow: 0 0 24px rgba(168, 85, 247, 0.06);
+  --accent-glow: rgba(168, 85, 247, 0.15);
+  --accent-glow-cyan: rgba(6, 182, 212, 0.12);
+  --border: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-glow: 0 0 32px rgba(168, 85, 247, 0.2);
   --radius: 16px;
   --radius-lg: 20px;
   --radius-xl: 24px;
@@ -29,8 +29,8 @@
 }
 
 html {
-  color-scheme: light;
-  background: #fafafa;
+  color-scheme: dark;
+  background: #080810;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
@@ -147,5 +147,51 @@ button, [role="button"] { -webkit-user-select: none; user-select: none; touch-ac
 /* === DECORATIVE === */
 .mint-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.15), rgba(6, 182, 212, 0.15), transparent);
+  background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.3), rgba(6, 182, 212, 0.3), transparent);
 }
+
+/* === DARK THEME OVERRIDES — flip Tailwind zinc colors for dark bg === */
+.luno-card,
+.glass-card {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.4) !important;
+}
+
+.text-zinc-900 { color: #f1f5f9 !important; }
+.text-zinc-800 { color: #e2e8f0 !important; }
+.text-zinc-700 { color: #cbd5e1 !important; }
+.text-zinc-600 { color: #94a3b8 !important; }
+.text-zinc-500 { color: #64748b !important; }
+.text-zinc-400 { color: #475569 !important; }
+
+.bg-white\/80, .bg-white\/85, .bg-white\/90, .bg-white\/92 {
+  background-color: rgba(255,255,255,0.06) !important;
+}
+.bg-white {
+  background-color: rgba(255,255,255,0.05) !important;
+}
+.bg-zinc-50\/40, .bg-zinc-50\/50, .bg-zinc-50 {
+  background-color: rgba(255,255,255,0.03) !important;
+}
+.bg-zinc-100\/80, .bg-zinc-100 {
+  background-color: rgba(255,255,255,0.06) !important;
+}
+.border-zinc-200\/50, .border-zinc-200\/30, .border-zinc-200, .border-zinc-100 {
+  border-color: rgba(255,255,255,0.09) !important;
+}
+.bg-purple-50, .bg-purple-50\/40, .bg-purple-50\/60 {
+  background-color: rgba(168,85,247,0.12) !important;
+}
+.border-purple-200\/50, .border-purple-100\/60, .border-purple-200 {
+  border-color: rgba(168,85,247,0.2) !important;
+}
+.text-purple-600\/80, .text-purple-600 { color: #c084fc !important; }
+.text-purple-500\/60, .text-purple-500 { color: #a855f7 !important; }
+.bg-red-50\/40 { background-color: rgba(239,68,68,0.06) !important; }
+.border-red-200\/30 { border-color: rgba(239,68,68,0.15) !important; }
+.text-zinc-700 { color: #e2e8f0 !important; }
+
+/* Navbar */
+.bg-white\/90 { background-color: rgba(8,8,16,0.85) !important; }
+.border-b { border-color: rgba(255,255,255,0.07) !important; }

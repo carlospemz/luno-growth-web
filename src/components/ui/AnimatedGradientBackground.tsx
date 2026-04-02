@@ -19,15 +19,16 @@ const AnimatedGradientBackground: React.FC<AnimatedGradientBackgroundProps> = ({
   startingGap = 125,
   Breathing = true,
   gradientColors = [
-    "#fafafa",     // LUNO bg — center
-    "#f5f3ff",     // very soft purple tint
-    "#ede9fe",     // light purple
-    "rgba(168,85,247,0.06)",  // purple wash
-    "rgba(6,182,212,0.05)",   // cyan wash
-    "rgba(168,85,247,0.03)",  // faint purple
-    "#fafafa",     // back to bg
+    "#080810",                    // center: deep dark
+    "#0f0a1e",                    // dark purple-black
+    "rgba(147,51,234,0.55)",      // deep purple ring
+    "rgba(168,85,247,0.38)",      // purple
+    "rgba(192,38,211,0.22)",      // magenta-purple
+    "rgba(6,182,212,0.28)",       // cyan ring
+    "rgba(168,85,247,0.08)",      // faint purple edge
+    "#080810",                    // edge: back to dark
   ],
-  gradientStops = [20, 35, 50, 65, 78, 90, 100],
+  gradientStops = [8, 22, 38, 54, 66, 78, 90, 100],
   animationSpeed = 0.015,
   breathingRange = 6,
   containerStyle = {},
