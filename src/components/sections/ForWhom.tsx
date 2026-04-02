@@ -5,16 +5,16 @@ import Section, { SectionHeader } from "@/components/ui/Section";
 import { MOTION } from "@/lib/motion";
 
 const VERTICALS = [
-  { emoji: "🍺", name: "Antros & Bares" },
-  { emoji: "🍽️", name: "Restaurantes" },
-  { emoji: "🎉", name: "Salones de Fiestas" },
-  { emoji: "🏥", name: "Clínicas & Consultorios" },
-  { emoji: "💈", name: "Salones de Belleza" },
-  { emoji: "🏋️", name: "Gimnasios & Wellness" },
-  { emoji: "🏡", name: "Inmobiliarias" },
-  { emoji: "📸", name: "Estudios & Creadores" },
-  { emoji: "🎵", name: "Venues & Eventos" },
-  { emoji: "🛍️", name: "Retail Local" },
+  { color: "#a855f7", name: "Antros & Bares" },
+  { color: "#06b6d4", name: "Restaurantes" },
+  { color: "#a855f7", name: "Salones de Fiestas" },
+  { color: "#06b6d4", name: "Clínicas & Consultorios" },
+  { color: "#a855f7", name: "Salones de Belleza" },
+  { color: "#06b6d4", name: "Gimnasios & Wellness" },
+  { color: "#a855f7", name: "Inmobiliarias" },
+  { color: "#06b6d4", name: "Estudios & Creadores" },
+  { color: "#a855f7", name: "Venues & Eventos" },
+  { color: "#06b6d4", name: "Retail Local" },
 ];
 
 // Duplicate for infinite scroll effect
@@ -63,7 +63,7 @@ export default function ForWhom() {
               key={i}
               className="flex items-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.05] px-5 py-3 whitespace-nowrap backdrop-blur-sm"
             >
-              <span className="text-xl">{v.emoji}</span>
+              <span className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: v.color }} />
               <span className="text-[14px] font-medium text-zinc-300">{v.name}</span>
             </div>
           ))}
