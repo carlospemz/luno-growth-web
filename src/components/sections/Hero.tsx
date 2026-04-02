@@ -6,6 +6,7 @@ import { ChevronDown, ArrowRight } from "lucide-react";
 import "@/styles/luno-landing.css";
 import Container from "@/components/ui/Container";
 import { quoteUrl } from "@/config/contact";
+import { HoverBorderGradient } from "@/components/ui/HoverBorderGradient";
 
 const pop: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
@@ -87,18 +88,21 @@ export default function Hero() {
                 transition={{ duration: 0.5, ease: pop, delay: 0.35 }}
                 className="mt-9 flex items-center gap-3.5"
               >
-                <a
+                <HoverBorderGradient
+                  as="a"
                   href="#pricing"
-                  className="group flex items-center gap-2 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-500 px-6 py-3 text-[14px] font-semibold text-white shadow-md shadow-purple-500/15 transition-all hover:shadow-lg hover:shadow-purple-500/20 hover:brightness-105"
+                  containerClassName="rounded-xl"
+                  className="flex items-center gap-2 rounded-xl px-6 py-3 text-[14px] font-semibold"
+                  duration={1.2}
                 >
                   Ver la oferta
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </a>
+                  <ArrowRight className="h-4 w-4" />
+                </HoverBorderGradient>
                 <a
                   href={quoteUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-xl border border-zinc-200 bg-white px-6 py-3 text-[14px] font-semibold text-zinc-700 shadow-sm transition-all hover:border-zinc-300 hover:text-zinc-900 hover:shadow-md"
+                  className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-[14px] font-semibold text-zinc-300 transition-all hover:border-white/20 hover:text-white"
                 >
                   WhatsApp
                 </a>
