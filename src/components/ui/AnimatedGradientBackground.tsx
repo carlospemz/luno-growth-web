@@ -47,24 +47,27 @@ const AnimatedGradientBackground: React.FC<AnimatedGradientBackgroundProps> = ({
     let animationFrame: number;
     let width = startingGap;
     let directionWidth = 1;
+    let frameCount = 0;
+
+    const gradientStopsString = gradientStops
+      .map((stop, index) => `${gradientColors[index]} ${stop}%`)
+      .join(", ");
 
     const animateGradient = () => {
+      animationFrame = requestAnimationFrame(animateGradient);
+      frameCount++;
+      // Only update every 3 frames (~20fps) — gradient is slow enough
+      if (frameCount % 3 !== 0) return;
+
       if (width >= startingGap + breathingRange) directionWidth = -1;
       if (width <= startingGap - breathingRange) directionWidth = 1;
       if (!Breathing) directionWidth = 0;
-      width += directionWidth * animationSpeed;
-
-      const gradientStopsString = gradientStops
-        .map((stop, index) => `${gradientColors[index]} ${stop}%`)
-        .join(", ");
-
-      const gradient = `radial-gradient(${width}% ${width + topOffset}% at 50% 20%, ${gradientStopsString})`;
+      width += directionWidth * animationSpeed * 3; // compensate for skipped frames
 
       if (containerRef.current) {
-        containerRef.current.style.background = gradient;
+        containerRef.current.style.background =
+          `radial-gradient(${width}% ${width + topOffset}% at 50% 20%, ${gradientStopsString})`;
       }
-
-      animationFrame = requestAnimationFrame(animateGradient);
     };
 
     animationFrame = requestAnimationFrame(animateGradient);
