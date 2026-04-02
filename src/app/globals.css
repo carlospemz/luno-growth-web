@@ -192,11 +192,19 @@ button, [role="button"] { -webkit-user-select: none; user-select: none; touch-ac
 .border-red-200\/30 { border-color: rgba(239,68,68,0.15) !important; }
 .text-zinc-700 { color: #e2e8f0 !important; }
 
+/* Mobile performance — disable expensive effects */
+@media (max-width: 768px) {
+  * { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  .animate-breathe { animation: none !important; }
+}
+
 /* Navbar */
 .bg-white\/90 { background-color: rgba(8,8,16,0.85) !important; }
 .border-b { border-color: rgba(255,255,255,0.07) !important; }
 
 /* === SPOTLIGHT CARD — global styles (avoids per-card injection) === */
+/* Disabled on touch/mobile — only active on hover-capable devices */
+@media (hover: hover) {
 [data-glow]::before,
 [data-glow]::after {
   pointer-events: none;
@@ -205,7 +213,6 @@ button, [role="button"] { -webkit-user-select: none; user-select: none; touch-ac
   inset: calc(var(--border-size) * -1);
   border: var(--border-size) solid transparent;
   border-radius: calc(var(--radius) * 1px);
-  background-attachment: fixed;
   background-size: calc(100% + (2 * var(--border-size))) calc(100% + (2 * var(--border-size)));
   background-repeat: no-repeat;
   background-position: 50% 50%;
@@ -244,3 +251,4 @@ button, [role="button"] { -webkit-user-select: none; user-select: none; touch-ac
   inset: -10px;
   border-width: 10px;
 }
+} /* end @media (hover: hover) */
