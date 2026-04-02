@@ -3,7 +3,7 @@
 import { motion, type Variants } from "framer-motion";
 import { Check, Zap, BookOpen, Users, BarChart3, MessageSquare, Globe, Target, Shield } from "lucide-react";
 import Section from "@/components/ui/Section";
-import Card from "@/components/ui/Card";
+import { GlowCard } from "@/components/ui/spotlight-card";
 import GlitchButton from "@/components/ui/GlitchButton";
 import { MOTION } from "@/lib/motion";
 
@@ -94,7 +94,7 @@ export default function AllInOne() {
         >
           {PAINS.map((p, i) => (
             <motion.div key={p.title} custom={i} variants={fadeUp}>
-              <Card variant="default">
+              <GlowCard glowColor="purple" className="p-6">
                 <div className="flex items-start gap-3">
                   <span className="text-2xl flex-shrink-0">{p.emoji}</span>
                   <div>
@@ -102,7 +102,7 @@ export default function AllInOne() {
                     <p className="text-[13px] text-zinc-400 leading-[1.5]">{p.desc}</p>
                   </div>
                 </div>
-              </Card>
+              </GlowCard>
             </motion.div>
           ))}
         </motion.div>
@@ -124,7 +124,7 @@ export default function AllInOne() {
           viewport={MOTION.viewport}
           transition={{ duration: 0.5, ease: [...MOTION.ease] }}
         >
-          <Card variant="gold" className="text-center">
+          <GlowCard glowColor="purple" className="p-6 md:p-7 text-center">
             <h3 className="text-[22px] md:text-[28px] font-bold tracking-[-0.02em] text-zinc-100 leading-[1.2] max-w-[500px] mx-auto">
               LUNO convierte tu negocio en uno que trabaja{" "}
               <span className="brand-gradient-text">cuando tú no puedes.</span>
@@ -133,7 +133,7 @@ export default function AllInOne() {
               Combinamos agentes de inteligencia artificial con estrategas humanos para manejar tu
               marketing completo — desde el diseño hasta la venta — por una sola mensualidad fija.
             </p>
-          </Card>
+          </GlowCard>
         </motion.div>
       </Section>
 
@@ -203,7 +203,7 @@ export default function AllInOne() {
           viewport={MOTION.viewport}
           transition={{ duration: 0.5, ease: [...MOTION.ease] }}
         >
-          <Card variant="gold" className="text-center">
+          <GlowCard glowColor="purple" className="p-6 md:p-7 text-center">
             <p className="text-[11px] font-bold tracking-[0.2em] text-purple-400 uppercase mb-3">Tú pagas solo</p>
             <div className="flex items-start justify-center gap-1">
               <span className="text-[24px] font-bold text-zinc-100 mt-3">$</span>
@@ -214,7 +214,7 @@ export default function AllInOne() {
             <div className="mt-4 inline-block rounded-full border border-purple-500/30 bg-purple-500/10 px-5 py-2 text-[13px] font-semibold text-purple-300">
               Ahorra $40,000–$80,000 al mes vs. contratar equipo
             </div>
-          </Card>
+          </GlowCard>
         </motion.div>
       </Section>
 
@@ -239,7 +239,7 @@ export default function AllInOne() {
             const Icon = bonus.icon;
             return (
               <motion.div key={bonus.title} custom={i} variants={fadeUp}>
-                <Card variant={i === 1 ? "gold" : "default"} shine={i === 1}>
+                <GlowCard glowColor={i === 2 ? "cyan" : "purple"} className="p-5 md:p-6">
                   <div className="flex items-start gap-4">
                     <div className="flex-shrink-0">
                       <span className={`inline-block rounded-md px-3 py-1 text-[11px] font-bold tracking-wide text-white ${i === 2 ? "bg-emerald-500" : "bg-gradient-to-r from-purple-600 to-cyan-500"}`}>
@@ -252,7 +252,7 @@ export default function AllInOne() {
                     </div>
                     <p className="flex-shrink-0 text-[13px] font-semibold text-purple-400 whitespace-nowrap">{bonus.value}</p>
                   </div>
-                </Card>
+                </GlowCard>
               </motion.div>
             );
           })}

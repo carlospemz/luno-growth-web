@@ -4,7 +4,7 @@ import { Check } from "lucide-react";
 import { motion, type Variants, useInView, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useRef } from "react";
 import Section, { SectionHeader } from "@/components/ui/Section";
-import Card from "@/components/ui/Card";
+import { GlowCard } from "@/components/ui/spotlight-card";
 import GlitchButton from "@/components/ui/GlitchButton";
 import SectionNote from "@/components/ui/SectionNote";
 import { MOTION } from "@/lib/motion";
@@ -136,7 +136,10 @@ export default function Pricing() {
               transition={{ duration: 0.38, ease: [...MOTION.ease], delay: 0.03 + i * 0.06 }}
               style={{ willChange: "transform, opacity" }}
             >
-              <Card variant={pkg.tier} collider shine={pkg.tier === "gold"} className={`flex flex-col ${pkg.tier === "gold" ? "md:scale-[1.03] md:origin-center" : ""}`}>
+              <GlowCard
+                glowColor={pkg.tier === "onyx" ? "cyan" : "purple"}
+                className={`flex flex-col p-6 md:p-7 ${pkg.tier === "gold" ? "md:scale-[1.03] md:origin-center" : ""}`}
+              >
                 <div className="flex items-center justify-between gap-2">
                   <h3 className="text-[18px] font-semibold text-zinc-100">{pkg.name}</h3>
                   {pkg.badge && (
@@ -173,7 +176,7 @@ export default function Pricing() {
                     </motion.li>
                   ))}
                 </motion.ul>
-              </Card>
+              </GlowCard>
             </motion.div>
           );
         })}
