@@ -1,0 +1,206 @@
+"use client";
+
+import { Check } from "lucide-react";
+import { motion, type Variants } from "framer-motion";
+import Section, { SectionHeader } from "@/components/ui/Section";
+import Card from "@/components/ui/Card";
+import GlitchButton from "@/components/ui/GlitchButton";
+import SectionNote from "@/components/ui/SectionNote";
+import { MOTION } from "@/lib/motion";
+import "@/styles/luno-landing.css";
+
+type Tier = "silver" | "gold" | "onyx";
+
+const PACKAGES: {
+  name: string;
+  price: string;
+  monthly: string;
+  tagline: string;
+  features: string[];
+  tier: Tier;
+  badge?: string;
+}[] = [
+  {
+    name: "Express",
+    price: "$7,900",
+    monthly: "$1,690",
+    tagline: "Listo para vender y recibir WhatsApp sin friccion.",
+    features: [
+      "1 pagina (hasta 5 secciones)",
+      "Copy claro y directo",
+      "Boton WhatsApp + boton de llamada",
+      "Publicada y lista para compartir",
+      "1 ajuste menor incluido",
+    ],
+    tier: "silver",
+  },
+  {
+    name: "Pro",
+    price: "$13,900",
+    monthly: "$2,690",
+    tagline: "Se ve pro, convence mas y guia a la accion.",
+    features: [
+      "1 pagina (hasta 9 secciones)",
+      "Copy persuasivo (sin palabras raras)",
+      "Micro-animaciones finas",
+      "Preparada para encontrarte en Google",
+      "1 ronda de ajustes",
+    ],
+    tier: "gold",
+    badge: "Recomendado",
+  },
+  {
+    name: "Enterprise",
+    price: "$24,900",
+    monthly: "$4,090",
+    tagline: "Mas estructura y flujos para cerrar y medir.",
+    features: [
+      "3-5 paginas con estructura",
+      "2+ flujos pensados para cerrar",
+      "Medicion basica para saber que funciona",
+      "2 rondas de ajustes",
+      "Soporte de lanzamiento",
+    ],
+    tier: "onyx",
+    badge: "Premium",
+  },
+];
+
+/* Tier-specific style tokens */
+const TIER_STYLES: Record<Tier, {
+  checkClass: string;
+  badgeClass: string;
+}> = {
+  silver: {
+    checkClass: "text-purple-500",
+    badgeClass: "",
+  },
+  gold: {
+    checkClass: "text-purple-500",
+    badgeClass: "bg-purple-100 text-purple-700 text-[10px] font-medium rounded-full px-2.5 py-0.5",
+  },
+  onyx: {
+    checkClass: "text-zinc-400",
+    badgeClass: "bg-purple-100 text-purple-700 text-[10px] font-medium rounded-full px-2.5 py-0.5",
+  },
+};
+
+/* Cards fan out: left from left, center rises, right from right */
+const cardDirections = [
+  { x: -24 },
+  { y: 24 },
+  { x: 24 },
+];
+
+const featureVariants: Variants = {
+  hidden: { opacity: 0, x: -10 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.25, ease: [...MOTION.ease] },
+  },
+};
+
+export default function Pricing() {
+  return (
+    <Section id="pricing">
+      <SectionHeader kicker="Servicios" title={"Soluciones claras. Sin\u00A0sorpresas."} accentWord="claras." />
+
+      <div className="grid gap-5 md:grid-cols-3">
+        {PACKAGES.map((pkg, i) => {
+          const dir = cardDirections[i];
+          const style = TIER_STYLES[pkg.tier];
+          return (
+            <motion.div
+              key={pkg.name}
+              initial={{
+                opacity: 0,
+                x: dir.x ?? 0,
+                y: dir.y ?? 12,
+              }}
+              whileInView={{
+                opacity: 1,
+                x: 0,
+                y: 0,
+              }}
+              viewport={{ once: true, amount: 0.08 }}
+              transition={{
+                duration: 0.38,
+                ease: [...MOTION.ease],
+                delay: 0.03 + i * 0.06,
+              }}
+              style={{ willChange: "transform, opacity" }}
+            >
+              <Card variant={pkg.tier} collider className="flex flex-col">
+                <div className="flex items-center justify-between gap-2">
+                  <h3 className="text-[18px] font-semibold text-zinc-900">{pkg.name}</h3>
+                  {pkg.badge && (
+                    <span className={style.badgeClass}>
+                      {pkg.badge}
+                    </span>
+                  )}
+                </div>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.3, ease: [...MOTION.ease], delay: 0.08 }}
+                  className="mt-1 flex items-baseline gap-1"
+                >
+                  <span>
+                    {pkg.tier === "onyx" && <span className="block text-[12px] font-normal text-zinc-400 tracking-normal leading-none">desde</span>}
+                    <span className="text-3xl font-semibold tracking-tight text-zinc-900">{pkg.price}</span>
+                    <span className="ml-1 text-[13px] font-normal text-zinc-400">MXN</span>
+                  </span>
+                </motion.div>
+                <p className="mt-1 text-[13px] leading-[1.4] text-zinc-400">
+                  o <span className="font-semibold text-zinc-900">{pkg.monthly}/mes</span>{" "}
+                  <span className="text-zinc-400">(12 meses)</span>
+                </p>
+                <p className="mt-2 text-[13px] leading-[1.5] text-zinc-500">{pkg.tagline}</p>
+                <motion.ul
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.15 }}
+                  variants={{ visible: { transition: { staggerChildren: 0.04, delayChildren: 0.08 } } }}
+                  className="mt-5 flex-1 space-y-2.5"
+                >
+                  {pkg.features.map((f) => (
+                    <motion.li key={f} variants={featureVariants} className="flex items-start gap-2.5 text-[13px] text-zinc-900">
+                      <span className="mt-0.5 flex-shrink-0">
+                        <Check className={`h-4 w-4 ${style.checkClass}`} />
+                      </span>
+                      {f}
+                    </motion.li>
+                  ))}
+                </motion.ul>
+              </Card>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      <SectionNote
+        summary="Dominio y correo quedan a tu nombre (pago directo al proveedor). Te guiamos y lo conectamos."
+        detail="No hay mensualidades ocultas. Estos costos van directo al proveedor para que siempre sean tuyos: dominio y correo."
+      />
+      <p className="mt-2 text-center">
+        <a href="#waas" className="text-[12px] font-medium text-purple-500/60 underline underline-offset-2 transition-colors hover:text-purple-500/80">
+          Prefieres mensualidad? Ver Web como servicio.
+        </a>
+      </p>
+
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.35, ease: [...MOTION.ease], delay: 0.1 }}
+        className="mt-10 flex justify-center"
+      >
+        <GlitchButton href="#brief">
+          Llenar brief
+        </GlitchButton>
+      </motion.div>
+    </Section>
+  );
+}
