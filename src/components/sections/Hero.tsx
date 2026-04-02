@@ -10,63 +10,6 @@ import { quoteUrl } from "@/config/contact";
 const pop: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
 
-/* ── Floating browser mockup ─────────────────────────── */
-function BrowserMockup() {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30, scale: 0.92 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ duration: 0.8, ease: pop, delay: 0.5 }}
-      className="relative mx-auto mt-12 w-full max-w-[520px]"
-    >
-      {/* Glow behind */}
-      <div className="absolute -inset-8 rounded-[32px] bg-gradient-to-br from-purple-400/10 via-cyan-400/8 to-purple-400/6 blur-2xl" />
-
-      {/* Browser chrome */}
-      <div className="relative overflow-hidden rounded-[16px] border border-zinc-200/70 bg-white shadow-lg shadow-purple-500/[0.04]">
-        {/* Title bar */}
-        <div className="flex items-center gap-2 border-b border-zinc-100 bg-zinc-50/80 px-4 py-2.5">
-          <div className="flex gap-1.5">
-            <span className="h-[10px] w-[10px] rounded-full bg-zinc-200" />
-            <span className="h-[10px] w-[10px] rounded-full bg-zinc-200" />
-            <span className="h-[10px] w-[10px] rounded-full bg-zinc-200" />
-          </div>
-          <div className="mx-auto flex h-6 w-48 items-center justify-center rounded-md bg-zinc-100/80 px-3">
-            <span className="text-[10px] text-zinc-400">tunegocio.com</span>
-          </div>
-        </div>
-
-        {/* Mockup content — abstract UI blocks */}
-        <div className="relative p-5">
-          {/* Hero area */}
-          <div className="flex flex-col items-center gap-3 py-6">
-            <div className="h-2.5 w-32 rounded-full bg-gradient-to-r from-purple-400/30 to-cyan-400/30" />
-            <div className="h-4 w-56 rounded-full bg-zinc-200/70" />
-            <div className="h-3 w-44 rounded-full bg-zinc-100/80" />
-            <div className="mt-2 flex gap-2">
-              <div className="h-7 w-24 rounded-lg bg-gradient-to-r from-purple-500 to-cyan-500 opacity-80" />
-              <div className="h-7 w-20 rounded-lg border border-zinc-200 bg-white" />
-            </div>
-          </div>
-
-          {/* Cards row */}
-          <div className="flex gap-2.5 px-2">
-            {[0, 1, 2].map((i) => (
-              <div key={i} className="flex-1 rounded-lg border border-zinc-100 bg-zinc-50/50 p-3">
-                <div className="h-2 w-12 rounded-full bg-purple-300/30" />
-                <div className="mt-2 h-1.5 w-full rounded-full bg-zinc-100" />
-                <div className="mt-1.5 h-1.5 w-3/4 rounded-full bg-zinc-100" />
-              </div>
-            ))}
-          </div>
-
-          {/* Iridescent overlay */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/[0.02] via-transparent to-cyan-500/[0.03]" />
-        </div>
-      </div>
-    </motion.div>
-  );
-}
 
 export default function Hero() {
   const revealRef = useRef<HTMLDivElement>(null);
@@ -96,7 +39,7 @@ export default function Hero() {
           className="flex flex-1 flex-col items-center w-full"
         >
           {/* ——— Main content — vertically centered ——— */}
-          <div className="flex flex-1 flex-col items-center justify-center">
+          <div className="flex flex-1 flex-col items-center justify-center pt-16 md:pt-20">
             {/* Logo badge */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
@@ -172,8 +115,6 @@ export default function Hero() {
               </motion.p>
             </div>
 
-            {/* Browser mockup */}
-            <BrowserMockup />
           </div>
 
           {/* ——— Scroll cue ——— */}

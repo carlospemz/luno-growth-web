@@ -14,9 +14,8 @@ const VARIANT_CLASS: Record<CardVariant, string> = {
   onyx: "card-glass card-glass--premium",
 };
 
-/* ── Inline styles per variant (light theme) ───────────────────────── */
+/* ── Inline styles per variant (dark theme) ───────────────────────── */
 const BASE_STYLE: React.CSSProperties = {
-  background: "rgba(255,255,255,0.92)",
   backdropFilter: "blur(20px)",
   WebkitBackdropFilter: "blur(20px)",
   willChange: "transform",
@@ -25,31 +24,35 @@ const BASE_STYLE: React.CSSProperties = {
 const VARIANT_STYLE: Record<CardVariant, React.CSSProperties> = {
   default: {
     ...BASE_STYLE,
-    border: "1px solid rgba(0,0,0,0.04)",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+    background: "rgba(255,255,255,0.05)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    boxShadow: "0 2px 12px rgba(0,0,0,0.4)",
   },
   silver: {
     ...BASE_STYLE,
-    border: "1px solid rgba(0,0,0,0.04)",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.04)",
+    background: "rgba(255,255,255,0.05)",
+    border: "1px solid rgba(255,255,255,0.08)",
+    boxShadow: "0 2px 12px rgba(0,0,0,0.4)",
   },
   gold: {
     ...BASE_STYLE,
-    border: "1.5px solid rgba(168,85,247,0.20)",
-    boxShadow: "0 4px 20px rgba(168,85,247,0.08), 0 0 40px rgba(168,85,247,0.06), 0 1px 3px rgba(0,0,0,0.04)",
+    background: "rgba(168,85,247,0.1)",
+    border: "1.5px solid rgba(168,85,247,0.3)",
+    boxShadow: "0 4px 24px rgba(168,85,247,0.15), 0 0 48px rgba(168,85,247,0.08)",
   },
   onyx: {
     ...BASE_STYLE,
-    border: "1px solid rgba(6,182,212,0.18)",
-    boxShadow: "0 2px 12px rgba(0,0,0,0.05), 0 0 32px rgba(6,182,212,0.06)",
+    background: "rgba(6,182,212,0.07)",
+    border: "1px solid rgba(6,182,212,0.25)",
+    boxShadow: "0 2px 16px rgba(0,0,0,0.3), 0 0 40px rgba(6,182,212,0.08)",
   },
 };
 
 const HOVER_SHADOW: Record<CardVariant, string> = {
-  default: "0 4px 16px rgba(0,0,0,0.06)",
-  silver: "0 4px 16px rgba(0,0,0,0.06)",
-  gold: "0 8px 32px rgba(168,85,247,0.12), 0 0 48px rgba(168,85,247,0.08), 0 2px 8px rgba(0,0,0,0.04)",
-  onyx: "0 6px 24px rgba(6,182,212,0.10), 0 0 40px rgba(6,182,212,0.06), 0 2px 8px rgba(0,0,0,0.04)",
+  default: "0 4px 20px rgba(0,0,0,0.5), 0 0 20px rgba(168,85,247,0.06)",
+  silver: "0 4px 20px rgba(0,0,0,0.5), 0 0 20px rgba(168,85,247,0.06)",
+  gold: "0 8px 36px rgba(168,85,247,0.2), 0 0 56px rgba(168,85,247,0.1)",
+  onyx: "0 6px 28px rgba(6,182,212,0.15), 0 0 48px rgba(6,182,212,0.08)",
 };
 
 export default function Card({
