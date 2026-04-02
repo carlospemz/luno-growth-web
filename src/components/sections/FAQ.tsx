@@ -99,7 +99,7 @@ function Item({ faq, index }: { faq: (typeof FAQS)[0]; index: number }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.35, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="pb-5 text-[14px] leading-[1.7] text-zinc-500"
+              className="pb-5 text-[14px] leading-[1.7] text-zinc-300"
             >
               {faq.a}
             </motion.p>

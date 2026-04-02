@@ -7,14 +7,14 @@ import Card from "@/components/ui/Card";
 import GlitchButton from "@/components/ui/GlitchButton";
 import { MOTION } from "@/lib/motion";
 
-/* ── Value stack items ── */
-const STACK = [
-  { icon: MessageSquare, title: "Gestión completa de redes sociales", desc: "Instagram + Facebook. Diseños con IA, copy estratégico, programación y análisis mensual.", value: "$12,000/mes" },
-  { icon: Zap, title: "Chatbot WhatsApp 24/7", desc: "Atiende, califica y cierra prospectos automáticamente mientras duermes.", value: "$8,000/mes" },
-  { icon: Globe, title: "Landing page de conversión", desc: "Una página diseñada para convertir — integrada con tu chatbot.", value: "$18,000 único" },
-  { icon: BarChart3, title: "Estrategia de contenido mensual", desc: "Qué publicar, cuándo y por qué. Basado en tendencias y tu audiencia real.", value: "$6,000/mes" },
-  { icon: Target, title: "Gestión de Meta Ads", desc: "Campañas que generan leads reales. Optimizadas semana a semana.", value: "$10,000/mes" },
-  { icon: BarChart3, title: "Reporte mensual de resultados", desc: "Alcance, leads, conversiones. Números reales, no promesas.", value: "$3,000/mes" },
+/* ── Team replacement (what LUNO replaces) ── */
+const TEAM = [
+  { icon: MessageSquare, role: "Community Manager", task: "Redes sociales, contenido, programación", cost: "$12,000–$18,000/mes" },
+  { icon: Target, role: "Especialista en Ads", task: "Meta Ads, Google Ads, optimización semanal", cost: "$15,000–$25,000/mes" },
+  { icon: Zap, role: "Desarrollador de chatbot", task: "WhatsApp bot, flujos, integración CRM", cost: "$8,000–$15,000/mes" },
+  { icon: Globe, role: "Diseñador web", task: "Landing page, actualizaciones, conversión", cost: "$12,000–$20,000/mes" },
+  { icon: BarChart3, role: "Estratega de contenido", task: "Calendario, briefs, tendencias, copy", cost: "$10,000–$15,000/mes" },
+  { icon: Users, role: "Coordinador de resultados", task: "Reportes, seguimiento, optimización mensual", cost: "$8,000–$12,000/mes" },
 ];
 
 /* ── Bonuses ── */
@@ -113,9 +113,9 @@ export default function AllInOne() {
       ══════════════════════════════════════════════════ */}
       <Section className="pb-0">
         <NarrativeQuestion
-          kicker="La solución existe"
-          question="¿Y si no es tu culpa?"
-          sub="El mercado cambió. Tu competencia ya tiene un sistema. Tú también puedes tenerlo — sin contratar un equipo."
+          kicker="Tu competencia ya lo tiene"
+          question="La solución existe."
+          sub="No es tu culpa. El mercado cambió y nadie te avisó. Pero ahora puedes tener el mismo sistema — sin contratar a nadie."
         />
 
         <motion.div
@@ -142,9 +142,9 @@ export default function AllInOne() {
       ══════════════════════════════════════════════════ */}
       <Section className="pb-0">
         <NarrativeQuestion
-          kicker="Lo que obtienes"
-          question="Todo esto. En una sola suscripción."
-          sub="Lo que antes costaba un equipo de 5 personas."
+          kicker="Lo que dejas de contratar"
+          question="¿A quién ya no necesitas?"
+          sub="Esto es lo que LUNO reemplaza. Cada uno de estos roles cuesta dinero, tiempo y dolores de cabeza."
         />
 
         <motion.div
@@ -152,27 +152,26 @@ export default function AllInOne() {
           initial="hidden"
           whileInView="visible"
           viewport={MOTION.viewport}
-          className="flex flex-col gap-[10px]"
+          className="flex flex-col gap-[8px]"
         >
-          {STACK.map((item, i) => {
+          {TEAM.map((item, i) => {
             const Icon = item.icon;
             return (
-              <motion.div key={item.title} custom={i} variants={fadeUp}>
+              <motion.div key={item.role} custom={i} variants={fadeUp}>
                 <motion.div
-                  whileHover={{ y: -2 }}
+                  whileHover={{ y: -1 }}
                   transition={{ duration: 0.2 }}
-                  className="flex items-start gap-4 rounded-[18px] border border-white/[0.08] bg-white/[0.04] px-5 py-4 backdrop-blur-xl"
+                  className="flex items-center gap-4 rounded-[16px] border border-white/[0.07] bg-white/[0.03] px-5 py-3.5"
                 >
-                  <div className="mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px] bg-purple-500/15 text-purple-400">
+                  <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-[10px] bg-purple-500/12 text-purple-400">
                     <Icon className="h-4 w-4" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[15px] font-semibold text-zinc-100 leading-[1.3]">{item.title}</p>
-                    <p className="mt-0.5 text-[13px] text-zinc-400 leading-[1.45]">{item.desc}</p>
+                    <p className="text-[14px] font-semibold text-zinc-200 leading-[1.2]">{item.role}</p>
+                    <p className="text-[12px] text-zinc-500 mt-0.5">{item.task}</p>
                   </div>
                   <div className="flex-shrink-0 text-right">
-                    <p className="text-[14px] font-bold text-zinc-300 whitespace-nowrap">{item.value}</p>
-                    <p className="text-[11px] text-zinc-500">valor de mercado</p>
+                    <p className="text-[13px] font-bold text-red-400/80 whitespace-nowrap line-through">{item.cost}</p>
                   </div>
                 </motion.div>
               </motion.div>
@@ -180,10 +179,10 @@ export default function AllInOne() {
           })}
 
           {/* Total tachado */}
-          <motion.div custom={STACK.length} variants={fadeUp}
-            className="flex items-center justify-between rounded-[16px] border border-white/[0.06] bg-white/[0.03] px-5 py-4 mt-1">
-            <span className="text-[13px] font-semibold text-zinc-500 uppercase tracking-wide">Valor total mensual</span>
-            <span className="text-[22px] font-bold text-zinc-600 line-through">$57,000/mes</span>
+          <motion.div custom={TEAM.length} variants={fadeUp}
+            className="flex items-center justify-between rounded-[16px] border border-red-500/15 bg-red-500/5 px-5 py-4 mt-2">
+            <span className="text-[13px] font-semibold text-zinc-400 uppercase tracking-wide">Total equipo por separado</span>
+            <span className="text-[22px] font-bold text-red-400/70 line-through">$65,000–$105,000/mes</span>
           </motion.div>
         </motion.div>
       </Section>
@@ -213,7 +212,7 @@ export default function AllInOne() {
             </div>
             <p className="mt-2 text-[13px] text-zinc-500">+ $10,000 setup fee único · Sin contratos de largo plazo</p>
             <div className="mt-4 inline-block rounded-full border border-purple-500/30 bg-purple-500/10 px-5 py-2 text-[13px] font-semibold text-purple-300">
-              Ahorra $32,000 al mes vs. contratar un equipo
+              Ahorra $40,000–$80,000 al mes vs. contratar equipo
             </div>
           </Card>
         </motion.div>

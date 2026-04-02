@@ -180,8 +180,8 @@ button, [role="button"] { -webkit-user-select: none; user-select: none; touch-ac
 .border-zinc-200\/50, .border-zinc-200\/30, .border-zinc-200, .border-zinc-100 {
   border-color: rgba(255,255,255,0.09) !important;
 }
-.bg-purple-50, .bg-purple-50\/40, .bg-purple-50\/60 {
-  background-color: rgba(168,85,247,0.12) !important;
+.bg-purple-50, .bg-purple-50\/30, .bg-purple-50\/40, .bg-purple-50\/60 {
+  background-color: rgba(168,85,247,0.10) !important;
 }
 .border-purple-200\/50, .border-purple-100\/60, .border-purple-200 {
   border-color: rgba(168,85,247,0.2) !important;
