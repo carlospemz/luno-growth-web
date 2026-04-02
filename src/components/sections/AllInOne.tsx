@@ -26,10 +26,10 @@ const BONUSES = [
 
 /* ── Pain points ── */
 const PAINS = [
-  { emoji: "😰", title: "\"Mi competencia me está ganando clientes\"", desc: "Mientras tú no estás en redes, ellos sí. El cliente que no te encontró a ti, le compró a alguien más." },
-  { emoji: "🤑", title: "\"Las agencias cobran caro y no entregan\"", desc: "Pagaste $30,000 por una campaña que no sirvió. Nunca supiste qué hicieron ni si valió la pena." },
-  { emoji: "🤖", title: "\"No entiendo la IA y me estoy quedando atrás\"", desc: "Todo el mundo habla de IA pero nadie te explica cómo usarla en tu negocio específico." },
-  { emoji: "⏰", title: "\"No tengo tiempo para hacer todo yo solo\"", desc: "Eres el dueño, el vendedor, el contador y el community manager. Y el marketing no avanza." },
+  { emoji: "😰", title: "\"Mi competencia me está robando clientes\"", desc: "Mientras tú no publicas, ellos sí. El cliente que no te encontró a ti no esperó — le compró a alguien más hoy mismo." },
+  { emoji: "🤑", title: "\"Pagué una agencia y fue tirar el dinero\"", desc: "Invertiste $30,000 y no sabes ni qué hicieron. Sin reporte real. Sin resultados. Sin que nadie respondiera bien." },
+  { emoji: "🤖", title: "\"La IA me está dejando atrás y no sé cómo usarla\"", desc: "Tus competidores ya automatizan WhatsApp, contenido y ventas. Tú sigues haciendo todo a mano y el tiempo corre." },
+  { emoji: "⏰", title: "\"Soy dueño, vendedor, diseñador y contador\"", desc: "Haces todo solo. Y justamente por eso el marketing nunca avanza — siempre hay algo más urgente que apagar." },
 ];
 
 /* ── Animations ── */
@@ -126,12 +126,11 @@ export default function AllInOne() {
         >
           <GlowCard glowColor="purple" className="p-6 md:p-7 text-center">
             <h3 className="text-[22px] md:text-[28px] font-bold tracking-[-0.02em] text-zinc-100 leading-[1.2] max-w-[500px] mx-auto">
-              LUNO convierte tu negocio en uno que trabaja{" "}
-              <span className="brand-gradient-text">cuando tú no puedes.</span>
+              No es tu culpa. El mercado cambió y nadie te avisó.{" "}
+              <span className="brand-gradient-text">Tu competencia ya opera con sistema. Tú puedes también.</span>
             </h3>
             <p className="mt-3 text-[15px] text-zinc-400 max-w-[440px] mx-auto leading-relaxed">
-              Combinamos agentes de inteligencia artificial con estrategas humanos para manejar tu
-              marketing completo — desde el diseño hasta la venta — por una sola mensualidad fija.
+              LUNO combina IA + estrategas humanos para manejar tu marketing completo — contenido, anuncios, chatbot y seguimiento — por una sola mensualidad fija. Sin contratar a nadie.
             </p>
           </GlowCard>
         </motion.div>
@@ -142,9 +141,9 @@ export default function AllInOne() {
       ══════════════════════════════════════════════════ */}
       <Section className="pb-0">
         <NarrativeQuestion
-          kicker="Lo que dejas de contratar"
-          question="¿A quién ya no necesitas?"
-          sub="Esto es lo que LUNO reemplaza. Cada uno de estos roles cuesta dinero, tiempo y dolores de cabeza."
+          kicker="El costo oculto de crecer solo"
+          question="¿Cuánto te está costando no tener sistema?"
+          sub="Esto es lo que pagarías si contrataras a cada persona por separado. Y eso sin contar las entrevistas, la curva de aprendizaje, los errores y el tiempo que tú metes gestionándolos."
         />
 
         <motion.div
@@ -177,8 +176,21 @@ export default function AllInOne() {
           {/* Total tachado */}
           <motion.div custom={TEAM.length} variants={fadeUp}
             className="flex items-center justify-between rounded-[16px] border border-red-500/15 bg-red-500/5 px-5 py-4 mt-2">
-            <span className="text-[13px] font-semibold text-zinc-400 uppercase tracking-wide">Total equipo por separado</span>
+            <div>
+              <span className="text-[13px] font-semibold text-zinc-400 uppercase tracking-wide">Total equipo por separado</span>
+              <p className="text-[11px] text-zinc-600 mt-0.5">Sin contar gestión, errores ni rotación</p>
+            </div>
             <span className="text-[22px] font-bold text-red-400/70 line-through">$65,000–$105,000/mes</span>
+          </motion.div>
+
+          {/* Contraste LUNO */}
+          <motion.div custom={TEAM.length + 1} variants={fadeUp}
+            className="flex items-center justify-between rounded-[16px] border border-purple-500/30 bg-purple-500/10 px-5 py-4">
+            <div>
+              <span className="text-[13px] font-semibold text-purple-300 uppercase tracking-wide">O contratas LUNO y se acabó el problema</span>
+              <p className="text-[11px] text-zinc-500 mt-0.5">Todo incluido. Sin gestionar a nadie.</p>
+            </div>
+            <span className="text-[22px] font-black text-purple-300">$25,000/mes</span>
           </motion.div>
         </motion.div>
       </Section>

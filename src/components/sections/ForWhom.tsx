@@ -75,12 +75,11 @@ export default function ForWhom() {
         className="mt-12 rounded-[20px] border border-white/[0.07] bg-white/[0.03] px-6 py-6 md:px-10 md:py-8 text-center"
       >
         <p className="text-[18px] md:text-[22px] font-bold text-zinc-100 leading-[1.3] max-w-[560px] mx-auto">
-          "Te instalamos el sistema para que{" "}
-          <span className="brand-gradient-text">lleguen más mensajes</span>
-          {" "}y{" "}
-          <span className="brand-gradient-text">cierres más ventas</span>."
+          Cada mensaje sin responder es una venta perdida.{" "}
+          <span className="brand-gradient-text">Te instalamos el sistema que responde, califica y cierra</span>
+          {" "}— cuando tú no puedes.
         </p>
-        <p className="mt-3 text-[14px] text-zinc-500">Setup en 48h · Sin equipo propio · Sin contrato de largo plazo</p>
+        <p className="mt-3 text-[14px] text-zinc-500">Sin equipo · Sin contrato largo · Resultados medibles en 30 días o no renuevas</p>
       </motion.div>
     </Section>
   );

@@ -77,8 +77,8 @@ export default function Hero() {
                 transition={{ duration: 0.5, ease, delay: 0.25 }}
                 className="mt-6 max-w-[460px] text-[16px] md:text-[18px] text-zinc-500 leading-relaxed"
               >
-                Más mensajes. Más ventas. Sin contratar equipo.{" "}
-                <span className="text-zinc-400">IA + estrategas humanos. Una mensualidad. 30 días.</span>
+                Cada día sin sistema, tu competencia te quita clientes.{" "}
+                <span className="text-zinc-400">LUNO lo detiene en 48 horas — sin contratar a nadie.</span>
               </motion.p>
 
               {/* CTAs */}
@@ -115,7 +115,7 @@ export default function Hero() {
                 transition={{ duration: 0.3, delay: 0.45 }}
                 className="mt-4 text-[13px] text-zinc-400"
               >
-                Setup en 48h · Sin contratos · Tu competencia ya tiene esto.
+                Sin contrato largo · 30 días de resultados medibles o no renuevas · Setup en 48h
               </motion.p>
             </div>
 

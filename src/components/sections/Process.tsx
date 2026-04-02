@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { MessageSquare, Paintbrush, Rocket } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import Section, { SectionHeader } from "@/components/ui/Section";
-import Card from "@/components/ui/Card";
+import { GlowCard } from "@/components/ui/spotlight-card";
 import { MOTION } from "@/lib/motion";
 
 /* ═══════════════════════════════════════
@@ -15,7 +15,7 @@ const STEPS = [
   {
     icon: MessageSquare,
     title: "Diagnóstico (15 min)",
-    desc: "Entendemos qué vendes, a quién y qué debe pasar para que te escriban.",
+    desc: "Una llamada corta. Entendemos tu negocio, tu cliente ideal y qué necesitas para que te lleguen más mensajes.",
     ambient: {
       animate: {
         y: [0, -4, 1, -3, 0],
@@ -30,7 +30,7 @@ const STEPS = [
   {
     icon: Paintbrush,
     title: "Construcción (48–72h)",
-    desc: "Primera versión en 48–72h después de recibir contenido. Tiempo total depende del paquete y de que entregues assets.",
+    desc: "Landing, chatbot, contenido y campañas configurados en 48–72h. Tú solo apruebas — nosotros ejecutamos.",
     ambient: {
       animate: {
         x: [0, 14, 0],
@@ -43,7 +43,7 @@ const STEPS = [
   {
     icon: Rocket,
     title: "Lanzamiento (mismo día)",
-    desc: "Se publica, se prueba WhatsApp/llamada y queda lista para operar.",
+    desc: "Todo live el mismo día. Tu sistema recibiendo mensajes, calificando leads y cerrando ventas — sin que tú hagas nada.",
     ambient: {
       animate: {
         x: [0, 22, 0],
@@ -96,7 +96,7 @@ export default function Process() {
   return (
     <Section id="process">
       <div ref={sectionRef}>
-        <SectionHeader kicker="Método" title={"Ejecución precisa. Sin\u00A0fricción."} accentWord="precisa." />
+        <SectionHeader kicker="Cómo funciona" title={"48 horas y ya estás\u00A0corriendo."} accentWord="corriendo." />
 
         {/* Timeline container with vertical line */}
         <div className="relative">
@@ -136,7 +136,7 @@ export default function Process() {
                   }}
                   style={{ willChange: "transform, opacity" }}
                 >
-                  <Card collider>
+                  <GlowCard glowColor={i === 1 ? "cyan" : "purple"} className="p-6">
                     {/* Step number indicator */}
                     <div
                       className={`mb-3 flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold ${i === 1 ? "bg-cyan-400/10 text-cyan-400" : "bg-violet-100 text-violet-400"}`}
@@ -158,7 +158,7 @@ export default function Process() {
                     </span>
                     <h3 className="mt-4 font-heading text-[17px] font-bold">{s.title}</h3>
                     <p className="mt-2 text-[14.5px] leading-[1.55] text-zinc-500">{s.desc}</p>
-                  </Card>
+                  </GlowCard>
                 </motion.div>
               );
             })}
