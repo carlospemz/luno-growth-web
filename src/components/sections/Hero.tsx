@@ -120,10 +120,10 @@ export default function Hero() {
                 className="text-[36px] md:text-[56px] lg:text-[64px] font-bold tracking-[-0.03em] text-zinc-900 leading-[1.05]"
                 style={{ textWrap: "balance" }}
               >
-                Interfaces de alto{" "}
-                <span className="brand-gradient-text">impacto</span>{" "}
-                que convierten en{" "}
-                <span className="brand-gradient-text">clientes.</span>
+                Tu negocio trabajando{" "}
+                <span className="brand-gradient-text">cuando tú</span>{" "}
+                no{" "}
+                <span className="brand-gradient-text">puedes.</span>
               </motion.h1>
 
               {/* Subtitle */}
@@ -133,8 +133,8 @@ export default function Hero() {
                 transition={{ duration: 0.5, ease, delay: 0.25 }}
                 className="mt-6 max-w-[460px] text-[16px] md:text-[18px] text-zinc-500 leading-relaxed"
               >
-                Diseño, desarrollo y lanzamiento en 48–72h.{" "}
-                <span className="text-zinc-400">Ruta directa a cotizar por WhatsApp.</span>
+                Marketing completo con IA + estrategas humanos.{" "}
+                <span className="text-zinc-400">Una sola mensualidad. Resultados en 30 días.</span>
               </motion.p>
 
               {/* CTAs */}
@@ -148,7 +148,7 @@ export default function Hero() {
                   href="#pricing"
                   className="group flex items-center gap-2 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-500 px-6 py-3 text-[14px] font-semibold text-white shadow-md shadow-purple-500/15 transition-all hover:shadow-lg hover:shadow-purple-500/20 hover:brightness-105"
                 >
-                  Ver precios
+                  Ver la oferta
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                 </a>
                 <a
@@ -168,7 +168,7 @@ export default function Hero() {
                 transition={{ duration: 0.3, delay: 0.45 }}
                 className="mt-4 text-[13px] text-zinc-400"
               >
-                Respuesta en menos de 24h.
+                Setup en 48h · Sin contratos · Tu competencia ya tiene esto.
               </motion.p>
             </div>
 

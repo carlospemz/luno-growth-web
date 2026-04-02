@@ -21,48 +21,53 @@ const PACKAGES: {
   badge?: string;
 }[] = [
   {
-    name: "Express",
-    price: "$7,900",
-    monthly: "$1,690",
-    tagline: "Listo para vender y recibir WhatsApp sin friccion.",
+    name: "Señal",
+    price: "$5,000",
+    monthly: "$8,500",
+    tagline: "Presencia digital sólida sin contratar equipo propio.",
     features: [
-      "1 pagina (hasta 5 secciones)",
-      "Copy claro y directo",
-      "Boton WhatsApp + boton de llamada",
-      "Publicada y lista para compartir",
-      "1 ajuste menor incluido",
+      "Instagram + Facebook (12 posts/mes)",
+      "Diseños con IA por marca",
+      "Copy + hashtags + programación",
+      "Calendario de contenido mensual",
+      "Historias semanales (4/semana)",
+      "Reporte mensual de resultados",
     ],
     tier: "silver",
   },
   {
-    name: "Pro",
-    price: "$13,900",
-    monthly: "$2,690",
-    tagline: "Se ve pro, convence mas y guia a la accion.",
+    name: "Sistema",
+    price: "$8,000",
+    monthly: "$19,500",
+    tagline: "Genera leads y automatiza la atención al cliente.",
     features: [
-      "1 pagina (hasta 9 secciones)",
-      "Copy persuasivo (sin palabras raras)",
-      "Micro-animaciones finas",
-      "Preparada para encontrarte en Google",
-      "1 ronda de ajustes",
+      "Todo de Señal",
+      "Landing page de conversión",
+      "Chatbot WhatsApp 24/7",
+      "Gestión de Meta Ads",
+      "16 posts/mes + 2 Reels",
+      "Seguimiento automático de prospectos",
+      "Reporte de leads y conversión",
     ],
     tier: "gold",
-    badge: "Recomendado",
+    badge: "Más popular",
   },
   {
-    name: "Enterprise",
-    price: "$24,900",
-    monthly: "$4,090",
-    tagline: "Mas estructura y flujos para cerrar y medir.",
+    name: "Motor",
+    price: "$15,000",
+    monthly: "$38,000",
+    tagline: "Departamento de marketing completo. Sin contratar a nadie.",
     features: [
-      "3-5 paginas con estructura",
-      "2+ flujos pensados para cerrar",
-      "Medicion basica para saber que funciona",
-      "2 rondas de ajustes",
-      "Soporte de lanzamiento",
+      "Todo de Sistema",
+      "SEO + posicionamiento local",
+      "Automatización del funnel de ventas",
+      "Dashboard de resultados en tiempo real",
+      "Google Ads + Meta Ads gestionados",
+      "Freelancer de contenido local coordinado",
+      "Reunión de estrategia mensual",
     ],
     tier: "onyx",
-    badge: "Premium",
+    badge: "Escala global",
   },
 ];
 
@@ -104,7 +109,7 @@ const featureVariants: Variants = {
 export default function Pricing() {
   return (
     <Section id="pricing">
-      <SectionHeader kicker="Servicios" title={"Soluciones claras. Sin\u00A0sorpresas."} accentWord="claras." />
+      <SectionHeader kicker="Planes" title={"Todo incluido. Sin\u00A0sorpresas."} accentWord="incluido." />
 
       <div className="grid gap-5 md:grid-cols-3">
         {PACKAGES.map((pkg, i) => {
@@ -154,8 +159,8 @@ export default function Pricing() {
                   </span>
                 </motion.div>
                 <p className="mt-1 text-[13px] leading-[1.4] text-zinc-400">
-                  o <span className="font-semibold text-zinc-900">{pkg.monthly}/mes</span>{" "}
-                  <span className="text-zinc-400">(12 meses)</span>
+                  <span className="font-semibold text-zinc-900">{pkg.monthly}/mes</span>{" "}
+                  <span className="text-zinc-400">· setup fee: {pkg.price}</span>
                 </p>
                 <p className="mt-2 text-[13px] leading-[1.5] text-zinc-500">{pkg.tagline}</p>
                 <motion.ul
@@ -181,14 +186,9 @@ export default function Pricing() {
       </div>
 
       <SectionNote
-        summary="Dominio y correo quedan a tu nombre (pago directo al proveedor). Te guiamos y lo conectamos."
-        detail="No hay mensualidades ocultas. Estos costos van directo al proveedor para que siempre sean tuyos: dominio y correo."
+        summary="Setup fee único. Sin contratos de largo plazo. Cancela cuando quieras."
+        detail="El setup fee cubre discovery, onboarding y configuración inicial. La mensualidad cubre la ejecución completa mes a mes."
       />
-      <p className="mt-2 text-center">
-        <a href="#waas" className="text-[12px] font-medium text-purple-500/60 underline underline-offset-2 transition-colors hover:text-purple-500/80">
-          Prefieres mensualidad? Ver Web como servicio.
-        </a>
-      </p>
 
       <motion.div
         initial={{ opacity: 0, y: 12 }}

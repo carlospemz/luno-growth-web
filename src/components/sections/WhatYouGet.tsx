@@ -6,12 +6,12 @@ import Section, { SectionHeader } from "@/components/ui/Section";
 import { MOTION } from "@/lib/motion";
 
 const TILES: { title: string; desc: string; chips?: string[] }[] = [
-  { title: "Copy que vende", desc: "Explica tu oferta y empuja a cotizar." },
-  { title: "Diseño que da confianza", desc: "Se ve serio y se entiende rápido." },
-  { title: "Ruta directa a contacto", desc: "Botón principal claro y canal listo para responder.", chips: ["WhatsApp", "Llamada", "Formulario"] },
-  { title: "Lista para Google", desc: "Base técnica para aparecer y ser encontrado." },
-  { title: "Rápida en celular", desc: "Optimizada para el dispositivo real." },
-  { title: "Estructura sin pensar", desc: "Orden lógico para decidir en segundos." },
+  { title: "Marketing gestionado con IA", desc: "Contenido, diseño y estrategia generados y ejecutados automáticamente.", chips: ["Instagram", "Facebook"] },
+  { title: "Chatbot que cierra ventas", desc: "Atiende, califica y cierra prospectos por WhatsApp las 24 horas." },
+  { title: "Leads que llegan solos", desc: "Anuncios en Meta optimizados semana a semana para que los clientes te encuentren.", chips: ["Meta Ads", "Google Ads"] },
+  { title: "Web que convierte", desc: "Landing page integrada con tu chatbot y tus campañas." },
+  { title: "Resultados medibles", desc: "Reporte mensual con números reales: alcance, leads, conversiones." },
+  { title: "Estrategia, no solo ejecución", desc: "Calendario de contenido, tendencias y plan mensual. No improvisamos." },
 ];
 
 const ACCENT_IDX = new Set([0, 3]);
@@ -37,9 +37,9 @@ export default function WhatYouGet() {
     <Section id="features" className="pb-[32px]">
       <SectionHeader
         kicker="Capacidades"
-        title="Lo que hacemos para que te compren."
-        accentWord="compren"
-        subcopy="Seis cosas que dejamos listas para que te contacten."
+        title="Lo que hacemos por tu negocio."
+        accentWord="negocio."
+        subcopy="Un equipo completo trabajando para ti — sin que tú tengas que hacer nada."
         compact
       />
 
