@@ -9,16 +9,16 @@ const FOUNDERS = [
   {
     name: "Lalo Villarreal",
     role: "CEO & CMO",
-    bio: "Estrategia, ventas y narrativa de marca. Llevo años construyendo sistemas de crecimiento para negocios locales en México. LUNO es la versión que siempre quise tener disponible para cualquier dueño.",
+    bio: "Soy el dueño de negocio que nadie servía bien. Probé agencias, perdí dinero y nunca supe qué hicieron. En lugar de seguir buscando, construí el sistema que yo necesitaba. LUNO es ese sistema — hecho por alguien que vivió el mismo problema que tú.",
     avatar: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&h=200&fit=crop&crop=face",
-    tags: ["Estrategia", "Ventas", "IA aplicada"],
+    tags: ["Estrategia", "Ventas", "Marketing con IA"],
   },
   {
     name: "Carlos Pemz",
     role: "COO & CPO",
-    bio: "Arquitectura, producto y tecnología. Construyo los sistemas que hacen que todo funcione sin que el cliente tenga que tocar nada. Si no escala, no lo construyo.",
+    bio: "Vi de cerca cómo los negocios locales pagaban caro por tecnología que no funcionaba o que nadie sabía operar. Decidí construir algo diferente: un sistema que se instala, trabaja solo y escala sin que el dueño tenga que tocar nada.",
     avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&h=200&fit=crop&crop=face",
-    tags: ["Producto", "Automatización", "Seguridad"],
+    tags: ["Producto", "Automatización", "Arquitectura"],
   },
 ];
 
