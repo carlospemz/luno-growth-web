@@ -1,5 +1,17 @@
 @AGENTS.md
 
+# Luno Growth — Public Landing Page
+
+This repo is the public-facing website for **Luno Growth** (marketing services branch).
+It is NOT the product (that's Luno OS in `luno-platform`).
+It is NOT the admin (that's Luno Ops in `luno-platform`).
+
+## Branch Identity
+- **Luno Growth** = cash flow engine. Marketing services sold to businesses.
+- This repo = public landing page + brief intake form
+- Backend = lives in `luno-platform` (/api/growth/*, /admin/growth/*)
+- Connection = brief form -> /api/growth/intake -> luno-platform /api/ops-sync
+
 ## Platform Connection (updated 2026-04-05)
 
 ### How this site connects to luno-platform
