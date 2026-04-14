@@ -9,13 +9,16 @@ import { MOTION } from "@/lib/motion";
 
 /* ═══════════════════════════════════════
    Step data + per-icon ambient config
+   Ambient animations preserved from original — they're the strongest
+   visual element of the repo. Only copy was rewritten to match the
+   brand bible voice (calm, surgical, not urgent).
    ═══════════════════════════════════════ */
 
 const STEPS = [
   {
     icon: MessageSquare,
-    title: "Diagnóstico (15 min)",
-    desc: "Una llamada corta. Entendemos tu negocio, tu cliente ideal y qué necesitas para que te lleguen más mensajes.",
+    title: "Diagnóstico",
+    desc: "Una llamada corta con Vincent. Entendemos tu negocio antes de tocar un píxel — qué vendes, a quién, qué te duele.",
     ambient: {
       animate: {
         y: [0, -4, 1, -3, 0],
@@ -24,13 +27,12 @@ const STEPS = [
       },
       transition: { duration: 3.5, repeat: Infinity, ease: "easeInOut" as const },
     },
-    /** Show a reply chat bubble next to the icon */
     replyBubble: true,
   },
   {
     icon: Paintbrush,
-    title: "Construcción (48–72h)",
-    desc: "Landing, chatbot, contenido y campañas configurados en 48–72h. Tú solo apruebas — nosotros ejecutamos.",
+    title: "Construcción",
+    desc: "IA y humanos trabajando en paralelo. Producimos en días lo que una agencia tradicional tarda semanas. Tú apruebas, nosotros pintamos.",
     ambient: {
       animate: {
         x: [0, 14, 0],
@@ -42,8 +44,8 @@ const STEPS = [
   },
   {
     icon: Rocket,
-    title: "Lanzamiento (mismo día)",
-    desc: "Todo live el mismo día. Tu sistema recibiendo mensajes, calificando leads y cerrando ventas — sin que tú hagas nada.",
+    title: "Lanzamiento",
+    desc: "Todo vivo, con acompañamiento las primeras semanas. Vincent se queda cerca hasta que la noche empieza a trabajar sola.",
     ambient: {
       animate: {
         x: [0, 22, 0],
@@ -55,14 +57,13 @@ const STEPS = [
   },
 ];
 
-/* Each card enters from a different direction — moderate offsets for fluidity */
 const cardEntrances = [
-  { x: -40, rotate: -2 },   /* Card 1: from left */
-  { y: 30 },                 /* Card 2: from below */
-  { x: 40, rotate: 2 },     /* Card 3: from right */
+  { x: -40, rotate: -2 },
+  { y: 30 },
+  { x: 40, rotate: 2 },
 ];
 
-/* Reply bubble animation — appears as if someone is replying */
+/* Reply bubble — simulates someone replying */
 function ReplyBubble({ inView }: { inView: boolean }) {
   return (
     <motion.span
@@ -73,7 +74,7 @@ function ReplyBubble({ inView }: { inView: boolean }) {
           ? {
               opacity: [0, 0.7, 0.7, 0],
               scale: [0, 1, 1, 0.8],
-              x: [  -4, 2, 2, 4],
+              x: [-4, 2, 2, 4],
             }
           : {}
       }
@@ -84,7 +85,10 @@ function ReplyBubble({ inView }: { inView: boolean }) {
         ease: "easeInOut",
       }}
     >
-      <MessageSquare className="h-3.5 w-3.5 -scale-x-100 text-cyan-400/60" />
+      <MessageSquare
+        className="h-3.5 w-3.5 -scale-x-100"
+        style={{ color: "rgba(232, 185, 49, 0.7)" }}
+      />
     </motion.span>
   );
 }
@@ -96,17 +100,25 @@ export default function Process() {
   return (
     <Section id="process">
       <div ref={sectionRef}>
-        <SectionHeader kicker="Cómo funciona" title={"48 horas y ya estás\u00A0corriendo."} accentWord="corriendo." />
+        <SectionHeader
+          kicker="Método"
+          title="Tres pasos. Sin misterio."
+          accentWord="Sin misterio."
+          subcopy="Entendemos. Construimos. Acompañamos. En ese orden. Con calma."
+        />
 
         {/* Timeline container with vertical line */}
-        <div className="relative">
-          {/* Vertical timeline line — draws downward */}
+        <div className="relative mt-10">
           <motion.div
             initial={{ scaleY: 0 }}
             whileInView={{ scaleY: 1 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 1.2, ease: [...MOTION.easeOut], delay: 0.2 }}
-            className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 origin-top bg-gradient-to-b from-cyan-400/30 via-violet-500/20 to-transparent md:block"
+            className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 origin-top md:block"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(232, 185, 49, 0.4), rgba(232, 185, 49, 0.15), transparent)",
+            }}
             aria-hidden="true"
           />
 
@@ -130,16 +142,21 @@ export default function Process() {
                   }}
                   viewport={{ once: true, amount: 0.1 }}
                   transition={{
-                    duration: 0.4,
+                    duration: 0.5,
                     ease: [...MOTION.ease],
-                    delay: 0.05 + i * 0.08,
+                    delay: 0.05 + i * 0.1,
                   }}
                   style={{ willChange: "transform, opacity" }}
                 >
-                  <GlowCard glowColor={i === 1 ? "cyan" : "purple"} className="p-6">
-                    {/* Step number indicator */}
+                  <GlowCard glowColor="orange" className="p-6">
+                    {/* Step number */}
                     <div
-                      className={`mb-3 flex h-6 w-6 items-center justify-center rounded-full text-[11px] font-bold ${i === 1 ? "bg-cyan-400/10 text-cyan-400" : "bg-violet-100 text-violet-400"}`}
+                      className="mb-3 flex h-7 w-7 items-center justify-center rounded-full font-mono text-[11px] font-semibold"
+                      style={{
+                        background: "rgba(232, 185, 49, 0.12)",
+                        color: "#E8B931",
+                        border: "1px solid rgba(232, 185, 49, 0.4)",
+                      }}
                     >
                       {i + 1}
                     </div>
@@ -150,14 +167,25 @@ export default function Process() {
                         animate={inView ? s.ambient.animate : {}}
                         transition={inView ? s.ambient.transition : { duration: 0.3 }}
                       >
-                        <s.icon className={`h-7 w-7 ${i === 1 ? "text-cyan-400" : "text-violet-400"}`} />
+                        <s.icon className="h-7 w-7" style={{ color: "#E8B931" }} />
                       </motion.span>
                       {"replyBubble" in s && s.replyBubble && (
                         <ReplyBubble inView={inView} />
                       )}
                     </span>
-                    <h3 className="mt-4 font-heading text-[17px] font-bold">{s.title}</h3>
-                    <p className="mt-2 text-[14.5px] leading-[1.55] text-zinc-500">{s.desc}</p>
+
+                    <h3
+                      className="mt-4 font-headline text-[22px] font-bold leading-[1.05]"
+                      style={{ color: "#F5F0E1" }}
+                    >
+                      {s.title}
+                    </h3>
+                    <p
+                      className="mt-3 text-[14px] leading-[1.55]"
+                      style={{ color: "rgba(245, 240, 225, 0.68)" }}
+                    >
+                      {s.desc}
+                    </p>
                   </GlowCard>
                 </motion.div>
               );

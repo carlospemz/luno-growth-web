@@ -2,15 +2,14 @@
 
 import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
-import { ChevronDown, ArrowRight } from "lucide-react";
+import { ChevronDown, ArrowRight, MessageCircle } from "lucide-react";
 import "@/styles/luno-landing.css";
 import Container from "@/components/ui/Container";
-import { quoteUrl } from "@/config/contact";
-import { HoverBorderGradient } from "@/components/ui/HoverBorderGradient";
+import VincentWordmark from "@/components/ui/VincentWordmark";
+import { whatsappUrl } from "@/config/contact";
 
 const pop: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
-
 
 export default function Hero() {
   const revealRef = useRef<HTMLDivElement>(null);
@@ -28,111 +27,142 @@ export default function Hero() {
 
   const show = revealInView && fontsReady;
 
-  const handleScrollToWork = useCallback(() => {
-    document.getElementById("work")?.scrollIntoView({ behavior: "smooth" });
+  const handleScrollToOffers = useCallback(() => {
+    document.getElementById("offers")?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   return (
-    <section className="relative flex min-h-[100svh] flex-col">
+    <section className="relative flex min-h-[100svh] flex-col overflow-hidden">
       <Container className="relative z-20 flex flex-1 flex-col items-center pb-5 md:pb-6">
         <div
           ref={revealRef}
           className="flex flex-1 flex-col items-center w-full"
         >
-          {/* ——— Main content — vertically centered ——— */}
-          <div className="flex flex-1 flex-col items-center justify-center pt-16 md:pt-20">
-            {/* Logo badge */}
+          {/* Main content — vertically centered */}
+          <div className="flex flex-1 flex-col items-center justify-center pt-20 md:pt-28">
+            {/* Pill badge */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               animate={show ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.5, ease: pop }}
-              className="mb-7"
+              className="mb-8"
             >
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-purple-200/50 bg-purple-50/60 px-3.5 py-1.5 text-[12px] font-semibold uppercase tracking-[0.1em] text-purple-600">
-                <span className="h-1.5 w-1.5 rounded-full bg-purple-500 animate-pulse" />
-                Luno Growth
+              <span
+                className="inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-[11px] font-mono uppercase tracking-[0.2em]"
+                style={{
+                  borderColor: "rgba(232, 185, 49, 0.4)",
+                  background: "rgba(232, 185, 49, 0.06)",
+                  color: "#E8B931",
+                }}
+              >
+                <span
+                  className="h-1.5 w-1.5 rounded-full animate-pulse"
+                  style={{ background: "#E8B931" }}
+                />
+                VINCENT Growth · Abril 2026
               </span>
             </motion.div>
 
-            {/* H1 + sub + CTAs + microcopy */}
-            <div className="flex max-w-[720px] flex-col items-center text-center">
-              {/* H1 */}
+            {/* Wordmark */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={show ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.7, ease: pop, delay: 0.05 }}
+              className="mb-8"
+            >
+              <VincentWordmark
+                height={56}
+                aria-label="VINCENT"
+                className="md:h-20"
+              />
+            </motion.div>
+
+            {/* H1 */}
+            <div className="flex max-w-[780px] flex-col items-center text-center">
               <motion.h1
                 initial={{ opacity: 0, y: 24 }}
                 animate={show ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.7, ease: pop, delay: 0.1 }}
-                className="text-[36px] md:text-[56px] lg:text-[64px] font-bold tracking-[-0.03em] text-zinc-900 leading-[1.05]"
-                style={{ textWrap: "balance" }}
+                transition={{ duration: 0.7, ease: pop, delay: 0.15 }}
+                className="font-headline text-[44px] md:text-[68px] lg:text-[84px] font-extrabold uppercase leading-[0.95] tracking-tight"
+                style={{ color: "#F5F0E1", textWrap: "balance" }}
               >
-                Tu negocio trabajando{" "}
-                <span className="brand-gradient-text">cuando tú</span>{" "}
-                no{" "}
-                <span className="brand-gradient-text">puedes.</span>
+                Tu negocio nunca duerme.
+                <br />
+                <span className="vin-gradient-gold-text">Tú sí.</span>
               </motion.h1>
 
               {/* Subtitle */}
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 animate={show ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, ease, delay: 0.25 }}
-                className="mt-6 max-w-[460px] text-[16px] md:text-[18px] text-zinc-500 leading-relaxed"
+                transition={{ duration: 0.5, ease, delay: 0.3 }}
+                className="mt-7 max-w-[560px] text-[16px] md:text-[19px] leading-relaxed"
+                style={{ color: "rgba(245, 240, 225, 0.72)" }}
               >
-                Cada día sin sistema, tu competencia te quita clientes.{" "}
-                <span className="text-zinc-400">LUNO lo detiene en 48 horas — sin contratar a nadie.</span>
+                Somos los artistas del futuro. Pintamos con código y con IA para que tu marca trabaje de noche y tú recuperes el día.
               </motion.p>
 
               {/* CTAs */}
               <motion.div
                 initial={{ opacity: 0, y: 14 }}
                 animate={show ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, ease: pop, delay: 0.35 }}
-                className="mt-9 flex items-center gap-3.5"
+                transition={{ duration: 0.5, ease: pop, delay: 0.42 }}
+                className="mt-10 flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto"
               >
-                <HoverBorderGradient
-                  as="a"
-                  href="#pricing"
-                  containerClassName="rounded-xl"
-                  className="flex items-center gap-2 rounded-xl px-6 py-3 text-[14px] font-semibold"
-                  duration={1.2}
+                <a
+                  href={whatsappUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-glow flex w-full sm:w-auto items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[14px] font-semibold"
+                  style={{
+                    background: "linear-gradient(135deg, #E8B931, #F5D06A)",
+                    color: "#0B1E38",
+                  }}
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  Habla con Vincent
+                </a>
+                <button
+                  type="button"
+                  onClick={handleScrollToOffers}
+                  className="flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border px-7 py-3.5 text-[14px] font-semibold transition-colors"
+                  style={{
+                    borderColor: "rgba(245, 240, 225, 0.25)",
+                    color: "#F5F0E1",
+                    background: "rgba(245, 240, 225, 0.04)",
+                  }}
                 >
                   Ver la oferta
                   <ArrowRight className="h-4 w-4" />
-                </HoverBorderGradient>
-                <a
-                  href={quoteUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-[14px] font-semibold text-zinc-300 transition-all hover:border-white/20 hover:text-white"
-                >
-                  WhatsApp
-                </a>
+                </button>
               </motion.div>
 
               {/* Microcopy */}
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={show ? { opacity: 1 } : {}}
-                transition={{ duration: 0.3, delay: 0.45 }}
-                className="mt-4 text-[13px] text-zinc-400"
+                transition={{ duration: 0.3, delay: 0.55 }}
+                className="mt-5 font-mono text-[11px] uppercase tracking-[0.12em]"
+                style={{ color: "rgba(245, 240, 225, 0.5)" }}
               >
-                Sin contrato largo · 30 días de resultados medibles o no renuevas · Setup en 48h
+                Desde $8,000 MXN · Sin contratos largos · Setup en días, no meses
               </motion.p>
             </div>
-
           </div>
 
-          {/* ——— Scroll cue ——— */}
+          {/* Scroll cue */}
           <motion.button
             type="button"
-            onClick={handleScrollToWork}
+            onClick={handleScrollToOffers}
             initial={{ opacity: 0, y: 6 }}
             animate={show ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.4, ease, delay: 0.75 }}
-            className="group mt-8 flex flex-col items-center gap-2 text-zinc-400 transition-colors hover:text-zinc-600"
-            aria-label="Ver evidencia"
+            transition={{ duration: 0.4, ease, delay: 0.8 }}
+            className="group mt-10 flex flex-col items-center gap-2 transition-colors"
+            style={{ color: "rgba(245, 240, 225, 0.42)" }}
+            aria-label="Ver la oferta"
           >
-            <span className="text-[12px] font-medium tracking-wide uppercase">
-              Mira la evidencia
+            <span className="font-mono text-[10px] font-medium tracking-[0.2em] uppercase">
+              Ver la oferta
             </span>
             <motion.span
               animate={{ y: [0, 5, 0] }}

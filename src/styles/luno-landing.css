@@ -1,13 +1,16 @@
 /*
- * luno-landing.css
- * ================
- * Luno Growth landing page — LIGHT theme.
- * Matches Luno platform: #fafafa bg, white surfaces, purple/cyan accents.
- * Calm, premium, Opal-inspired — on LIGHT backgrounds.
+ * luno-landing.css (VINCENT Noche Estrellada rewrite · Abril 2026)
+ * ================================================================
+ * File keeps its legacy name so existing imports don't break, but
+ * every utility has been reskinned to the VINCENT palette:
+ *   #0B1E38 deep indigo · #2D4E8E cobalt · #E8B931 gold · #F5F0E1 cream
+ *
+ * Rule: nothing here introduces behavior the brand bible forbids
+ * (no parallax, no 3D, no mouse tracking). Only reskin.
  */
 
 /* ───────────────────────────────────────────
-   1. ShineText — iridescent gradient sweep
+   1. ShineText — gold gradient sweep (on dark)
    ─────────────────────────────────────────── */
 
 .shine-text {
@@ -15,10 +18,10 @@
   display: inline-block;
   background: linear-gradient(
     135deg,
-    #9333ea 0%,
-    #06b6d4 40%,
-    #c026d3 70%,
-    #9333ea 100%
+    #E8B931 0%,
+    #F5D06A 40%,
+    #E8B931 70%,
+    #F5D06A 100%
   );
   background-size: 300% 100%;
   -webkit-background-clip: text;
@@ -37,7 +40,7 @@
 }
 
 /* ───────────────────────────────────────────
-   2. Glow button — Opal-inspired on light bg
+   2. Glow button — gold on indigo
    ─────────────────────────────────────────── */
 
 .btn-glow {
@@ -47,15 +50,15 @@
     transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.3s ease,
     filter 0.3s ease;
-  box-shadow: 0 2px 16px rgba(168, 85, 247, 0.12);
+  box-shadow: 0 2px 16px rgba(232, 185, 49, 0.18);
 }
 
 .btn-glow:hover {
-  filter: brightness(1.06);
+  filter: brightness(1.08);
   transform: scale(1.03);
   box-shadow:
-    0 4px 24px rgba(168, 85, 247, 0.20),
-    0 0 40px rgba(6, 182, 212, 0.08);
+    0 4px 24px rgba(232, 185, 49, 0.28),
+    0 0 40px rgba(232, 185, 49, 0.14);
 }
 
 /* Shimmer sweep */
@@ -69,7 +72,7 @@
   background: linear-gradient(
     105deg,
     transparent 20%,
-    rgba(255, 255, 255, 0.30) 50%,
+    rgba(245, 240, 225, 0.35) 50%,
     transparent 80%
   );
   transform: translateX(-100%);
@@ -85,8 +88,8 @@
 
 /* Breathing glow */
 @keyframes breathe-glow {
-  0%, 100% { box-shadow: 0 2px 16px rgba(168, 85, 247, 0.12); }
-  50%      { box-shadow: 0 4px 24px rgba(168, 85, 247, 0.18), 0 0 32px rgba(6, 182, 212, 0.06); }
+  0%, 100% { box-shadow: 0 2px 16px rgba(232, 185, 49, 0.18); }
+  50%      { box-shadow: 0 4px 24px rgba(232, 185, 49, 0.28), 0 0 32px rgba(232, 185, 49, 0.12); }
 }
 
 .btn-glow-breathe {
@@ -94,18 +97,18 @@
 }
 
 /* ───────────────────────────────────────────
-   3. Landing cards — Luno glass on light bg
+   3. Landing cards — VINCENT glass on indigo
    ─────────────────────────────────────────── */
 
 .card-glass {
-  background: rgba(255, 255, 255, 0.82);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(245, 240, 225, 0.04);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(245, 240, 225, 0.10);
   border-radius: 20px;
   box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    0 1px 2px rgba(0, 0, 0, 0.02);
+    0 2px 14px rgba(0, 0, 0, 0.5),
+    0 1px 3px rgba(0, 0, 0, 0.3);
   transition:
     transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.3s ease,
@@ -115,32 +118,31 @@
 .card-glass:hover {
   transform: translateY(-3px);
   box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.06),
-    0 0 24px rgba(168, 85, 247, 0.04);
-  border-color: rgba(168, 85, 247, 0.10);
+    0 8px 28px rgba(0, 0, 0, 0.6),
+    0 0 28px rgba(232, 185, 49, 0.14);
+  border-color: rgba(232, 185, 49, 0.30);
 }
 
-/* Tier variants */
 .card-glass--standard {
-  border-color: rgba(0, 0, 0, 0.04);
+  border-color: rgba(245, 240, 225, 0.08);
 }
 
 .card-glass--recommended {
-  border-color: rgba(168, 85, 247, 0.15);
+  border-color: rgba(232, 185, 49, 0.35);
   box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    0 0 24px rgba(168, 85, 247, 0.06);
+    0 2px 14px rgba(0, 0, 0, 0.5),
+    0 0 32px rgba(232, 185, 49, 0.14);
 }
 
 .card-glass--premium {
-  border-color: rgba(6, 182, 212, 0.15);
+  border-color: rgba(45, 78, 142, 0.5);
   box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    0 0 24px rgba(6, 182, 212, 0.04);
+    0 2px 14px rgba(0, 0, 0, 0.5),
+    0 0 28px rgba(45, 78, 142, 0.2);
 }
 
 /* ───────────────────────────────────────────
-   4. Gradient border — slow iridescent rotation
+   4. Gradient border — slow gold rotation
    ─────────────────────────────────────────── */
 
 @property --border-angle {
@@ -167,9 +169,9 @@
   background: conic-gradient(
     from var(--border-angle),
     transparent 25%,
-    rgba(168, 85, 247, 0.15) 30%,
-    rgba(6, 182, 212, 0.15) 35%,
-    rgba(192, 38, 211, 0.10) 40%,
+    rgba(232, 185, 49, 0.35) 30%,
+    rgba(245, 208, 106, 0.25) 35%,
+    rgba(232, 185, 49, 0.20) 40%,
     transparent 45%
   );
   -webkit-mask:
@@ -211,23 +213,23 @@
   background: linear-gradient(
     105deg,
     transparent 40%,
-    rgba(168, 85, 247, 0.03) 50%,
+    rgba(232, 185, 49, 0.08) 50%,
     transparent 60%
   );
   animation: card-shine 10s linear infinite;
 }
 
 /* ───────────────────────────────────────────
-   6. Price shimmer — gradient text for prices
+   6. Price shimmer — gold gradient for prices on dark
    ─────────────────────────────────────────── */
 
 .price-shimmer {
   background: linear-gradient(
     90deg,
-    #18181b 0%,
-    #9333ea 40%,
-    #06b6d4 70%,
-    #18181b 100%
+    #F5F0E1 0%,
+    #E8B931 40%,
+    #F5D06A 70%,
+    #F5F0E1 100%
   );
   background-size: 200% 100%;
   -webkit-background-clip: text;
@@ -242,7 +244,7 @@
 }
 
 /* ───────────────────────────────────────────
-   7. Section divider line
+   7. Section divider line — gold
    ─────────────────────────────────────────── */
 
 .luno-line {
@@ -250,8 +252,8 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(168, 85, 247, 0.15),
-    rgba(6, 182, 212, 0.15),
+    rgba(232, 185, 49, 0.40),
+    rgba(232, 185, 49, 0.40),
     transparent
   );
 }
@@ -274,8 +276,8 @@
    ─────────────────────────────────────────── */
 
 @keyframes scroll-cue-breathe {
-  0%, 100% { transform: translateY(0); opacity: 0.25; }
-  50%      { transform: translateY(5px); opacity: 0.65; }
+  0%, 100% { transform: translateY(0); opacity: 0.3; }
+  50%      { transform: translateY(5px); opacity: 0.85; }
 }
 
 .scroll-cue {
@@ -283,7 +285,7 @@
 }
 
 /* ───────────────────────────────────────────
-   10. Opal gradient — subtle background accent
+   10. Nocturnal gradient — subtle indigo swirl
    ─────────────────────────────────────────── */
 
 @keyframes opal-gradient-shift {
@@ -297,69 +299,69 @@
 .opal-gradient {
   background: linear-gradient(
     135deg,
-    rgba(168, 85, 247, 0.04) 0%,
-    rgba(6, 182, 212, 0.03) 25%,
-    rgba(192, 38, 211, 0.03) 50%,
-    rgba(168, 85, 247, 0.04) 100%
+    rgba(45, 78, 142, 0.10) 0%,
+    rgba(232, 185, 49, 0.05) 25%,
+    rgba(11, 30, 56, 0.12) 50%,
+    rgba(45, 78, 142, 0.10) 100%
   );
   background-size: 400% 400%;
-  animation: opal-gradient-shift 12s ease-in-out infinite;
+  animation: opal-gradient-shift 14s ease-in-out infinite;
 }
 
 /* ───────────────────────────────────────────
-   11. Glass input fields — light theme
+   11. Glass input fields — dark theme
    ─────────────────────────────────────────── */
 
 .input-glass {
-  background: rgba(255, 255, 255, 0.90);
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: rgba(245, 240, 225, 0.05);
+  border: 1px solid rgba(245, 240, 225, 0.12);
   border-radius: 14px;
-  color: #18181b;
+  color: #F5F0E1;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .input-glass::placeholder {
-  color: #a1a1aa;
+  color: rgba(245, 240, 225, 0.38);
 }
 
 .input-glass:focus {
-  border-color: rgba(168, 85, 247, 0.30);
-  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.06);
+  border-color: rgba(232, 185, 49, 0.5);
+  box-shadow: 0 0 0 3px rgba(232, 185, 49, 0.15);
   outline: none;
 }
 
 /* ───────────────────────────────────────────
-   12. Gradient text utility
+   12. Gradient text utility — gold
    ─────────────────────────────────────────── */
 
 .gradient-text {
-  background: linear-gradient(135deg, #9333ea, #06b6d4);
+  background: linear-gradient(135deg, #E8B931, #F5D06A);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 /* ───────────────────────────────────────────
-   13. Submit button — solid premium
+   13. Submit button — gold on indigo
    ─────────────────────────────────────────── */
 
 .btn-submit {
-  background: linear-gradient(135deg, #a855f7, #7c3aed);
-  color: white;
+  background: linear-gradient(135deg, #E8B931, #F5D06A);
+  color: #0B1E38;
   border-radius: 14px;
-  font-weight: 600;
+  font-weight: 700;
   transition:
     transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.3s ease,
     filter 0.3s ease;
-  box-shadow: 0 2px 12px rgba(168, 85, 247, 0.15);
+  box-shadow: 0 2px 16px rgba(232, 185, 49, 0.22);
 }
 
 .btn-submit:hover {
-  filter: brightness(1.06);
+  filter: brightness(1.08);
   box-shadow:
-    0 4px 20px rgba(168, 85, 247, 0.22),
-    0 0 32px rgba(6, 182, 212, 0.06);
+    0 6px 24px rgba(232, 185, 49, 0.32),
+    0 0 40px rgba(232, 185, 49, 0.14);
   transform: translateY(-1px);
 }
 
@@ -369,8 +371,68 @@
   transform: none;
 }
 
+.btn-secondary-alive {
+  color: #F5F0E1;
+  border: 1px solid rgba(245, 240, 225, 0.25);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.btn-secondary-alive:hover {
+  border-color: rgba(232, 185, 49, 0.5);
+  background: rgba(232, 185, 49, 0.06);
+}
+
 /* ───────────────────────────────────────────
-   14. Reduced motion
+   14. VINCENT Split — signature diagonal divider
+   ─────────────────────────────────────────── */
+
+.vin-split-top {
+  background: #0B1E38;
+  color: #F5F0E1;
+  clip-path: polygon(0 0, 100% 0, 100% 52%, 0 48%);
+}
+
+@media (min-width: 768px) {
+  .vin-split-top {
+    clip-path: polygon(0 0, 100% 0, 100% 58%, 0 42%);
+  }
+}
+
+.vin-split-bottom {
+  background: #F5F0E1;
+  color: #0B1E38;
+}
+
+/* The gold tagline that sits over the intersection */
+.vin-split-tagline {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 8px 20px;
+  background: rgba(11, 30, 56, 0.85);
+  border: 1px solid rgba(232, 185, 49, 0.6);
+  border-radius: 999px;
+  color: #E8B931;
+  font-family: var(--font-headline), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-size: 12px;
+  white-space: nowrap;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 2;
+}
+
+@media (min-width: 768px) {
+  .vin-split-tagline {
+    font-size: 16px;
+    padding: 10px 28px;
+  }
+}
+
+/* ───────────────────────────────────────────
+   15. Reduced motion
    ─────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
@@ -382,8 +444,7 @@
   .animate-gentle-float,
   .scroll-cue,
   .opal-gradient,
-  .price-shimmer,
-  .gradient-text-iridescent {
+  .price-shimmer {
     animation: none !important;
   }
 }

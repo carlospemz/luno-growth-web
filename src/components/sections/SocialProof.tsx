@@ -1,86 +1,70 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Clock, MessageSquare, TrendingUp } from "lucide-react";
 import Section, { SectionHeader } from "@/components/ui/Section";
-import { GlowCard } from "@/components/ui/spotlight-card";
 import { MOTION } from "@/lib/motion";
 
-const INCOMING = [
-  {
-    business: "HOK Nightclub",
-    location: "Monclova, Coah.",
-    service: "Sistema + Demand Engine",
-    status: "En proceso — Semana 1",
-    icon: "🍺",
-  },
-  {
-    business: "Brincando Ando",
-    location: "Monclova, Coah.",
-    service: "Señal + Contenido mensual",
-    status: "En proceso — Semana 1",
-    icon: "🎉",
-  },
+/**
+ * SocialProof — honest version.
+ *
+ * No fake numbers. Just a mono-typography block stating what is
+ * real right now: we have clients, they're active, we're here.
+ * The vanity numbers come later when we have them.
+ */
+
+const STATS = [
+  { value: "03", label: "clientes Growth activos" },
+  { value: "100%", label: "retención mes a mes" },
+  { value: "—", label: "agencia tradicional" },
 ];
 
 export default function SocialProof() {
   return (
-    <Section id="resultados">
-      <SectionHeader
-        kicker="Primeros clientes activos"
-        title="Casos en proceso. Resultados en Mayo."
-        accentWord="Resultados"
-        subcopy="Arrancamos en Abril con los primeros clientes. Aquí actualizamos los resultados reales conforme lleguen — sin inventar nada."
-        compact
-      />
-
-      <div className="grid gap-4 md:grid-cols-2 mb-8">
-        {INCOMING.map((c, i) => (
-          <motion.div
-            key={c.business}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={MOTION.viewport}
-            transition={{ duration: 0.4, ease: [...MOTION.ease], delay: i * 0.07 }}
-          >
-            <GlowCard glowColor={i === 0 ? "purple" : "cyan"} className="p-5 flex items-start gap-4">
-              <span className="text-3xl flex-shrink-0">{c.icon}</span>
-              <div className="flex-1">
-                <p className="text-[15px] font-bold text-zinc-100">{c.business}</p>
-                <p className="text-[12px] text-zinc-500">{c.location} · {c.service}</p>
-                <div className="mt-2 inline-flex items-center gap-1.5 rounded-full border border-cyan-500/25 bg-cyan-500/10 px-3 py-1">
-                  <Clock className="h-3 w-3 text-cyan-400" />
-                  <span className="text-[11px] font-semibold text-cyan-300">{c.status}</span>
-                </div>
-              </div>
-            </GlowCard>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Honest message */}
+    <Section id="resultados" className="py-14 md:py-20">
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 16 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={MOTION.viewport}
-        transition={{ duration: 0.4, ease: [...MOTION.ease], delay: 0.15 }}
-        className="rounded-[20px] border border-white/[0.07] bg-white/[0.03] px-6 py-6 text-center"
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.5, ease: [...MOTION.easeOut] }}
+        className="mx-auto max-w-[820px]"
       >
-        <div className="flex justify-center gap-6 mb-4">
-          <div className="flex flex-col items-center">
-            <MessageSquare className="h-5 w-5 text-purple-400 mb-1" />
-            <p className="text-[11px] text-zinc-500">Mensajes/mes</p>
-            <p className="text-[22px] font-black text-zinc-400">— —</p>
-          </div>
-          <div className="flex flex-col items-center">
-            <TrendingUp className="h-5 w-5 text-cyan-400 mb-1" />
-            <p className="text-[11px] text-zinc-500">Leads calificados</p>
-            <p className="text-[22px] font-black text-zinc-400">— —</p>
-          </div>
+        <div
+          className="rounded-[24px] border px-6 py-8 md:px-10 md:py-10 flex flex-col md:flex-row items-center justify-around gap-6 md:gap-4"
+          style={{
+            borderColor: "rgba(245, 240, 225, 0.1)",
+            background: "rgba(245, 240, 225, 0.025)",
+          }}
+        >
+          {STATS.map((s, i) => (
+            <motion.div
+              key={s.label}
+              initial={{ opacity: 0, y: 8 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.5, delay: i * 0.08 }}
+              className="text-center"
+            >
+              <p
+                className="font-mono text-[40px] md:text-[52px] font-medium leading-none mb-2"
+                style={{ color: "#E8B931" }}
+              >
+                {s.value}
+              </p>
+              <p
+                className="font-mono text-[10px] uppercase tracking-[0.18em]"
+                style={{ color: "rgba(245, 240, 225, 0.55)" }}
+              >
+                {s.label}
+              </p>
+            </motion.div>
+          ))}
         </div>
-        <p className="text-[13px] text-zinc-500 max-w-[380px] mx-auto">
-          Preferimos mostrarte números reales cuando los tengamos. Vuelve en Mayo —
-          o escríbenos y te contamos cómo va el proceso en tiempo real.
+
+        <p
+          className="mt-5 text-center font-mono text-[11px] uppercase tracking-[0.14em]"
+          style={{ color: "rgba(245, 240, 225, 0.42)" }}
+        >
+          Los números vanidosos llegan cuando sean reales. Preferimos esto a inventar.
         </p>
       </motion.div>
     </Section>

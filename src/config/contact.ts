@@ -20,18 +20,17 @@ export interface BriefData {
 }
 
 /* ═══════════════════════════════════════
-   Contact constants
+   VINCENT Contact constants
    ═══════════════════════════════════════ */
 
 export const CONTACT = {
   whatsappNumber: "521XXXXXXXXXX",
   phoneNumber: "+52 1 XXX XXX XXXX",
-  whatsappPrefill:
-    "Hola, acabo de llenar el brief en lunolive.com. ¿Me pueden cotizar?",
+  whatsappPrefill: "Hola Vincent, quiero recuperar el día.",
 } as const;
 
 export const contactEmail =
-  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "inquiries@lunolive.com";
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hola@vincent.mx";
 
 /* ═══════════════════════════════════════
    URL builders
@@ -51,16 +50,27 @@ export function contactEmailUrl(): string {
 }
 
 /* Quick quote prefill — used by hero CTA, floating button, etc. */
-export const QUOTE_PREFILL = `Hola, quiero cotizar una web.
+export const QUOTE_PREFILL = `Hola Vincent, quiero saber más de la oferta.
 Negocio:
 Ciudad:
-Objetivo (cotizar / reservar / pedir):
-¿Pago único o mensualidad?:
-¿Tienes logo/fotos? (sí/no):
-Link (Instagram o Google, si aplica):`;
+¿Qué te interesa? (Brand System / Content Engine / Demand Engine):`;
 
 export function quoteUrl(): string {
   return whatsappUrl(QUOTE_PREFILL);
+}
+
+/* Per-offer WhatsApp prefills */
+export const OFFER_PREFILLS = {
+  brand_system: "Hola Vincent, cuéntame del Brand System.",
+  content_engine: "Hola Vincent, cuéntame del Content Engine.",
+  demand_engine: "Hola Vincent, cuéntame del Demand Engine.",
+  website: "Hola Vincent, necesito una landing o sitio.",
+  local_search: "Hola Vincent, necesito presencia en Google Maps.",
+  health: "Hola Vincent, tengo un consultorio y quiero saber más.",
+} as const;
+
+export function offerWhatsappUrl(offer: keyof typeof OFFER_PREFILLS): string {
+  return whatsappUrl(OFFER_PREFILLS[offer]);
 }
 
 /* ═══════════════════════════════════════
@@ -73,7 +83,7 @@ function cap(s: string, max = 200) {
 
 export function buildBriefMessage(d: BriefData): string {
   const lines: string[] = [
-    `Hola, soy ${d.businessName}.`,
+    `Hola Vincent, soy ${d.businessName}.`,
     "",
     `Vendo: ${cap(d.whatYouSell)}`,
     `Mi cliente ideal: ${cap(d.whoYouSellTo)}`,
@@ -96,7 +106,7 @@ export function buildBriefMessage(d: BriefData): string {
     lines.push(`Lo quiero listo para: ${d.timeline}`);
   }
 
-  lines.push("", "Enviado desde el brief de lunolive.com");
+  lines.push("", "Enviado desde vincent.mx/growth");
 
   return whatsappUrl(lines.join("\n"));
 }

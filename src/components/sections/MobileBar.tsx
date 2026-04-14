@@ -3,13 +3,11 @@
 import { useEffect, useState, useRef } from "react";
 import { MessageCircle } from "lucide-react";
 import { whatsappUrl } from "@/config/contact";
-import "@/styles/luno-landing.css";
 
 /**
  * MobileBar — floating WhatsApp CTA (mobile only).
- * Hides when:
- * 1. Any other WhatsApp CTA button is visible on screen
- * 2. The hero section is still in view (prevents double-button)
+ * Hides when the hero or work section is in view, or when another
+ * WhatsApp CTA button is visible (avoids double-button).
  */
 export default function MobileBar() {
   const [visible, setVisible] = useState(false);
@@ -28,11 +26,13 @@ export default function MobileBar() {
     let workEl: Element | null = null;
 
     const updateVisibility = () => {
-      const shouldShow = !heroVisibleRef.current && !workVisibleRef.current && ctaVisibleCountRef.current === 0;
+      const shouldShow =
+        !heroVisibleRef.current &&
+        !workVisibleRef.current &&
+        ctaVisibleCountRef.current === 0;
       setVisible(shouldShow);
     };
 
-    /* Observer for CTA buttons */
     const ctaObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -47,7 +47,6 @@ export default function MobileBar() {
       { threshold: 0.1 },
     );
 
-    /* Observer for hero section — block MobileBar while hero is in view */
     const heroObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -58,7 +57,6 @@ export default function MobileBar() {
       { threshold: 0.05 },
     );
 
-    /* Observer for work/projects section — hide so it doesn't cover card CTAs */
     const workObserver = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -69,7 +67,6 @@ export default function MobileBar() {
       { threshold: 0.05 },
     );
 
-    /* Small delay to let DOM hydrate */
     const timer = setTimeout(() => {
       ctaTargets = Array.from(document.querySelectorAll(ctaSelector)).filter(
         (el) => !el.closest("[data-mobile-bar]"),
@@ -78,12 +75,8 @@ export default function MobileBar() {
       heroEl = document.querySelector("section:first-of-type");
       workEl = document.getElementById("work");
 
-      if (heroEl) {
-        heroObserver.observe(heroEl);
-      }
-      if (workEl) {
-        workObserver.observe(workEl);
-      }
+      if (heroEl) heroObserver.observe(heroEl);
+      if (workEl) workObserver.observe(workEl);
 
       if (ctaTargets.length === 0 && !heroEl) {
         setVisible(true);
@@ -107,19 +100,25 @@ export default function MobileBar() {
     <div
       data-mobile-bar
       className={`fixed bottom-5 right-4 z-50 md:hidden transition-all duration-300 ${
-        visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0 pointer-events-none"
+        visible
+          ? "translate-y-0 opacity-100"
+          : "translate-y-8 opacity-0 pointer-events-none"
       }`}
     >
       <a
         href={whatsappUrl()}
         target="_blank"
         rel="noopener noreferrer"
-        className="card-border-glow flex items-center gap-2.5 rounded-full bg-surface-1/90 backdrop-blur-md px-5 py-3 border border-white/[0.08] text-[13px] font-semibold text-white shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
+        className="flex items-center gap-2.5 rounded-full px-5 py-3.5 text-[13px] font-semibold transition-all active:scale-[0.98]"
+        style={{
+          background: "linear-gradient(135deg, #E8B931, #F5D06A)",
+          color: "#0B1E38",
+          boxShadow:
+            "0 4px 24px rgba(232, 185, 49, 0.28), 0 2px 8px rgba(0, 0, 0, 0.4)",
+        }}
       >
-        <span className="msg-alive">
-          <MessageCircle className="h-4 w-4 text-violet-400" />
-        </span>
-        Cotizar
+        <MessageCircle className="h-4 w-4" />
+        Habla con Vincent
       </a>
     </div>
   );
