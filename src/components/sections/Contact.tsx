@@ -3,15 +3,24 @@
 import { motion } from "framer-motion";
 import { MessageCircle, Mail } from "lucide-react";
 import Container from "@/components/ui/Container";
-import { whatsappUrl, contactEmail, contactEmailUrl } from "@/config/contact";
+import {
+  waAnchorProps,
+  contactEmail,
+  contactEmailUrl,
+} from "@/config/contact";
 import { MOTION } from "@/lib/motion";
-import VincentWordmark, { VincentDiamond } from "@/components/ui/VincentWordmark";
+import { VincentDiamond } from "@/components/ui/VincentWordmark";
 import "@/styles/luno-landing.css";
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative z-[3] py-20 md:py-28">
-      <Container>
+    <section
+      id="contact"
+      className="relative z-[3] vin-bay-shell is-calm"
+    >
+      {/* Global night system lives fixed at layout root — the night
+          atmosphere carries into contact without a local canvas. */}
+      <Container className="relative z-10">
         {/* CTA block */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -46,7 +55,7 @@ export default function Contact() {
               transition={{ duration: 0.5 }}
               className="mb-6 flex justify-center"
             >
-              <VincentDiamond size={20} breathe />
+              <VincentDiamond size={20} />
             </motion.div>
 
             <motion.h2
@@ -80,9 +89,7 @@ export default function Contact() {
               className="mt-9 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
             >
               <a
-                href={whatsappUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...waAnchorProps()}
                 className="btn-glow flex w-full sm:w-auto items-center justify-center gap-2 rounded-full px-7 py-3.5 text-[14px] font-semibold"
                 style={{
                   background: "linear-gradient(135deg, #E8B931, #F5D06A)",
@@ -125,6 +132,7 @@ export default function Contact() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.35, ease: [...MOTION.ease], delay: 0.15 }}
+        className="relative z-10"
       >
         <div
           className="mt-20 border-t"
@@ -134,26 +142,31 @@ export default function Contact() {
           <div className="flex flex-col items-center justify-between gap-5 md:flex-row">
             {/* Brand */}
             <div className="flex items-center gap-3">
-              <VincentWordmark height={22} still aria-label="VINCENT" />
+              <img
+                src="/vincent-logo.png"
+                alt="Vincent"
+                className="h-12 w-auto"
+                draggable={false}
+              />
               <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[rgba(245,240,225,0.45)]">
                 Growth
               </span>
             </div>
 
-            {/* Links */}
+            {/* Links — each channel only renders if it's actually wired. */}
             <div className="flex items-center gap-6">
+              {contactEmail && (
+                <a
+                  href={contactEmailUrl() ?? "#brief"}
+                  className="flex items-center gap-1.5 text-[12px] font-mono transition-colors hover:text-[#E8B931]"
+                  style={{ color: "rgba(245, 240, 225, 0.55)" }}
+                >
+                  <Mail className="h-3 w-3" />
+                  {contactEmail}
+                </a>
+              )}
               <a
-                href={contactEmailUrl()}
-                className="flex items-center gap-1.5 text-[12px] font-mono transition-colors hover:text-[#E8B931]"
-                style={{ color: "rgba(245, 240, 225, 0.55)" }}
-              >
-                <Mail className="h-3 w-3" />
-                {contactEmail}
-              </a>
-              <a
-                href={whatsappUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
+                {...waAnchorProps()}
                 className="flex items-center gap-1.5 text-[12px] font-mono transition-colors hover:text-[#E8B931]"
                 style={{ color: "rgba(245, 240, 225, 0.55)" }}
               >
