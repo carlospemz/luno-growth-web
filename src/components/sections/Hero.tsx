@@ -194,6 +194,21 @@ export default function Hero() {
             </span>
           </motion.div>
 
+          {/* ── Wordmark — observatory authority piece ──── */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={show ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.65, ease: pop, delay: 0.05 }}
+            className="mb-16 md:mb-24"
+          >
+            <img
+              src="/vincent-wordmark.png"
+              alt="Vincent"
+              className="h-[72px] md:h-[108px] w-auto"
+              draggable={false}
+            />
+          </motion.div>
+
           {/* ── Headline — monumental, breathing ────────── */}
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
