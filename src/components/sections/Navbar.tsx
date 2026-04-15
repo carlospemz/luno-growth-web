@@ -51,7 +51,7 @@ export default function Navbar() {
       }}
     >
       <Container>
-        <nav className="flex h-[72px] md:h-[80px] items-center justify-between gap-4">
+        <nav className="flex h-14 md:h-16 items-center justify-between gap-4">
           {/* Wordmark with diamond */}
           <a
             href="#"
@@ -61,7 +61,7 @@ export default function Navbar() {
             <img
               src="/vincent-wordmark.png"
               alt="Vincent"
-              className="h-14 md:h-16 w-auto"
+              className="h-9 md:h-10 w-auto"
               draggable={false}
             />
             <span className="hidden sm:inline text-[10px] font-mono uppercase tracking-[0.22em] text-[rgba(245,240,225,0.45)]">
