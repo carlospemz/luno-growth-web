@@ -56,9 +56,9 @@ export const ModemFooter = ({
             <div className="w-full flex flex-col items-center">
               <div className="space-y-3 flex flex-col items-center flex-1">
                 <img
-                  src="/vincent-logo.png"
+                  src="/vincent-wordmark.png"
                   alt="Vincent"
-                  className="h-16 md:h-20 w-auto"
+                  className="h-12 md:h-16 w-auto"
                   draggable={false}
                 />
                 <p

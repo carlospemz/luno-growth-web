@@ -202,9 +202,9 @@ export default function Hero() {
             className="mb-16 md:mb-24"
           >
             <img
-              src="/vincent-logo.png"
+              src="/vincent-wordmark.png"
               alt="Vincent"
-              className="h-[96px] md:h-[140px] w-auto"
+              className="h-[72px] md:h-[108px] w-auto"
               draggable={false}
             />
           </motion.div>

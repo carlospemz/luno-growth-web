@@ -59,9 +59,9 @@ export default function Navbar() {
             className="flex items-center gap-2.5 transition-opacity hover:opacity-90 shrink-0"
           >
             <img
-              src="/vincent-logo.png"
+              src="/vincent-wordmark.png"
               alt="Vincent"
-              className="h-12 md:h-14 w-auto"
+              className="h-10 md:h-12 w-auto"
               draggable={false}
             />
             <span className="hidden sm:inline text-[10px] font-mono uppercase tracking-[0.22em] text-[rgba(245,240,225,0.45)]">

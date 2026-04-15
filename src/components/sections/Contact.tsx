@@ -143,9 +143,9 @@ export default function Contact() {
             {/* Brand */}
             <div className="flex items-center gap-3">
               <img
-                src="/vincent-logo.png"
+                src="/vincent-wordmark.png"
                 alt="Vincent"
-                className="h-12 w-auto"
+                className="h-10 w-auto"
                 draggable={false}
               />
               <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[rgba(245,240,225,0.45)]">
