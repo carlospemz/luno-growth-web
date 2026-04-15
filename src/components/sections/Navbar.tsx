@@ -18,8 +18,8 @@ const LINKS = [
    - padding-top offset in the main document
    - scroll-margin-top on section anchors
    Keep in sync with the h-14 / md:h-16 Tailwind classes below. */
-export const NAVBAR_H_MOBILE = 56;
-export const NAVBAR_H_DESKTOP = 64;
+export const NAVBAR_H_MOBILE = 72;
+export const NAVBAR_H_DESKTOP = 80;
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -51,7 +51,7 @@ export default function Navbar() {
       }}
     >
       <Container>
-        <nav className="flex h-14 md:h-16 items-center justify-between gap-4">
+        <nav className="flex h-[72px] md:h-[80px] items-center justify-between gap-4">
           {/* Wordmark with diamond */}
           <a
             href="#"
@@ -61,7 +61,7 @@ export default function Navbar() {
             <img
               src="/vincent-wordmark.png"
               alt="Vincent"
-              className="h-10 md:h-12 w-auto"
+              className="h-14 md:h-16 w-auto"
               draggable={false}
             />
             <span className="hidden sm:inline text-[10px] font-mono uppercase tracking-[0.22em] text-[rgba(245,240,225,0.45)]">
