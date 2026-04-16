@@ -61,8 +61,10 @@ export function HoverBorderGradient({
 
   const angle = getAngle(direction);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const Component = Tag as any;
   return (
-    <Tag
+    <Component
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className={`relative flex rounded-full border content-center bg-black/20 hover:bg-black/10 transition duration-500 items-center flex-col flex-nowrap gap-10 h-min justify-center overflow-visible p-px decoration-clone w-fit ${containerClassName}`}
@@ -85,6 +87,6 @@ export function HoverBorderGradient({
         transition={{ ease: "linear", duration: duration / 4 }}
       />
       <div className="bg-[#080810] absolute inset-[1px] rounded-[inherit] z-1" />
-    </Tag>
+    </Component>
   );
 }
