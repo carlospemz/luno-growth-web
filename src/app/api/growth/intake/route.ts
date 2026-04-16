@@ -1,13 +1,16 @@
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
 /**
  * POST /api/growth/intake
  *
  * Receives brief data from the landing page form.
- * Forwards to luno-platform ops-sync to create a lead + project.
+ * 1. Sends email notification to hola@lunolive.com (via Resend)
+ * 2. Forwards to luno-platform ops-sync to create a lead + project.
  * Returns submission_id for tracking.
  *
  * Environment:
+ *   RESEND_API_KEY — Resend API key for email delivery
  *   LUNO_PLATFORM_URL — base URL of luno-platform (e.g. https://luno-white.vercel.app)
  *   LUNO_OPS_SYNC_KEY — shared secret (SUPABASE_SERVICE_ROLE_KEY from luno-platform)
  */
@@ -255,12 +258,122 @@ export async function POST(request: Request) {
     // Generate submission ID
     const submissionId = crypto.randomUUID();
 
-    // Log submission (always, even if sync fails)
+    // ── Send email notification to Eduardo ──
+    let emailed = false;
+    const resendKey = process.env.RESEND_API_KEY;
+    if (resendKey) {
+      try {
+        const resend = new Resend(resendKey);
+        const services = (body.service_types || []).join(", ") || "No especificado";
+        const actions = (body.desired_actions || []).join(", ") || "No especificado";
+        const channels = (body.primary_channels || []).join(", ") || "No especificado";
+        const extras = (body.extra_pages || []).join(", ");
+        const advanced = (body.advanced_features || []).join(", ");
+
+        await resend.emails.send({
+          from: "Vincent Growth <onboarding@resend.dev>",
+          to: ["hola@lunolive.com"],
+          subject: `Nuevo Brief: ${body.business_name} — ${services}`,
+          html: `
+            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 0 auto; background: #0B1E38; color: #F5F0E1; padding: 32px; border-radius: 16px;">
+              <div style="text-align: center; margin-bottom: 24px;">
+                <span style="color: #E8B931; font-size: 12px; text-transform: uppercase; letter-spacing: 2px;">Vincent Growth · Nuevo Brief</span>
+              </div>
+
+              <h1 style="color: #F5F0E1; font-size: 24px; margin: 0 0 4px;">${body.business_name}</h1>
+              <p style="color: rgba(245,240,225,0.6); font-size: 14px; margin: 0 0 24px;">ID: ${submissionId}</p>
+
+              <table style="width: 100%; border-collapse: collapse;">
+                <tr style="border-bottom: 1px solid rgba(245,240,225,0.1);">
+                  <td style="padding: 10px 0; color: rgba(245,240,225,0.5); font-size: 13px; width: 140px;">Contacto</td>
+                  <td style="padding: 10px 0; color: #F5F0E1; font-size: 14px;">${body.contact_name}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(245,240,225,0.1);">
+                  <td style="padding: 10px 0; color: rgba(245,240,225,0.5); font-size: 13px;">WhatsApp</td>
+                  <td style="padding: 10px 0; color: #E8B931; font-size: 14px; font-weight: 600;">${body.contact_phone}</td>
+                </tr>
+                ${body.contact_email ? `<tr style="border-bottom: 1px solid rgba(245,240,225,0.1);"><td style="padding: 10px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Email</td><td style="padding: 10px 0; color: #F5F0E1; font-size: 14px;">${body.contact_email}</td></tr>` : ""}
+                <tr style="border-bottom: 1px solid rgba(245,240,225,0.1);">
+                  <td style="padding: 10px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Giro</td>
+                  <td style="padding: 10px 0; color: #F5F0E1; font-size: 14px;">${body.business_type}</td>
+                </tr>
+                ${body.location_city ? `<tr style="border-bottom: 1px solid rgba(245,240,225,0.1);"><td style="padding: 10px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Ciudad</td><td style="padding: 10px 0; color: #F5F0E1; font-size: 14px;">${body.location_city}${body.location_zone ? ` · ${body.location_zone}` : ""}</td></tr>` : ""}
+                <tr style="border-bottom: 1px solid rgba(245,240,225,0.1);">
+                  <td style="padding: 10px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Qué vende</td>
+                  <td style="padding: 10px 0; color: #F5F0E1; font-size: 14px;">${body.business_description}</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(245,240,225,0.1);">
+                  <td style="padding: 10px 0; color: rgba(245,240,225,0.5); font-size: 13px;">A quién</td>
+                  <td style="padding: 10px 0; color: #F5F0E1; font-size: 14px;">${body.target_audience}</td>
+                </tr>
+              </table>
+
+              <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(232,185,49,0.3);">
+                <h2 style="color: #E8B931; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px;">Servicio</h2>
+                <table style="width: 100%; border-collapse: collapse;">
+                  <tr style="border-bottom: 1px solid rgba(245,240,225,0.1);">
+                    <td style="padding: 8px 0; color: rgba(245,240,225,0.5); font-size: 13px; width: 140px;">Interés</td>
+                    <td style="padding: 8px 0; color: #F5F0E1; font-size: 14px;">${services}</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(245,240,225,0.1);">
+                    <td style="padding: 8px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Acciones</td>
+                    <td style="padding: 8px 0; color: #F5F0E1; font-size: 14px;">${actions}</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(245,240,225,0.1);">
+                    <td style="padding: 8px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Canales</td>
+                    <td style="padding: 8px 0; color: #F5F0E1; font-size: 14px;">${channels}</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(245,240,225,0.1);">
+                    <td style="padding: 8px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Pago</td>
+                    <td style="padding: 8px 0; color: #F5F0E1; font-size: 14px;">${body.payment_preference || "No especificado"}</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(245,240,225,0.1);">
+                    <td style="padding: 8px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Budget</td>
+                    <td style="padding: 8px 0; color: #F5F0E1; font-size: 14px;">${body.budget_range || "No especificado"}</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(245,240,225,0.1);">
+                    <td style="padding: 8px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Timeline</td>
+                    <td style="padding: 8px 0; color: #F5F0E1; font-size: 14px;">${body.timeline || "Flexible"}</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(245,240,225,0.1);">
+                    <td style="padding: 8px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Dominio</td>
+                    <td style="padding: 8px 0; color: #F5F0E1; font-size: 14px;">${body.has_domain ? "Sí" : "No"}${body.domain_name ? ` (${body.domain_name})` : ""}</td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid rgba(245,240,225,0.1);">
+                    <td style="padding: 8px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Logo</td>
+                    <td style="padding: 8px 0; color: #F5F0E1; font-size: 14px;">${body.has_logo ? "Sí" : "No"}${body.logo_url ? ` · ${body.logo_url}` : ""}</td>
+                  </tr>
+                  ${extras ? `<tr style="border-bottom: 1px solid rgba(245,240,225,0.1);"><td style="padding: 8px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Páginas extra</td><td style="padding: 8px 0; color: #F5F0E1; font-size: 14px;">${extras}</td></tr>` : ""}
+                  ${advanced ? `<tr style="border-bottom: 1px solid rgba(245,240,225,0.1);"><td style="padding: 8px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Funciones</td><td style="padding: 8px 0; color: #F5F0E1; font-size: 14px;">${advanced}</td></tr>` : ""}
+                  ${body.competitors ? `<tr style="border-bottom: 1px solid rgba(245,240,225,0.1);"><td style="padding: 8px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Competencia</td><td style="padding: 8px 0; color: #F5F0E1; font-size: 14px;">${body.competitors}</td></tr>` : ""}
+                  ${body.reference_sites ? `<tr style="border-bottom: 1px solid rgba(245,240,225,0.1);"><td style="padding: 8px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Referencia visual</td><td style="padding: 8px 0; color: #F5F0E1; font-size: 14px;">${body.reference_sites}</td></tr>` : ""}
+                  ${body.additional_notes ? `<tr><td style="padding: 8px 0; color: rgba(245,240,225,0.5); font-size: 13px;">Notas</td><td style="padding: 8px 0; color: #F5F0E1; font-size: 14px;">${body.additional_notes}</td></tr>` : ""}
+                </table>
+              </div>
+
+              <div style="margin-top: 28px; padding: 16px; background: rgba(232,185,49,0.08); border: 1px solid rgba(232,185,49,0.25); border-radius: 10px; text-align: center;">
+                <a href="https://wa.me/${body.contact_phone.replace(/\D/g, "")}?text=${encodeURIComponent(`Hola ${body.contact_name}, soy Eduardo de Vincent Growth. Recibimos tu brief para ${body.business_name}. ¿Tienes unos minutos para platicar?`)}" style="color: #E8B931; font-size: 14px; font-weight: 600; text-decoration: none;">Responder por WhatsApp →</a>
+              </div>
+
+              <p style="margin-top: 24px; text-align: center; color: rgba(245,240,225,0.3); font-size: 11px;">Vincent Growth · ${new Date().toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit" })}</p>
+            </div>
+          `,
+        });
+        emailed = true;
+      } catch (emailErr) {
+        console.error("[intake] Email failed:", emailErr);
+      }
+    } else {
+      console.warn("[intake] RESEND_API_KEY not configured — email not sent");
+    }
+
+    // Log submission (always, even if sync/email fails)
     console.log("[intake] Brief received:", {
       submission_id: submissionId,
       business: body.business_name,
       phone: body.contact_phone?.slice(-4),
       synced,
+      emailed,
       sync_error: syncError,
       timestamp: new Date().toISOString(),
     });
@@ -269,7 +382,7 @@ export async function POST(request: Request) {
       success: true,
       submission_id: submissionId,
       synced,
-      // Don't leak sync errors to client
+      emailed,
     });
   } catch (err) {
     console.error("[intake] Unexpected error:", err);
