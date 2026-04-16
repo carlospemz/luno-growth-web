@@ -6,7 +6,6 @@ import { MessageCircle } from "lucide-react";
 import "@/styles/luno-landing.css";
 import Container from "@/components/ui/Container";
 import { Starfield } from "@/components/ui/Starfield";
-import VincentWarpShader from "@/components/ui/VincentWarpShader";
 import { waAnchorProps } from "@/config/contact";
 
 const pop: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -85,17 +84,6 @@ export default function Hero() {
           speed={1.55}
           quantity={2200}
         />
-      </div>
-
-      {/* Warp — radial speed-lines in Vincent palette (CSS, no WebGL).
-          Sits above the starfield, below atmospheric layers.
-          `screen` blend drops the dark center. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{ zIndex: 1, mixBlendMode: "screen" }}
-      >
-        <VincentWarpShader className="w-full h-full" />
       </div>
 
       {/* Top atmospheric horizon — soft cobalt haze in the upper
