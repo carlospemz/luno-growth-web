@@ -1,16 +1,13 @@
 "use client";
 
-import { useRef, useState, useEffect, useMemo, lazy, Suspense } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 import "@/styles/luno-landing.css";
 import Container from "@/components/ui/Container";
 import { Starfield } from "@/components/ui/Starfield";
+import VincentWarpShader from "@/components/ui/VincentWarpShader";
 import { waAnchorProps } from "@/config/contact";
-
-const VincentWarpShader = lazy(
-  () => import("@/components/ui/VincentWarpShader"),
-);
 
 const pop: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const ease: [number, number, number, number] = [0.25, 0.1, 0.25, 1];
@@ -90,21 +87,15 @@ export default function Hero() {
         />
       </div>
 
-      {/* Warp shader — radial speed-lines in Vincent palette.
+      {/* Warp — radial speed-lines in Vincent palette (CSS, no WebGL).
           Sits above the starfield, below atmospheric layers.
-          `screen` blend drops the dark center, `opacity` keeps it ambient. */}
+          `screen` blend drops the dark center. */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
-        style={{
-          zIndex: 1,
-          opacity: 0.35,
-          mixBlendMode: "screen",
-        }}
+        style={{ zIndex: 1, mixBlendMode: "screen" }}
       >
-        <Suspense fallback={null}>
-          <VincentWarpShader className="w-full h-full" />
-        </Suspense>
+        <VincentWarpShader className="w-full h-full" />
       </div>
 
       {/* Top atmospheric horizon — soft cobalt haze in the upper

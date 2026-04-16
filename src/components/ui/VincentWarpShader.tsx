@@ -1,143 +1,185 @@
 "use client";
 
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import * as THREE from "three";
-import { useMemo, useRef } from "react";
+import { motion } from "framer-motion";
 
 /**
- * Vincent Warp Shader — radial speed-lines effect recolored to the
- * Noche Estrellada palette (deep indigo → cobalt → star gold → cream).
+ * VincentWarpCSS — radial speed-lines effect using pure CSS.
  *
- * Meant as a background layer in the Hero, rendered at low opacity
- * via CSS so it doesn't compete with the headline + starfield.
+ * Three layered conic-gradients rotating at different speeds
+ * create the illusion of hyperspace/warp streaks radiating
+ * from the center. Palette: indigo → cobalt → gold → cream.
+ *
+ * No WebGL, no three.js — works on every device including iOS Safari.
  */
-
-function FullscreenShader() {
-  const shaderRef = useRef<THREE.ShaderMaterial>(null!);
-  const { size, gl } = useThree();
-
-  const uniforms = useMemo(
-    () => ({
-      uTime: { value: 0 },
-      uResolution: {
-        value: new THREE.Vector3(size.width, size.height, 1),
-      },
-    }),
-    [size.width, size.height],
-  );
-
-  useFrame(({ clock }) => {
-    if (!shaderRef.current) return;
-    shaderRef.current.uniforms.uTime.value = clock.getElapsedTime();
-    const buf = new THREE.Vector2();
-    (gl as THREE.WebGLRenderer).getDrawingBufferSize(buf);
-    shaderRef.current.uniforms.uResolution.value.set(buf.x, buf.y, 1);
-  });
-
-  return (
-    <mesh>
-      <planeGeometry args={[2, 2]} />
-      <shaderMaterial
-        ref={shaderRef}
-        depthWrite={false}
-        depthTest={false}
-        transparent={false}
-        uniforms={uniforms}
-        vertexShader={`
-          varying vec2 vTexCoord;
-          void main() {
-            vTexCoord = uv;
-            gl_Position = vec4(position, 1.0);
-          }
-        `}
-        fragmentShader={`
-          precision highp float;
-
-          uniform vec3 uResolution;
-          uniform float uTime;
-
-          float randVal(vec2 p) {
-            return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453123);
-          }
-
-          float noise2d(vec2 p) {
-            vec2 i = floor(p);
-            vec2 f = fract(p);
-            vec2 u = f * f * (3.0 - 2.0 * f);
-            float a = randVal(i);
-            float b = randVal(i + vec2(1.0, 0.0));
-            float c = randVal(i + vec2(0.0, 1.0));
-            float d = randVal(i + vec2(1.0, 1.0));
-            return (a + (b - a) * u.x + (c - a) * u.y + (a - b - c + d) * u.x * u.y) / 4.0;
-          }
-
-          float mirrored(float t, float shift) {
-            t = fract(t + shift);
-            return 2.0 * abs(t - 0.5);
-          }
-
-          float radialLayer(float angle, float radius) {
-            const float SCALE = 45.0;
-            radius = pow(radius, 0.01);
-            float offset = -uTime * 0.04;
-            vec2 pos = vec2(mirrored(angle, 0.1), radius + offset);
-            float n1 = noise2d(pos * SCALE);
-            pos = 2.1 * vec2(mirrored(angle, 0.4), radius + offset);
-            float n2 = noise2d(pos * SCALE);
-            pos = 3.7 * vec2(mirrored(angle, 0.8), radius + offset);
-            float n3 = noise2d(pos * SCALE);
-            pos = 5.8 * vec2(mirrored(angle, 0.0), radius + offset);
-            float n4 = noise2d(pos * SCALE);
-            return pow((n1 + 0.5 * n2 + 0.25 * n3 + 0.125 * n4) * 3.0, 1.0);
-          }
-
-          // Vincent palette: deep indigo → cobalt → star gold → cream
-          vec3 applyColor(float v) {
-            v = clamp(v, 0.0, 1.0);
-            // Base: deep indigo (#0B1E38) to cobalt (#2D4E8E)
-            vec3 col = mix(vec3(0.043, 0.118, 0.22), vec3(0.176, 0.306, 0.557), v);
-            // Mid: cobalt to star gold (#E8B931)
-            col = mix(col, vec3(0.91, 0.725, 0.192), smoothstep(0.35, 0.7, v));
-            // Hot: gold to cream (#F5F0E1) for the brightest streaks
-            col = mix(col, vec3(0.96, 0.94, 0.882), smoothstep(0.7, 1.0, v));
-            // Amplify brightness slightly for presence
-            col *= v * 1.4;
-            col = max(col, vec3(0.0));
-            return col;
-          }
-
-          void main() {
-            vec2 uv = (gl_FragCoord.xy * 2.0 - uResolution.xy) / uResolution.y * 0.5;
-            float dist = dot(uv, uv);
-            float ang = atan(uv.y, uv.x) / 6.28318530718;
-            float val = radialLayer(ang, dist);
-            val = val * 2.5 - 1.4;
-            val = mix(0.0, val, 0.8 * smoothstep(0.0, 0.8, dist));
-            gl_FragColor = vec4(applyColor(val), 1.0);
-          }
-        `}
-      />
-    </mesh>
-  );
-}
-
 export default function VincentWarpShader({
   className = "",
 }: {
   className?: string;
 }) {
   return (
-    <div className={className}>
-      <Canvas
-        orthographic
-        camera={{ position: [0, 0, 1], zoom: 1 }}
-        dpr={[1, 1.5]}
-        gl={{ antialias: false, alpha: false }}
-        style={{ width: "100%", height: "100%" }}
-      >
-        <color attach="background" args={["#0B1E38"]} />
-        <FullscreenShader />
-      </Canvas>
+    <div className={`relative overflow-hidden ${className}`}>
+      {/* Layer 1 — wide gold streaks, slow rotation */}
+      <motion.div
+        className="absolute inset-0"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 120, repeat: Infinity, ease: "linear" }}
+        style={{
+          background: `conic-gradient(
+            from 0deg at 50% 50%,
+            transparent 0deg,
+            rgba(232, 185, 49, 0.15) 8deg,
+            transparent 16deg,
+            transparent 40deg,
+            rgba(45, 78, 142, 0.12) 48deg,
+            transparent 56deg,
+            transparent 80deg,
+            rgba(232, 185, 49, 0.1) 88deg,
+            transparent 96deg,
+            transparent 120deg,
+            rgba(245, 240, 225, 0.08) 128deg,
+            transparent 136deg,
+            transparent 160deg,
+            rgba(45, 78, 142, 0.14) 168deg,
+            transparent 176deg,
+            transparent 200deg,
+            rgba(232, 185, 49, 0.12) 208deg,
+            transparent 216deg,
+            transparent 240deg,
+            rgba(75, 139, 245, 0.1) 248deg,
+            transparent 256deg,
+            transparent 280deg,
+            rgba(232, 185, 49, 0.08) 288deg,
+            transparent 296deg,
+            transparent 320deg,
+            rgba(245, 240, 225, 0.06) 328deg,
+            transparent 336deg,
+            transparent 360deg
+          )`,
+          filter: "blur(1px)",
+        }}
+      />
+
+      {/* Layer 2 — tight cobalt/gold streaks, medium speed, counter-rotate */}
+      <motion.div
+        className="absolute inset-0"
+        animate={{ rotate: -360 }}
+        transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
+        style={{
+          background: `conic-gradient(
+            from 45deg at 50% 50%,
+            transparent 0deg,
+            rgba(75, 139, 245, 0.18) 4deg,
+            transparent 8deg,
+            transparent 24deg,
+            rgba(232, 185, 49, 0.2) 28deg,
+            transparent 32deg,
+            transparent 48deg,
+            rgba(45, 78, 142, 0.16) 52deg,
+            transparent 56deg,
+            transparent 72deg,
+            rgba(245, 240, 225, 0.1) 76deg,
+            transparent 80deg,
+            transparent 96deg,
+            rgba(232, 185, 49, 0.14) 100deg,
+            transparent 104deg,
+            transparent 120deg,
+            rgba(75, 139, 245, 0.12) 124deg,
+            transparent 128deg,
+            transparent 150deg,
+            rgba(232, 185, 49, 0.18) 154deg,
+            transparent 158deg,
+            transparent 180deg,
+            rgba(45, 78, 142, 0.14) 184deg,
+            transparent 188deg,
+            transparent 210deg,
+            rgba(245, 240, 225, 0.08) 214deg,
+            transparent 218deg,
+            transparent 240deg,
+            rgba(232, 185, 49, 0.16) 244deg,
+            transparent 248deg,
+            transparent 270deg,
+            rgba(75, 139, 245, 0.1) 274deg,
+            transparent 278deg,
+            transparent 300deg,
+            rgba(232, 185, 49, 0.12) 304deg,
+            transparent 308deg,
+            transparent 330deg,
+            rgba(45, 78, 142, 0.1) 334deg,
+            transparent 338deg,
+            transparent 360deg
+          )`,
+          filter: "blur(0.5px)",
+        }}
+      />
+
+      {/* Layer 3 — fast fine cream/gold highlights */}
+      <motion.div
+        className="absolute inset-0"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 55, repeat: Infinity, ease: "linear" }}
+        style={{
+          background: `conic-gradient(
+            from 120deg at 50% 50%,
+            transparent 0deg,
+            rgba(245, 240, 225, 0.14) 2deg,
+            transparent 4deg,
+            transparent 20deg,
+            rgba(232, 185, 49, 0.22) 22deg,
+            transparent 24deg,
+            transparent 45deg,
+            rgba(245, 240, 225, 0.1) 47deg,
+            transparent 49deg,
+            transparent 70deg,
+            rgba(232, 185, 49, 0.16) 72deg,
+            transparent 74deg,
+            transparent 95deg,
+            rgba(75, 139, 245, 0.12) 97deg,
+            transparent 99deg,
+            transparent 120deg,
+            rgba(232, 185, 49, 0.2) 122deg,
+            transparent 124deg,
+            transparent 145deg,
+            rgba(245, 240, 225, 0.12) 147deg,
+            transparent 149deg,
+            transparent 170deg,
+            rgba(232, 185, 49, 0.14) 172deg,
+            transparent 174deg,
+            transparent 200deg,
+            rgba(75, 139, 245, 0.1) 202deg,
+            transparent 204deg,
+            transparent 225deg,
+            rgba(232, 185, 49, 0.18) 227deg,
+            transparent 229deg,
+            transparent 250deg,
+            rgba(245, 240, 225, 0.08) 252deg,
+            transparent 254deg,
+            transparent 280deg,
+            rgba(232, 185, 49, 0.16) 282deg,
+            transparent 284deg,
+            transparent 310deg,
+            rgba(45, 78, 142, 0.12) 312deg,
+            transparent 314deg,
+            transparent 340deg,
+            rgba(232, 185, 49, 0.1) 342deg,
+            transparent 344deg,
+            transparent 360deg
+          )`,
+        }}
+      />
+
+      {/* Center vignette — dark hole so the text area stays clean */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(
+            ellipse 50% 45% at 50% 50%,
+            rgba(11, 30, 56, 0.95) 0%,
+            rgba(11, 30, 56, 0.7) 35%,
+            rgba(11, 30, 56, 0.2) 65%,
+            transparent 100%
+          )`,
+        }}
+      />
     </div>
   );
 }
