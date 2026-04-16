@@ -41,10 +41,10 @@ const OFFERS: Offer[] = [
     price: "$8K – $18K",
     priceSub: "MXN · one-time",
     offerKey: "brand_system",
-    accent: "#7B9CC4",
-    accentGlow: "rgba(123, 156, 196, 0.2)",
-    accentSoft: "rgba(123, 156, 196, 0.07)",
-    accentBorder: "rgba(123, 156, 196, 0.28)",
+    accent: "#94A8C7",
+    accentGlow: "rgba(148, 168, 199, 0.2)",
+    accentSoft: "rgba(148, 168, 199, 0.07)",
+    accentBorder: "rgba(148, 168, 199, 0.28)",
     ribbon: "Punto de entrada",
     ribbonStyle: "cobalt",
   },
@@ -84,10 +84,10 @@ const OFFERS: Offer[] = [
     priceSub: "+ $6K–$15K / mes",
     note: "Media spend aparte",
     offerKey: "demand_engine",
-    accent: "#C9A267",
-    accentGlow: "rgba(201, 162, 103, 0.2)",
-    accentSoft: "rgba(201, 162, 103, 0.07)",
-    accentBorder: "rgba(201, 162, 103, 0.3)",
+    accent: "#D4956A",
+    accentGlow: "rgba(212, 149, 106, 0.2)",
+    accentSoft: "rgba(212, 149, 106, 0.07)",
+    accentBorder: "rgba(212, 149, 106, 0.28)",
     ribbon: "Alto impacto",
     ribbonStyle: "ember",
   },
@@ -166,9 +166,9 @@ function OfferCard({ offer, index }: { offer: Offer; index: number }) {
 
   const ribbonColors = {
     cobalt: {
-      bg: "rgba(123, 156, 196, 0.1)",
-      border: "rgba(123, 156, 196, 0.28)",
-      text: "#7B9CC4",
+      bg: "rgba(148, 168, 199, 0.1)",
+      border: "rgba(148, 168, 199, 0.25)",
+      text: "#94A8C7",
     },
     gold: {
       bg: "rgba(232, 185, 49, 0.1)",
@@ -176,9 +176,9 @@ function OfferCard({ offer, index }: { offer: Offer; index: number }) {
       text: "#E8B931",
     },
     ember: {
-      bg: "rgba(201, 162, 103, 0.1)",
-      border: "rgba(201, 162, 103, 0.28)",
-      text: "#C9A267",
+      bg: "rgba(212, 149, 106, 0.1)",
+      border: "rgba(212, 149, 106, 0.25)",
+      text: "#D4956A",
     },
   };
 
