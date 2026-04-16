@@ -260,9 +260,9 @@ export default function Hero() {
             className="mt-10 md:mt-14 max-w-[560px] text-center text-[15px] md:text-[17px] leading-relaxed"
             style={{ color: "rgba(245, 240, 225, 0.72)" }}
           >
-            Pintamos con código y con IA para que tu marca siga operando de
-            noche: presencia, demanda y sistemas que no dependen de que tú
-            improvises todos los días.
+            Construimos presencia, demanda y sistemas para que tu negocio
+            opere con claridad, se vea a la altura y deje de depender de la
+            improvisación.
           </motion.p>
 
           {/* ── CTAs — primary dominant + secondary quiet ─ */}
