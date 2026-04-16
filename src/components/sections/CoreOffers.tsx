@@ -33,10 +33,12 @@ const OFFERS: Offer[] = [
     title: "Brand System",
     promise: "Ordena tu marca antes de ejecutar.",
     features: [
-      "Diagnóstico del negocio",
-      "Research de mercado",
-      "Strategic core + brand audit",
-      "Brand Kit + strategic brief",
+      "Diagnóstico completo de tu negocio y mercado",
+      "Research de competidores y oportunidades reales",
+      "Auditoría de marca: qué comunicas vs. qué deberías",
+      "Strategic core: posicionamiento, tono, personalidad",
+      "Brand Kit final: logo, paleta, tipografía, guía de uso",
+      "Brief estratégico listo para ejecutar contenido o campañas",
     ],
     price: "$8K – $18K",
     priceSub: "MXN · one-time",
@@ -52,12 +54,15 @@ const OFFERS: Offer[] = [
     badge: "Recurrencia",
     icon: Waves,
     title: "Content Engine",
-    promise: "Mantiene tu marca operando todo el mes.",
+    promise: "Tu marca operando todos los días, sin que tú improvises.",
     features: [
-      "Planeación + calendario",
-      "Piezas, copies y stories",
-      "Dirección visual continua",
-      "Entregables recurrentes",
+      "Todo lo de Brand System incluido",
+      "Estrategia de contenido mensual personalizada",
+      "Calendario editorial con fechas y temas definidos",
+      "Piezas para redes: diseño, copies, stories, reels",
+      "Dirección visual continua — tu marca siempre coherente",
+      "Entregables recurrentes listos para publicar",
+      "Reportes mensuales de rendimiento",
     ],
     price: "$4.5K – $16K",
     priceSub: "MXN / mes",
@@ -73,12 +78,16 @@ const OFFERS: Offer[] = [
     badge: "Aceleración",
     icon: Flame,
     title: "Demand Engine",
-    promise: "Convierte atención en leads.",
+    promise: "Convierte atención en clientes reales que pagan.",
     features: [
-      "Estrategia + Meta Ads",
-      "Creativos y copies",
-      "Landing de destino",
-      "Seguimiento básico",
+      "Todo lo de Content Engine incluido",
+      "Estrategia de captación con Meta Ads (Facebook + Instagram)",
+      "Creativos y copies optimizados para conversión",
+      "Landing page de destino diseñada para convertir",
+      "Segmentación de audiencias por zona, edad e interés",
+      "Seguimiento de leads: quién vio, quién hizo clic, quién compró",
+      "Optimización semanal de campañas con datos reales",
+      "Reportes de captación y costo por lead",
     ],
     price: "Setup $5K",
     priceSub: "+ $6K–$15K / mes",
@@ -365,32 +374,41 @@ function OfferCard({ offer, index }: { offer: Offer; index: number }) {
 
           {/* Features panel */}
           <div className="px-7 md:px-8 pb-7 md:pb-8">
-            <div className="grid grid-cols-2 gap-y-4 gap-x-4">
-              {offer.features.map((f, fi) => (
-                <motion.div
-                  key={f}
-                  className="flex items-start gap-2.5"
-                  initial={{ opacity: 0, x: -8 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{
-                    duration: 0.35,
-                    delay: index * 0.1 + fi * 0.06,
-                    ease: [...MOTION.ease],
-                  }}
-                >
-                  <CheckIcon
-                    color={offer.accent}
-                    className="w-4 h-4 flex-shrink-0 mt-0.5"
-                  />
-                  <span
-                    className="text-[12.5px] font-medium leading-[1.4]"
-                    style={{ color: "rgba(245, 240, 225, 0.78)" }}
+            <div className="grid grid-cols-1 gap-y-3">
+              {offer.features.map((f, fi) => {
+                const isInherited = f.startsWith("Todo lo de ");
+                return (
+                  <motion.div
+                    key={f}
+                    className={`flex items-start gap-2.5 ${isInherited ? "pb-2 mb-1" : ""}`}
+                    style={isInherited ? {
+                      borderBottom: `1px solid ${offer.accentSoft}`,
+                    } : undefined}
+                    initial={{ opacity: 0, x: -8 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 0.35,
+                      delay: index * 0.1 + fi * 0.06,
+                      ease: [...MOTION.ease],
+                    }}
                   >
-                    {f}
-                  </span>
-                </motion.div>
-              ))}
+                    <CheckIcon
+                      color={isInherited ? offer.accent : offer.accent}
+                      className="w-4 h-4 flex-shrink-0 mt-0.5"
+                    />
+                    <span
+                      className="text-[12.5px] font-medium leading-[1.4]"
+                      style={{
+                        color: isInherited ? offer.accent : "rgba(245, 240, 225, 0.78)",
+                        fontStyle: isInherited ? "italic" : undefined,
+                      }}
+                    >
+                      {f}
+                    </span>
+                  </motion.div>
+                );
+              })}
             </div>
 
             {offer.note && (
