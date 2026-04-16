@@ -270,28 +270,29 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={show ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.55, ease: pop, delay: 0.45 }}
-            className="mt-14 md:mt-20 flex flex-col items-center gap-4"
+            className="mt-14 md:mt-20 flex items-center gap-5"
           >
             <a
               {...waProps}
-              className="flex w-full sm:w-auto items-center justify-center gap-2.5 rounded-full px-10 py-[18px] text-[14px] md:text-[15px] font-semibold transition-transform active:scale-[0.98]"
+              className="inline-flex items-center gap-2 rounded-lg px-6 py-2.5 text-[13px] font-semibold tracking-wide transition-all duration-200 hover:brightness-110 active:scale-[0.97]"
               style={{
-                background: "linear-gradient(135deg, #E8B931, #F5D06A)",
+                background: "#E8B931",
                 color: "#0B1E38",
-                boxShadow:
-                  "0 6px 22px rgba(232, 185, 49, 0.22), 0 0 0 1px rgba(232, 185, 49, 0.4)",
-                minWidth: "280px",
+                boxShadow: "0 2px 12px rgba(232, 185, 49, 0.18)",
               }}
             >
-              <MessageCircle className="h-4 w-4" />
+              <MessageCircle className="h-3.5 w-3.5" />
               Habla con Vincent
             </a>
             <a
               href="#offers"
-              className="text-[12px] md:text-[13px] font-mono uppercase tracking-[0.22em] transition-opacity hover:opacity-100"
-              style={{ color: "rgba(245, 240, 225, 0.6)" }}
+              className="inline-flex items-center gap-1.5 rounded-lg border px-5 py-2.5 text-[13px] font-medium tracking-wide transition-all duration-200 hover:border-[rgba(245,240,225,0.25)]"
+              style={{
+                borderColor: "rgba(245, 240, 225, 0.12)",
+                color: "rgba(245, 240, 225, 0.7)",
+              }}
             >
-              Ver oferta ↓
+              Ver oferta
             </a>
           </motion.div>
 
