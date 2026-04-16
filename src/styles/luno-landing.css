@@ -50,50 +50,23 @@
     transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.3s ease,
     filter 0.3s ease;
-  box-shadow: 0 2px 16px rgba(232, 185, 49, 0.18);
+  box-shadow: 0 3px 12px rgba(232, 185, 49, 0.14);
 }
 
 .btn-glow:hover {
-  filter: brightness(1.08);
-  transform: scale(1.03);
-  box-shadow:
-    0 4px 24px rgba(232, 185, 49, 0.28),
-    0 0 40px rgba(232, 185, 49, 0.14);
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 18px rgba(232, 185, 49, 0.2);
 }
 
-/* Shimmer sweep */
+/* Shimmer sweep removed — the button no longer performs, it just is. */
 .btn-glow::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 30%;
-  height: 100%;
-  background: linear-gradient(
-    105deg,
-    transparent 20%,
-    rgba(245, 240, 225, 0.35) 50%,
-    transparent 80%
-  );
-  transform: translateX(-100%);
-  animation: btn-shimmer-sweep 4s ease-in-out 1.5s infinite;
-  pointer-events: none;
+  content: none;
 }
 
-@keyframes btn-shimmer-sweep {
-  0%   { transform: translateX(-100%); }
-  30%  { transform: translateX(400%); }
-  100% { transform: translateX(400%); }
-}
-
-/* Breathing glow */
-@keyframes breathe-glow {
-  0%, 100% { box-shadow: 0 2px 16px rgba(232, 185, 49, 0.18); }
-  50%      { box-shadow: 0 4px 24px rgba(232, 185, 49, 0.28), 0 0 32px rgba(232, 185, 49, 0.12); }
-}
-
+/* Breathing glow neutralized — decorative motion, not systemic. */
 .btn-glow-breathe {
-  animation: breathe-glow 4s ease-in-out infinite;
+  animation: none;
 }
 
 /* ───────────────────────────────────────────
@@ -354,14 +327,12 @@
     transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
     box-shadow 0.3s ease,
     filter 0.3s ease;
-  box-shadow: 0 2px 16px rgba(232, 185, 49, 0.22);
+  box-shadow: 0 2px 12px rgba(232, 185, 49, 0.14);
 }
 
 .btn-submit:hover {
-  filter: brightness(1.08);
-  box-shadow:
-    0 6px 24px rgba(232, 185, 49, 0.32),
-    0 0 40px rgba(232, 185, 49, 0.14);
+  filter: brightness(1.06);
+  box-shadow: 0 4px 16px rgba(232, 185, 49, 0.22);
   transform: translateY(-1px);
 }
 

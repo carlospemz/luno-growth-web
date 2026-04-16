@@ -28,19 +28,40 @@ This repo is the public-facing website for **VINCENT Growth** — the marketing-
 
 **Secuencia de venta:** Entrada → Recurrencia → Aceleración → Conversión → Retención.
 
-## Dual positioning (April 2026 strategy)
+## Dual positioning — INTERNO, IMPLÍCITO, INVISIBLE
 
-Growth serves any vertical, **but actively focuses on sector salud** (consultorios dentales, médicos, clínicas estéticas, fisio, psicología, pediatría). Reason: Vincent Care is coming as a SaaS product for clinics, and Growth's current health clients become Care's launch cohort.
+**REGLA DE ORO**: la landing pública **nunca menciona** el foco en salud, la estrategia de building-a-client-base-for-Care, ni el posicionamiento dual. **Es información interna.** El visitante jamás debe percibir que Vincent prefiere un sector sobre otro — si lo percibe, el que no es de ese sector asume que no es bienvenido y se va.
 
-- Hero is vertical-agnostic (universal problem)
-- ForWhom strip lists salud verticals first with heavier visual weight
-- FAQ has explicit dual-positioning question
-- Brief form captures `industry` + `industry_bucket` (salud / otros)
-- HealthTeaser in Work section + cream-tone teaser in ManifestoQuote anticipate Care
-- Plausible events segment by `industry_bucket` — the ratio is the KPI that decides Care launch timing
-- Same playbook will be replicated with sector inmobiliario → future product
+### Por qué
 
-**DO NOT say "somos la agencia de dentistas"** — that closes doors. Say "trabajamos con cualquiera, tenemos un cariño especial por los que cuidan la salud de los demás."
+Vincent Growth es, de cara al mercado, **multi-vertical puro**: cualquier dueño de negocio que esté harto de improvisar. Punto. La estrategia interna (foco activo en salud porque Vincent Care está por salir y esos clientes son la cohorte de lanzamiento) **existe en el backend**, en la segmentación de Plausible, en el routing de leads, en cómo Carlos y Ángel priorizan su tiempo. **No en la landing.**
+
+### Qué SÍ se puede hacer (implícito)
+
+- Capturar `industry` + `industry_bucket` en el Brief form como campo normal — el usuario ve un select plano con todas las industrias mezcladas, el backend clasifica
+- Segmentar eventos de Plausible por `industry_bucket` para medir internamente el ratio salud/otros (la métrica interna que decide timing de launch de Care)
+- Priorizar internamente respuestas a leads de salud (Angel/Carlos deciden quién responde primero, no la landing)
+- Tener contenido/casos de estudio específicos para salud cuando existan — pero presentados como "caso de cliente X" igual que cualquier otro, sin etiquetar "sector salud destacado"
+
+### Qué NO se puede hacer (explícito prohibido)
+
+- ❌ Pills tipo "Foco activo · Sector salud · 2026"
+- ❌ Sub-bloques tipo HealthTeaser que anuncien "Algo especial para consultorios"
+- ❌ Banners tipo "Lista de espera VINCENT Care" en el Brief
+- ❌ Hints tipo "Vas primero en la lista de Care" cuando el usuario selecciona industria salud
+- ❌ Preguntas de FAQ que digan "tenemos un foco especial en sector salud"
+- ❌ Frases tipo "tenemos un cariño especial por los que cuidan la salud de los demás"
+- ❌ Líneas de teaser tipo "mañana tenemos algo muy específico para consultorios"
+- ❌ Verticales con peso visual diferenciado en el ForWhom strip (salud pesado, otros ligero)
+- ❌ Optgroups visibles en selects con etiquetas "── Salud ──" / "── Otros ──"
+- ❌ Mencionar Vincent Care públicamente como producto que está por salir
+- ❌ Cualquier cosa que un lead NO-salud pueda leer y pensar "ah, esto no es para mí"
+
+### La frase que resume la regla
+
+*"Si un restaurantero o un abogado ve algo en la landing que le haga dudar si Vincent es para él, lo estamos haciendo mal."*
+
+Mismo principio se replicará cuando el próximo foco sea sector inmobiliario → Vincent Real (o como se llame). Hoy salud es la capa invisible; mañana inmobiliaria también será invisible hasta que sea público.
 
 ## Brand tokens (from brand bible, Angel Villarreal, April 2026)
 

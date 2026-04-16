@@ -1,45 +1,44 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect, type FormEvent } from "react";
+import { useState, useRef, useCallback, type FormEvent } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, Stethoscope } from "lucide-react";
+import { CheckCircle, AlertTriangle } from "lucide-react";
 import Section, { SectionHeader } from "@/components/ui/Section";
 import Divider from "@/components/ui/Divider";
 import Button from "@/components/ui/Button";
-import { whatsappUrl } from "@/config/contact";
+import {
+  whatsappUrl,
+  isWhatsappConfigured,
+  waAnchorProps,
+} from "@/config/contact";
 import { MOTION } from "@/lib/motion";
 import "@/styles/luno-landing.css";
 
 /* ═══════════════════════════════════════
-   Industry taxonomy — salud-first (dual positioning)
+   Industry taxonomy — flat list, no visible grouping.
+   The taxonomy exists in data for internal segmentation (industry_bucket
+   goes to the API payload) but the UI shows a single flat select so
+   the user never perceives any sector as preferred.
    ═══════════════════════════════════════ */
 
-const SALUD_INDUSTRIES = [
-  { value: "dental", label: "Consultorio dental" },
-  { value: "medico", label: "Consultorio médico" },
-  { value: "estetica", label: "Clínica estética" },
-  { value: "fisio", label: "Fisioterapia / rehabilitación" },
-  { value: "psicologia", label: "Psicología / salud mental" },
-  { value: "pediatria", label: "Pediatría" },
-  { value: "otro_salud", label: "Otro (salud)" },
+const INDUSTRIES = [
+  { value: "dental", label: "Consultorio dental", bucket: "salud" as const },
+  { value: "medico", label: "Consultorio médico", bucket: "salud" as const },
+  { value: "estetica", label: "Clínica estética", bucket: "salud" as const },
+  { value: "fisio", label: "Fisioterapia / rehabilitación", bucket: "salud" as const },
+  { value: "psicologia", label: "Psicología", bucket: "salud" as const },
+  { value: "pediatria", label: "Pediatría", bucket: "salud" as const },
+  { value: "restaurante", label: "Restaurante / café", bucket: "otros" as const },
+  { value: "inmobiliaria", label: "Inmobiliaria", bucket: "otros" as const },
+  { value: "gimnasio", label: "Gimnasio / estudio", bucket: "otros" as const },
+  { value: "servicios_prof", label: "Servicios profesionales", bucket: "otros" as const },
+  { value: "retail", label: "Retail local", bucket: "otros" as const },
+  { value: "otro", label: "Otro", bucket: "otros" as const },
 ] as const;
-
-const OTROS_INDUSTRIES = [
-  { value: "restaurante", label: "Restaurante / café" },
-  { value: "inmobiliaria", label: "Inmobiliaria" },
-  { value: "gimnasio", label: "Gimnasio / estudio" },
-  { value: "servicios_prof", label: "Servicios profesionales" },
-  { value: "retail", label: "Retail local" },
-  { value: "otro", label: "Otro" },
-] as const;
-
-const SALUD_VALUES = new Set(SALUD_INDUSTRIES.map((i) => i.value));
 
 function industryBucket(value: string): "salud" | "otros" | "" {
-  if (!value) return "";
-  return SALUD_VALUES.has(value as typeof SALUD_INDUSTRIES[number]["value"])
-    ? "salud"
-    : "otros";
+  const match = INDUSTRIES.find((i) => i.value === value);
+  return match?.bucket ?? "";
 }
 
 /* ═══════════════════════════════════════
@@ -305,21 +304,8 @@ export default function Brief() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [fromHealthCTA, setFromHealthCTA] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const hpRef = useRef<HTMLInputElement>(null);
-
-  /* If the user arrived via the HealthTeaser CTA (hash contains
-     industry=salud), pre-select "Consultorio dental" and show the
-     Care-waitlist banner. */
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const hash = window.location.hash;
-    if (hash.includes("industry=salud")) {
-      setForm((prev) => ({ ...prev, industry: "dental" }));
-      setFromHealthCTA(true);
-    }
-  }, []);
 
   const set = useCallback(
     <K extends keyof BriefFormData>(key: K, value: BriefFormData[K]) =>
@@ -342,7 +328,7 @@ export default function Brief() {
     async (e: FormEvent) => {
       e.preventDefault();
 
-      // Honeypot
+      // Honeypot — silently pretend success, don't hit the API.
       if (hpRef.current?.value) {
         setSubmitted(true);
         return;
@@ -361,7 +347,10 @@ export default function Brief() {
       setSubmitting(true);
       setSubmitError(null);
 
-      // 1. Try API submission first (persists to DB)
+      // 1. Submit to API with strict status check. Any non-2xx OR any
+      //    non-synced response is treated as a real failure and shown
+      //    to the user — we never pretend success.
+      let apiOk = false;
       try {
         const res = await fetch("/api/growth/intake", {
           method: "POST",
@@ -369,20 +358,52 @@ export default function Brief() {
           body: JSON.stringify(buildApiPayload(form)),
         });
 
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
-          console.warn("[brief] API submission failed:", data);
+        if (res.ok) {
+          const data = (await res.json().catch(() => ({}))) as {
+            success?: boolean;
+            synced?: boolean;
+            error?: string;
+          };
+          // Accept either: backend synced cleanly, OR backend accepted
+          // the brief (200) even if ops-sync is not configured yet —
+          // the intake route always logs locally, so the submission
+          // isn't lost.
+          if (data.success === true) {
+            apiOk = true;
+          }
+        } else if (res.status === 429) {
+          setSubmitError(
+            "Demasiados envíos en un minuto. Espera un momento e intenta de nuevo.",
+          );
+        } else {
+          // 4xx / 5xx — parse error message if any
+          const data = (await res.json().catch(() => ({}))) as {
+            error?: string;
+          };
+          setSubmitError(
+            data.error ||
+              "No pudimos procesar tu brief en este momento. Intenta de nuevo en un minuto.",
+          );
         }
       } catch (err) {
-        console.warn("[brief] API submission error:", err);
+        console.warn("[brief] network error:", err);
+        setSubmitError(
+          "No pudimos conectar con el servidor. Revisa tu conexión e intenta de nuevo.",
+        );
       }
 
-      // 2. Always open WhatsApp as well (backup + immediate channel)
-      const msg = buildWhatsAppMsg(form);
-      window.open(whatsappUrl(msg), "_blank");
+      // 2. If WA is configured, open it as a courtesy backup channel.
+      //    Only when the API actually succeeded — otherwise the user
+      //    sees the error state and decides what to do.
+      if (apiOk && isWhatsappConfigured()) {
+        const msg = buildWhatsAppMsg(form);
+        window.open(whatsappUrl(msg), "_blank");
+      }
 
       setSubmitting(false);
-      setSubmitted(true);
+      if (apiOk) {
+        setSubmitted(true);
+      }
     },
     [form],
   );
@@ -390,25 +411,52 @@ export default function Brief() {
   /* ——— Success state ——— */
 
   if (submitted) {
+    const waReady = isWhatsappConfigured();
+    const successCopy = waReady
+      ? "Tu brief quedó registrado. Te escribimos por WhatsApp en menos de 24 horas."
+      : "Tu brief quedó registrado. Ángel o Carlos te responderán directo en las próximas horas.";
+
     return (
       <Section id="brief">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4, ease: [...MOTION.ease] }}
-          className="mx-auto flex max-w-[480px] flex-col items-center py-16 text-center"
+          className="mx-auto flex max-w-[520px] flex-col items-center py-16 text-center"
         >
-          <CheckCircle className="mb-4 h-12 w-12 text-purple-500" />
-          <h2 className="font-heading text-[28px] font-bold text-zinc-900 md:text-[36px]">
-            ¡Brief recibido!
+          <div
+            className="mb-5 flex h-14 w-14 items-center justify-center rounded-full"
+            style={{
+              background: "rgba(232, 185, 49, 0.1)",
+              border: "1px solid rgba(232, 185, 49, 0.4)",
+            }}
+          >
+            <CheckCircle className="h-7 w-7" style={{ color: "#E8B931" }} />
+          </div>
+          <h2
+            className="font-headline text-[28px] md:text-[36px] font-extrabold uppercase leading-[0.95]"
+            style={{ color: "#F5F0E1" }}
+          >
+            Brief recibido.
           </h2>
-          <p className="mt-3 text-[15px] text-zinc-500">
-            Tu información quedó registrada. Te escribimos por WhatsApp en menos de 24h.
+          <p
+            className="mt-4 text-[15px] md:text-[16px] leading-relaxed max-w-[440px]"
+            style={{ color: "rgba(245, 240, 225, 0.72)" }}
+          >
+            {successCopy}
           </p>
           <div className="mt-8">
-            <Button variant="secondary" href="#" className="btn-secondary-alive">
+            <a
+              href="#"
+              className="inline-flex items-center rounded-full border px-6 py-3 text-[13px] font-semibold transition-colors"
+              style={{
+                borderColor: "rgba(245, 240, 225, 0.22)",
+                color: "#F5F0E1",
+                background: "rgba(245, 240, 225, 0.03)",
+              }}
+            >
               Volver al inicio
-            </Button>
+            </a>
           </div>
         </motion.div>
       </Section>
@@ -421,8 +469,9 @@ export default function Brief() {
     <Section id="brief">
       <SectionHeader
         kicker="Brief"
-        title="Cuéntanos tu caso."
-        accentWord="tu caso."
+        title="Si ya sabes que tu marca no puede seguir improvisando, empezamos aquí."
+        accentWord="empezamos aquí."
+        subcopy="Cuéntanos qué vendes, dónde estás parado y qué quieres que pase. Si hace sentido, te decimos por dónde entrar."
       />
 
       <motion.div
@@ -436,42 +485,10 @@ export default function Brief() {
           className="text-[15px] md:text-[16px]"
           style={{ color: "rgba(245, 240, 225, 0.68)" }}
         >
-          Brief 6–8 min. Vincent responde en horas, no en semanas.
+          Si tu caso encaja mejor con Vincent Care cuando abra, también te
+          lo vamos a decir.
         </p>
       </motion.div>
-
-      {/* Care waitlist banner — only if user came from HealthTeaser */}
-      {fromHealthCTA && (
-        <motion.div
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="mx-auto mb-5 max-w-[680px] rounded-2xl border px-5 py-4 flex items-start gap-3"
-          style={{
-            borderColor: "rgba(232, 185, 49, 0.45)",
-            background: "rgba(232, 185, 49, 0.06)",
-          }}
-        >
-          <Stethoscope
-            className="h-5 w-5 mt-0.5 flex-shrink-0"
-            style={{ color: "#E8B931" }}
-          />
-          <div>
-            <p
-              className="text-[14px] font-semibold mb-1"
-              style={{ color: "#E8B931" }}
-            >
-              Lista de espera VINCENT Care
-            </p>
-            <p
-              className="text-[13px] leading-relaxed"
-              style={{ color: "rgba(245, 240, 225, 0.75)" }}
-            >
-              Cuando abra nuestro producto para consultorios, los que llenen este brief entran primero.
-            </p>
-          </div>
-        </motion.div>
-      )}
 
       <div
         className="mx-auto max-w-[680px] rounded-[24px] border p-6 md:p-10"
@@ -530,30 +547,13 @@ export default function Brief() {
                   onChange={(e) => set("industry", e.target.value)}
                 >
                   <option value="">— Elige una opción —</option>
-                  <optgroup label="── Salud ──">
-                    {SALUD_INDUSTRIES.map((i) => (
-                      <option key={i.value} value={i.value}>
-                        {i.label}
-                      </option>
-                    ))}
-                  </optgroup>
-                  <optgroup label="── Otros sectores ──">
-                    {OTROS_INDUSTRIES.map((i) => (
-                      <option key={i.value} value={i.value}>
-                        {i.label}
-                      </option>
-                    ))}
-                  </optgroup>
+                  {INDUSTRIES.map((i) => (
+                    <option key={i.value} value={i.value}>
+                      {i.label}
+                    </option>
+                  ))}
                 </select>
                 {errors.industry && <p className={ERR}>{errors.industry}</p>}
-                {industryBucket(form.industry) === "salud" && (
-                  <p
-                    className="mt-2 font-mono text-[10px] uppercase tracking-[0.12em]"
-                    style={{ color: "rgba(232, 185, 49, 0.75)" }}
-                  >
-                    ↓ Vas primero en la lista de VINCENT Care
-                  </p>
-                )}
               </div>
               <div data-field="businessType">
                 <label className={LABEL} htmlFor="b-type">Detalle del giro (opcional)</label>
@@ -745,28 +745,59 @@ export default function Brief() {
 
           <Divider />
 
-          {/* ——— Submit ——— */}
+          {/* ——— Error banner — humano, visible, con siguiente paso ——— */}
           {submitError && (
-            <p className="text-center text-[14px] text-red-400">{submitError}</p>
+            <div
+              className="flex items-start gap-3 rounded-xl border px-4 py-3 text-left"
+              style={{
+                borderColor: "rgba(232, 185, 49, 0.4)",
+                background: "rgba(232, 185, 49, 0.06)",
+              }}
+              role="alert"
+            >
+              <AlertTriangle
+                className="mt-0.5 h-4 w-4 shrink-0"
+                style={{ color: "#E8B931" }}
+                aria-hidden="true"
+              />
+              <div className="min-w-0">
+                <p
+                  className="text-[13px] font-medium"
+                  style={{ color: "#F5F0E1" }}
+                >
+                  {submitError}
+                </p>
+                {isWhatsappConfigured() && (
+                  <a
+                    {...waAnchorProps(
+                      `Hola Vincent, intenté enviar el brief desde la landing y no cargó. Mi negocio es ${form.businessName || "(sin nombre)"}.`,
+                    )}
+                    className="mt-2 inline-block text-[12px] font-semibold underline"
+                    style={{ color: "#E8B931" }}
+                  >
+                    Escríbenos por WhatsApp en su lugar →
+                  </a>
+                )}
+              </div>
+            </div>
           )}
 
-          <motion.div
-            className="flex justify-center pt-2"
-            whileHover={{ scale: 1.03, y: -1 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: MOTION.duration.fast, ease: [...MOTION.ease] }}
-          >
+          {/* ——— Submit ——— */}
+          <div className="flex justify-center pt-2">
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-purple-600 to-cyan-500 px-8 text-[14px] font-semibold text-white shadow-md shadow-purple-500/15 disabled:opacity-50"
+              className="btn-submit inline-flex h-12 items-center justify-center gap-2 rounded-full px-8 text-[14px] font-semibold disabled:opacity-50"
             >
-              {submitting ? "Enviando..." : "Enviar brief →"}
+              {submitting ? "Enviando…" : "Enviar brief →"}
             </button>
-          </motion.div>
+          </div>
 
-          <p className="text-center text-[13px] text-zinc-500">
-            Tu información queda registrada de forma segura. Te contactamos en menos de 24h.
+          <p
+            className="text-center text-[12px]"
+            style={{ color: "rgba(245, 240, 225, 0.5)" }}
+          >
+            Lo revisa Vincent directo. Te respondemos en horas.
           </p>
         </form>
       </div>

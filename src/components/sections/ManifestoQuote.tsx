@@ -10,8 +10,7 @@ import { VincentDiamond } from "@/components/ui/VincentWordmark";
  *
  * This is the ONE block in the whole scroll that breaks from indigo
  * to cream. It's a rhythm break that forces the reader to slow down
- * and read. Below the quote sits a confidential-tone line that
- * teases Vincent Care without naming it.
+ * and read.
  */
 export default function ManifestoQuote() {
   const ref = useRef<HTMLElement>(null);
@@ -26,14 +25,13 @@ export default function ManifestoQuote() {
       aria-labelledby="manifesto-heading"
     >
       <Container>
-        <div className="mx-auto max-w-[820px] text-center">
+        <div className="mx-auto max-w-[860px] text-center">
           {/* Top kicker */}
           <motion.p
             initial={{ opacity: 0, y: 8 }}
             animate={inView ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="font-mono text-[10px] uppercase tracking-[0.22em] mb-8"
-            style={{ color: "rgba(11, 30, 56, 0.45)" }}
+            className="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.22em] mb-10 vin-text-on-cream-dim"
           >
             Manifiesto · Abril 2026
           </motion.p>
@@ -43,7 +41,7 @@ export default function ManifestoQuote() {
             initial={{ opacity: 0, scale: 0.6 }}
             animate={inView ? { opacity: 1, scale: 1 } : undefined}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-            className="flex justify-center mb-8"
+            className="flex justify-center mb-10"
             aria-hidden="true"
           >
             <VincentDiamond size={16} color="#0B1E38" />
@@ -55,11 +53,8 @@ export default function ManifestoQuote() {
             initial={{ opacity: 0, y: 16 }}
             animate={inView ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="font-headline text-[36px] md:text-[56px] lg:text-[68px] font-bold leading-[0.98] mb-8"
-            style={{
-              color: "#0B1E38",
-              textWrap: "balance",
-            }}
+            className="font-headline text-[36px] md:text-[60px] lg:text-[72px] font-extrabold uppercase leading-[0.96] tracking-tight mb-10 vin-text-on-cream-strong"
+            style={{ textWrap: "balance" }}
           >
             “Somos el estudio de Van Gogh si Van Gogh hubiera nacido en 2026.”
           </motion.h2>
@@ -69,8 +64,7 @@ export default function ManifestoQuote() {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : undefined}
             transition={{ duration: 0.5, delay: 0.55 }}
-            className="italic text-[15px] md:text-[16px]"
-            style={{ color: "rgba(11, 30, 56, 0.62)" }}
+            className="italic text-[14px] md:text-[16px] vin-text-on-cream-muted"
           >
             — Ángel Villarreal, Abril 2026
           </motion.p>
@@ -80,24 +74,13 @@ export default function ManifestoQuote() {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : undefined}
             transition={{ duration: 0.5, delay: 0.7 }}
-            className="mt-10 mb-10 flex justify-center gap-4"
+            className="mt-12 flex justify-center gap-4"
             aria-hidden="true"
           >
             <VincentDiamond size={8} color="rgba(232, 185, 49, 0.6)" />
             <VincentDiamond size={10} color="#E8B931" />
             <VincentDiamond size={8} color="rgba(232, 185, 49, 0.6)" />
           </motion.div>
-
-          {/* Care teaser — confidential tone */}
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={inView ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.85 }}
-            className="mx-auto max-w-[600px] text-[14px] md:text-[15px] leading-relaxed"
-            style={{ color: "rgba(11, 30, 56, 0.7)" }}
-          >
-            Hoy pintamos para cualquier negocio que quiera dejar de improvisar. Mañana tenemos algo muy específico para los que cuidan la salud de los demás.
-          </motion.p>
         </div>
       </Container>
     </section>

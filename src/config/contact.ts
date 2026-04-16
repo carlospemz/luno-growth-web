@@ -20,36 +20,100 @@ export interface BriefData {
 }
 
 /* ═══════════════════════════════════════
-   VINCENT Contact constants
+   VINCENT contact — env-driven, degrades safely
    ═══════════════════════════════════════ */
+
+/**
+ * Raw values from env (or defaults). NEVER read these directly in
+ * components — always go through the helpers below, which enforce
+ * "no broken channels in production".
+ */
+const RAW_WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
+const RAW_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "";
+const RAW_PHONE = process.env.NEXT_PUBLIC_CONTACT_PHONE ?? "";
+
+/** Base WA prefill used when no specific message is given. */
+export const WHATSAPP_PREFILL = "Hola Vincent, quiero recuperar el día.";
+
+/* ── Capability checks ─────────────────── */
+
+/**
+ * True only when a real WhatsApp E.164 number is set. Placeholders
+ * with any X/x, empty strings, and non-digit strings all return false.
+ */
+export function isWhatsappConfigured(): boolean {
+  if (!RAW_WHATSAPP) return false;
+  if (/[Xx]/.test(RAW_WHATSAPP)) return false;
+  return /^\d{10,15}$/.test(RAW_WHATSAPP);
+}
+
+/**
+ * True only when a real-looking email is set. Placeholders and empty
+ * strings return false.
+ */
+export function isEmailConfigured(): boolean {
+  if (!RAW_EMAIL) return false;
+  // Very loose email check — enough to catch empty / typos / placeholders.
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(RAW_EMAIL) &&
+    !/example|placeholder|xxxxx/i.test(RAW_EMAIL);
+}
+
+/**
+ * True only when a real phone is set. Placeholders with X/x return false.
+ */
+export function isPhoneConfigured(): boolean {
+  if (!RAW_PHONE) return false;
+  if (/[Xx]/.test(RAW_PHONE)) return false;
+  return /\d{7,}/.test(RAW_PHONE);
+}
+
+/* ── Exported values (safe to read) ────── */
+
+/** Public email string if configured, otherwise null. Never a placeholder. */
+export const contactEmail: string | null = isEmailConfigured()
+  ? RAW_EMAIL
+  : null;
+
+/** Public phone string if configured, otherwise null. */
+export const contactPhone: string | null = isPhoneConfigured()
+  ? RAW_PHONE
+  : null;
 
 export const CONTACT = {
-  whatsappNumber: "521XXXXXXXXXX",
-  phoneNumber: "+52 1 XXX XXX XXXX",
-  whatsappPrefill: "Hola Vincent, quiero recuperar el día.",
+  whatsappNumber: isWhatsappConfigured() ? RAW_WHATSAPP : null,
+  phoneNumber: contactPhone,
+  whatsappPrefill: WHATSAPP_PREFILL,
 } as const;
 
-export const contactEmail =
-  process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hola@vincent.mx";
+/* ── URL builders — always degrade to #brief for broken WA ─── */
 
-/* ═══════════════════════════════════════
-   URL builders
-   ═══════════════════════════════════════ */
-
+/**
+ * Build a wa.me link with an optional prefilled message. If WA is
+ * not configured, returns "#brief" so any <a href> lands on the
+ * in-page form instead of a broken wa.me page.
+ */
 export function whatsappUrl(message?: string): string {
-  const msg = encodeURIComponent(message ?? CONTACT.whatsappPrefill);
-  return `https://wa.me/${CONTACT.whatsappNumber}?text=${msg}`;
+  if (!isWhatsappConfigured()) {
+    return "#brief";
+  }
+  const msg = encodeURIComponent(message ?? WHATSAPP_PREFILL);
+  return `https://wa.me/${RAW_WHATSAPP}?text=${msg}`;
 }
 
-export function phoneUrl(): string {
-  return `tel:${CONTACT.phoneNumber.replace(/\s/g, "")}`;
+/** Returns a tel: URL or null if no real phone is configured. */
+export function phoneUrl(): string | null {
+  if (!contactPhone) return null;
+  return `tel:${contactPhone.replace(/\s/g, "")}`;
 }
 
-export function contactEmailUrl(): string {
+/** Returns a mailto: URL or null if no real email is configured. */
+export function contactEmailUrl(): string | null {
+  if (!contactEmail) return null;
   return `mailto:${contactEmail}`;
 }
 
-/* Quick quote prefill — used by hero CTA, floating button, etc. */
+/* ── Offer prefills — per-núcleo ───────── */
+
 export const QUOTE_PREFILL = `Hola Vincent, quiero saber más de la oferta.
 Negocio:
 Ciudad:
@@ -59,7 +123,6 @@ export function quoteUrl(): string {
   return whatsappUrl(QUOTE_PREFILL);
 }
 
-/* Per-offer WhatsApp prefills */
 export const OFFER_PREFILLS = {
   brand_system: "Hola Vincent, cuéntame del Brand System.",
   content_engine: "Hola Vincent, cuéntame del Content Engine.",
@@ -73,8 +136,32 @@ export function offerWhatsappUrl(offer: keyof typeof OFFER_PREFILLS): string {
   return whatsappUrl(OFFER_PREFILLS[offer]);
 }
 
+/* ── Anchor props that spread cleanly onto <a> ───────────── */
+
+/**
+ * Returns href + target + rel so the call site doesn't have to
+ * remember them. When the link is the #brief fallback, target and
+ * rel are omitted so the browser scrolls in-page instead of opening
+ * a blank tab.
+ */
+export function waAnchorProps(message?: string): {
+  href: string;
+  target?: "_blank";
+  rel?: "noopener noreferrer";
+} {
+  const href = whatsappUrl(message);
+  if (href.startsWith("#")) {
+    return { href };
+  }
+  return { href, target: "_blank", rel: "noopener noreferrer" };
+}
+
+export function offerWaAnchorProps(offer: keyof typeof OFFER_PREFILLS) {
+  return waAnchorProps(OFFER_PREFILLS[offer]);
+}
+
 /* ═══════════════════════════════════════
-   Brief → WhatsApp message builder
+   Brief → WhatsApp message builder (backup channel only)
    ═══════════════════════════════════════ */
 
 function cap(s: string, max = 200) {

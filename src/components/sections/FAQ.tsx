@@ -6,49 +6,30 @@ import { ChevronDown } from "lucide-react";
 import Section, { SectionHeader } from "@/components/ui/Section";
 import { MOTION } from "@/lib/motion";
 
-/**
- * FAQ — dual-positioning aware.
- * Two questions explicitly address (a) the multi-vertical openness
- * and (b) the coming Vincent Care product for clinics — both without
- * closing the door on other sectors.
- */
-
 const FAQS = [
   {
     q: "¿Trabajan con cualquier negocio o solo con ciertos sectores?",
-    a: "Trabajamos con cualquier negocio que tenga un dueño harto de improvisar. Tenemos un foco especial en sector salud — consultorios, clínicas, fisio, psicología, pediatría — porque estamos construyendo un sistema específico para ellos. Pero si lo tuyo es un restaurante, una inmobiliaria o una ferretería, también entras.",
+    a: "Podemos trabajar con cualquier negocio serio, pero hoy estamos enfocándonos activamente en consultorios, clínicas y especialistas. Ese foco nos permite afinar criterio, casos y profundidad sin dejar de abrir espacio a otros sectores.",
   },
   {
-    q: "¿Cuánto cuesta arrancar?",
-    a: "Brand System, nuestro punto de entrada, va desde $8,000 MXN como proyecto único. Content Engine desde $4,500/mes. Demand Engine con setup desde $5,000 más $6,000/mes. Los precios escalan según alcance — no hay letra chica.",
+    q: "¿Por dónde se empieza?",
+    a: "Si tu marca está desordenada, se empieza por Brand System. Si ya existe dirección, puede empezar por Content Engine o Demand Engine según el momento del negocio.",
   },
   {
-    q: "¿Tengo que comprar los tres núcleos?",
-    a: "No. Cada núcleo resuelve algo distinto. La mayoría arranca con Brand System porque ordena todo. De ahí avanzas a Content Engine cuando necesites operar mes a mes, y Demand Engine cuando quieras volumen.",
+    q: "¿Demand Engine incluye media spend?",
+    a: "No. El media spend siempre va aparte. Demand Engine cubre estrategia, creativos, destino de conversión y optimización.",
   },
   {
-    q: "Tengo un consultorio. ¿Qué pasa con Vincent Care?",
-    a: "Care es un producto SaaS separado que estamos construyendo específicamente para consultorios y clínicas: recepción conversacional por WhatsApp, confirmaciones automáticas, reactivación de pacientes dormidos. Aún no está público. Si llenas el brief hoy eres de los primeros en entrar cuando abra.",
+    q: "¿Lead Ops se vende solo?",
+    a: "No. Lead Ops solo entra cuando ya existe contexto comercial con Growth o Website Execution.",
   },
   {
-    q: "¿Por qué tan accesible para lo que entregan?",
-    a: "Porque la IA ejecuta en horas lo que un equipo tradicional tarda días. Una agencia con equipo humano completo necesita cobrar $15,000–$25,000 MXN mensuales solo para cubrir nóminas. Vincent entrega lo mismo al precio de un freelancer porque la IA hace el trabajo de mesa.",
+    q: "¿Necesito sitio para trabajar con ustedes?",
+    a: "No siempre. Pero si el sitio hoy está frenando credibilidad o conversión, Website Execution entra como complemento natural.",
   },
   {
-    q: "¿Hacen sitios web?",
-    a: "Sí, como add-on downstream del Brand System. No vendemos sitios sueltos — si no tienes marca ordenada primero, un sitio solo es un folleto digital caro.",
-  },
-  {
-    q: "¿Y Google Ads o dashboards de atribución?",
-    a: "Por ahora no como línea central. Nos enfocamos en Meta Ads (donde hoy tenemos músculo) y seguimiento básico suficiente. Los dashboards premium llegan cuando tengamos datos reales para alimentarlos, no como promesa vacía.",
-  },
-  {
-    q: "¿Dónde están?",
-    a: "Monclova (laboratorio y HQ) y Monterrey (mercado principal). Trabajamos remoto con toda México. Monclova prueba, Monterrey vende, nacional crece.",
-  },
-  {
-    q: "¿Qué es Vincent OS y Vincent Ops?",
-    a: "Vincent OS es la infraestructura interna multi-tenant. Vincent Ops es el cockpit desde donde los fundadores vemos y operamos todo. No los vendemos directo — los usamos para entregar Growth (y mañana Care) mejor que una agencia tradicional.",
+    q: "¿Vincent Care ya está abierto?",
+    a: "Todavía no. Hoy estamos operando Vincent Growth y preparando una solución específica para consultorios. Puedes entrar a la lista desde aquí para enterarte primero.",
   },
 ];
 
@@ -129,8 +110,7 @@ function Item({ faq, index }: { faq: (typeof FAQS)[0]; index: number }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.35, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-              className="pb-5 pr-4 text-[14px] leading-[1.7]"
-              style={{ color: "rgba(245, 240, 225, 0.72)" }}
+              className="pb-6 pr-4 text-[14px] md:text-[15px] leading-[1.7] vin-text-muted"
             >
               {faq.a}
             </motion.p>

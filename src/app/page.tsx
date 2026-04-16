@@ -1,76 +1,87 @@
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
 import VincentSplit from "@/components/sections/VincentSplit";
-import ForWhom from "@/components/sections/ForWhom";
-import SocialProof from "@/components/sections/SocialProof";
+import InteriorShell from "@/components/layout/InteriorShell";
 import CoreOffers from "@/components/sections/CoreOffers";
 import AddonsControlled from "@/components/sections/AddonsControlled";
 import SalesSequence from "@/components/sections/SalesSequence";
+import SocialProof from "@/components/sections/SocialProof";
 import Process from "@/components/sections/Process";
 import Work from "@/components/sections/Work";
+import HealthFocus from "@/components/sections/HealthFocus";
+import CareTeaser from "@/components/sections/CareTeaser";
 import Founders from "@/components/sections/Founders";
-import ManifestoQuote from "@/components/sections/ManifestoQuote";
 import FAQ from "@/components/sections/FAQ";
 import Brief from "@/components/sections/Brief";
 import Contact from "@/components/sections/Contact";
+import SiteFooter from "@/components/sections/SiteFooter";
 import MobileBar from "@/components/sections/MobileBar";
-import PageBackdrop from "@/components/layout/PageBackdrop";
-import UrgencyBanner from "@/components/sections/UrgencyBanner";
 
+/**
+ * Canonical scroll journey per VINCENT-GROWTH-COPY-IA-047:
+ *
+ *   1.  Hero
+ *   2.  Split (noche / día)
+ *   3.  Tres sistemas (CoreOffers)
+ *   4.  Complementos (AddonsControlled)
+ *   5.  Cómo se combina (SalesSequence)
+ *   6.  Promesas + Método (SocialProof + Process)
+ *   7.  Casos (Work)
+ *   8.  Foco salud (HealthFocus)
+ *   9.  Teaser Vincent Care (CareTeaser)
+ *   10. Founders
+ *   11. FAQ
+ *   12. Brief + Contact
+ */
 export default function Home() {
   return (
     <>
-      {/* Persistent night-sky canvas behind everything */}
-      <PageBackdrop />
-
-      <UrgencyBanner />
       <Navbar />
 
       <main className="relative z-10 pb-14 md:pb-0">
-        {/* Entrada narrativa */}
+        {/* 1 · Hero */}
         <Hero />
 
-        {/* Pieza firmante de la marca */}
+        {/* 2 · Split — noche/día, pieza firmante */}
         <VincentSplit />
 
-        {/* Para quién trabaja Vincent (salud-first) */}
-        <ForWhom />
+        <InteriorShell>
+          {/* 3 · Tres sistemas */}
+          <CoreOffers />
 
-        {/* Prueba social honesta */}
-        <SocialProof />
+          {/* 4 · Complementos */}
+          <AddonsControlled />
 
-        {/* Los 3 núcleos (PDF abril 2026) */}
-        <CoreOffers />
+          {/* 5 · Cómo se combina */}
+          <SalesSequence />
 
-        {/* Complementos controlados */}
-        <AddonsControlled />
+          {/* 6 · Promesas + método */}
+          <SocialProof />
+          <Process />
 
-        {/* El mapa de la secuencia de venta */}
-        <SalesSequence />
+          {/* 7 · Casos */}
+          <Work />
 
-        {/* Método */}
-        <Process />
+          {/* 8 · Foco salud */}
+          <HealthFocus />
 
-        {/* Casos reales + teaser de Care */}
-        <Work />
+          {/* 9 · Teaser Vincent Care */}
+          <CareTeaser />
 
-        {/* Fundadores */}
-        <Founders />
+          {/* 10 · Founders */}
+          <Founders />
 
-        {/* Quote de Ángel — rompe a fondo crema */}
-        <ManifestoQuote />
+          {/* 11 · FAQ */}
+          <FAQ />
 
-        {/* Preguntas con posicionamiento dual */}
-        <FAQ />
+          {/* 12 · Brief + Contact */}
+          <Brief />
+          <Contact />
+        </InteriorShell>
 
-        {/* Brief intake — captura industry bucket */}
-        <Brief />
-
-        {/* Contact + Footer */}
-        <Contact />
+        <SiteFooter />
       </main>
 
-      {/* Floating WhatsApp CTA (mobile) */}
       <MobileBar />
     </>
   );
